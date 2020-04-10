@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -15,10 +15,8 @@ import {
 import MainHeader from "./MainHeader";
 import MainNavContent from "./MainNavContent";
 import MainContent from "./MainContent";
+import MainAddDialog from "./MainAddDialog";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 
 const config = {
 	autoCollapseDisabled: false,
@@ -95,36 +93,9 @@ const config = {
 	},
 };
 
-const useStyles = makeStyles((theme) => ({
-	fab: {
-		position: "fixed",
-		bottom: 20,
-		right: 20,
-		zIndex: 10,
-		[theme.breakpoints.up("sm")]: {
-			bottom: 40,
-			right: 40,
-			height: 70,
-			width: 70,
-		},
-		[theme.breakpoints.up("md")]: {
-			bottom: 60,
-			right: 60,
-			height: 80,
-			width: 80,
-		},
-	},
-	fabIcon: {
-		fontSize: "default",
-		[theme.breakpoints.up("md")]: {
-			fontSize: 32,
-		},
-	},
-}));
 
 const Main = () => {
-	const classes = useStyles();
-
+	
 	return (
 		<Root config={config}>
 			{({ headerStyles, sidebarStyles, collapsed, opened }) => (
@@ -154,13 +125,7 @@ const Main = () => {
 					</Sidebar>
 					<Content>
 						<MainContent />
-						<Fab
-							classes={{ root: classes.fab }}
-							color="default"
-							aria-label="add"
-						>
-							<AddIcon classes={{ root: classes.fabIcon }} />
-						</Fab>
+						<MainAddDialog />
 					</Content>
 				</>
 			)}
