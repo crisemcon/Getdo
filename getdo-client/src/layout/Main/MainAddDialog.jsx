@@ -1,13 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -19,17 +16,29 @@ import { useTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+
+//icons
+import InboxIcon from "@material-ui/icons/Inbox";
+import DoubleArrowSharpIcon from "@material-ui/icons/DoubleArrowSharp";
+import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import CakeIcon from "@material-ui/icons/Cake";
+import StarIcon from "@material-ui/icons/Star";
+import LabelIcon from "@material-ui/icons/Label";
+import DoneIcon from '@material-ui/icons/Done';
+
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
 	form: {
 		display: "flex",
 		flexDirection: "column",
 		margin: "auto",
-		width: "fit-content",
 	},
 	formControl: {
-		marginTop: theme.spacing(2),
 		minWidth: 120,
+		marginBottom: 10,
 	},
 	formControlLabel: {
 		marginTop: theme.spacing(1),
@@ -64,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
 		top: theme.spacing(1),
 		color: theme.palette.grey[500],
 	},
+	doneButton: {
+		fontSize: 36,
+	},
 }));
 
 export default function MaxWidthDialog() {
@@ -74,9 +86,6 @@ export default function MaxWidthDialog() {
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-	const [fullWidth, setFullWidth] = React.useState(true);
-	const [maxWidth, setMaxWidth] = React.useState("sm");
-
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
@@ -85,12 +94,17 @@ export default function MaxWidthDialog() {
 		setOpen(false);
 	};
 
-	const handleMaxWidthChange = (event) => {
-		setMaxWidth(event.target.value);
-	};
+	//form
 
-	const handleFullWidthChange = (event) => {
-		setFullWidth(event.target.checked);
+	//action name textfield
+	const [namevalue, setNameValue] = React.useState("");
+	const handleNameChange = (event) => {
+		setNameValue(event.target.value);
+	};
+	//action notes textfield
+	const [notevalue, setNoteValue] = React.useState("");
+	const handleNoteChange = (event) => {
+		setNoteValue(event.target.value);
 	};
 
 	return (
@@ -105,15 +119,15 @@ export default function MaxWidthDialog() {
 			</Fab>
 			<Dialog
 				fullScreen={fullScreen}
-				fullWidth={fullWidth}
-				maxWidth={maxWidth}
+				fullWidth={true}
+				maxWidth="sm"
 				open={open}
 				onClose={handleClose}
 				aria-labelledby="max-width-dialog-title"
 			>
 				<DialogTitle id="max-width-dialog-title">
 					<>
-						<Typography variant="h6">Testing</Typography>
+						<Typography variant="h6">New Action</Typography>
 						<IconButton
 							aria-label="close"
 							className={classes.closeButton}
@@ -123,46 +137,95 @@ export default function MaxWidthDialog() {
 						</IconButton>
 					</>
 				</DialogTitle>
-				<DialogContent>
-					<DialogContentText>
-						You can set my maximum width and whether to adapt or
-						not.
-					</DialogContentText>
+				<DialogContent dividers>
 					<form className={classes.form} noValidate>
 						<FormControl className={classes.formControl}>
+							<TextField
+								autoFocus
+								id="standard-multiline-flexible"
+								label="Action Name"
+								multiline
+								rowsMax="2"
+								value={namevalue}
+								onChange={handleNameChange}
+							/>
+						</FormControl>
+						<FormControl className={classes.formControl}>
+							<TextField
+								id="standard-multiline-flexible"
+								label="Note or Description"
+								multiline
+								rowsMax="5"
+								value={notevalue}
+								onChange={handleNoteChange}
+							/>
+						</FormControl>
+						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="max-width">
-								maxWidth
+								Category
 							</InputLabel>
 							<Select
-								autoFocus
-								value={maxWidth}
-								onChange={handleMaxWidthChange}
-								inputProps={{
+								//value={maxWidth}
+								//onChange={handleMaxWidthChange}
+								/*inputProps={{
 									name: "max-width",
 									id: "max-width",
-								}}
+								}}*/
 							>
-								<MenuItem value={false}>false</MenuItem>
-								<MenuItem value="xs">xs</MenuItem>
-								<MenuItem value="sm">sm</MenuItem>
-								<MenuItem value="md">md</MenuItem>
-								<MenuItem value="lg">lg</MenuItem>
-								<MenuItem value="xl">xl</MenuItem>
+								<MenuItem value="inbox">
+									<ListItemIcon>
+										<InboxIcon />
+									</ListItemIcon>
+									Inbox
+								</MenuItem>
+								<MenuItem value="next">
+									<ListItemIcon>
+										<DoubleArrowSharpIcon />
+									</ListItemIcon>
+									Next
+								</MenuItem>
+								<MenuItem value="waiting">
+									<ListItemIcon>
+										<HourglassEmptyIcon />
+									</ListItemIcon>
+									Waiting
+								</MenuItem>
+								<MenuItem value="scheduled">
+									<ListItemIcon>
+										<ScheduleIcon />
+									</ListItemIcon>
+									Scheduled
+								</MenuItem>
+								<MenuItem value="someday">
+									<ListItemIcon>
+										<CakeIcon />
+									</ListItemIcon>
+									Someday
+								</MenuItem>
+								<MenuItem value="projects">
+									<ListItemIcon>
+										<StarIcon />
+									</ListItemIcon>
+									Projects
+								</MenuItem>
+								<MenuItem value="notebooks">
+									<ListItemIcon>
+										<LabelIcon />
+									</ListItemIcon>
+									Notebooks
+								</MenuItem>
 							</Select>
 						</FormControl>
-						<FormControlLabel
-							className={classes.formControlLabel}
-							control={
-								<Switch
-									checked={fullWidth}
-									onChange={handleFullWidthChange}
-								/>
-							}
-							label="Full width"
-						/>
 					</form>
 				</DialogContent>
-				<DialogActions></DialogActions>
+				<DialogActions>
+					<IconButton
+						aria-label="close"
+						onClick={handleClose}
+					>
+						<DoneIcon classes={{ root: classes.doneButton}} />
+					</IconButton>
+				</DialogActions>
 			</Dialog>
 		</>
 	);

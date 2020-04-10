@@ -49,9 +49,9 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: red[500],
 	},
 	cardHeader: {
-		padding: 8,
+		padding: 4,
 		paddingRight: 12,
-		paddingBottom: 4,
+		paddingBottom: 0,
 		display: "flex",
 		alignItems: "center",
 	},
@@ -80,6 +80,9 @@ const useStyles = makeStyles((theme) => ({
 	marginAuto: {
 		margin: "auto",
 	},
+	cardHeaderAction: {
+		paddingTop: 4,
+	}
 }));
 
 const MainCard = () => {
@@ -109,7 +112,7 @@ const MainCard = () => {
 	return (
 		<Card>
 			<CardHeader
-				classes={{ root: classes.cardHeader }}
+				classes={{ root: classes.cardHeader , action: classes.cardHeaderAction}}//this is the way to customize children
 				avatar={
 					<Checkbox
 						checked={checked}
