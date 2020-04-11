@@ -44,7 +44,7 @@ const MainContent = () => {
 				<Typography>No hay tareas</Typography>
 			) : (
 				categoryitems.map((item) => (
-					<Grid item xs={12} className={classes.item}>
+					<Grid key={item.id} item xs={12} className={classes.item}>
 						<MainCard item={item} />
 					</Grid>
 				))

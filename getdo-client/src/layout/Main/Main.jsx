@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect} from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -16,6 +16,8 @@ import MainHeader from "./MainHeader";
 import MainNavContent from "./MainNavContent";
 import MainContent from "./MainContent";
 import MainAddDialog from "../../components/MainAddDialog";
+
+import itemsContext from "../../context/items/itemsContext";
 
 
 const config = {
@@ -95,10 +97,17 @@ const config = {
 
 
 const Main = () => {
+	//get itemsState
+	const itemlistContext = useContext(itemsContext);
+	const { getItems } = itemlistContext;
+	//showing inbox items at start
+	useEffect(() => {
+		getItems("inbox");
+	}, []);
 	
 	return (
 		<Root config={config}>
-			{({ headerStyles, sidebarStyles, collapsed, opened }) => (
+			{({ headerStyles, sidebarStyles, collapsed, opened, setOpened}) => (
 				<>
 					<CssBaseline />
 					<Header>
@@ -113,7 +122,7 @@ const Main = () => {
 					</Header>
 					<Sidebar>
 						<div className={sidebarStyles.container}>
-							<MainNavContent />
+							<MainNavContent setOpened={setOpened}/>
 						</div>
 						<CollapseBtn className={sidebarStyles.collapseBtn}>
 							{collapsed ? (
