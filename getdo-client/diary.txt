@@ -1,0 +1,29 @@
+DAY 1 (08/04/2020) 2hr 51min:
+
+Started to develop the front-end of the application. I just discovered material-ui and did a basic course project with some features that
+were useful to incorporate in this project. So first of all, I spent some time figuring out how i wanted the app look like, based on some competition.
+The competition that I checked is NirvanaHQ, Everdo and Facilethings. Facilethings uses an interface that I will not implement soon, so that lets me
+with the other two. They have a similar interface, so to build my app I inspire in the best choices that I think they make on each component.
+Lets code! First of all I setted up a dashboard from mui-treasury library, customizing it to my preferences. I decide to not theme anything with colors
+or typography, just focusing on sizes, layout and responsiveness. I developed the navbar, the elements inside the sidebar with the categories of GTD
+system with their correspondent icon.
+
+DAY 2 (09/04/2020) 5hr 30min:
+
+Today I designed the cards that will be shown in the main content. I had to research a lot to get the design that I wanted, nesting components,
+using custom styling on material-ui components but at the end I'm pretty satisfied with the result. It is a card with a checkbutton at the left,
+then the name and the focus icon, followed by a menu button with the options to edit and delete. Then we have the tags, that are some badges
+with the label inside. Next to them there is the time badge and the energy badge, who are supposed to show the time that activity will consume
+and the effort, respectively. Finally we have a collapse button that expands the card to show the notes/description of the item, and if it is
+pressed again it will collapse
+
+DAY 3 (10/04/2020) 5hr 07min:
+
+I started to make some functionality. I developed the Context API for the items to be displayed and the categories in the sidebar. So here is where 
+I found some guideness from the MERNTasks tutorial. So first I created the sidebar context, reducer and state to detect when the user selects a
+category. The way that I tested if it works is through Firefox React Components extension, where i can see if the state of the context changes.
+Then I maked the items context, reducer and state, that is the main feature and controller of the application. To start simple, the items just have
+4 properties, that are id, category, name, note. Next, I created the first function that is to focus on the items from the selected category so they
+can be displayed in the main content. Also fixed some bugs, for example when I clicked a category on phone devices it did'nt close the sidebar. It was
+solved by using a function provided by the component (mui-treasury). Another fix was that when the page was loaded (inbox selected by default), it will
+not display any items, so I had to add an useEffect in the main component.
