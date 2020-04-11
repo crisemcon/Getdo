@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import sidebarContext from '../../context/sidebar/sidebarContext';
+import itemsContext from '../../context/items/itemsContext';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -26,20 +29,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SelectedListItem() {
-  const classes = useStyles();
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-  const handleListItemClick = (event, index) => {
+  //get sidebarState
+  const categoriesContext = useContext(sidebarContext);
+  const { currentCategory } = categoriesContext;
+  //get itemsState
+	const itemlistContext = useContext(itemsContext);
+	const { getItems } = itemlistContext;
+
+  const classes = useStyles();
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const handleListItemClick = (event, index, name) => {
     setSelectedIndex(index);
+    currentCategory(name); //set current category
+    getItems(name); //filter items with category name
   };
 
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
         <ListItem
+
           button
           selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
+          onClick={(event) => handleListItemClick(event, 0, "inbox")}
         >
           <ListItemIcon>
             <InboxIcon />
@@ -52,7 +67,7 @@ export default function SelectedListItem() {
         <ListItem
           button
           selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
+          onClick={(event) => handleListItemClick(event, 1, "next")}
         >
           <ListItemIcon>
             <DoubleArrowSharpIcon />
@@ -62,7 +77,7 @@ export default function SelectedListItem() {
         <ListItem
           button
           selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
+          onClick={(event) => handleListItemClick(event, 2, "waiting")}
         >
           <ListItemIcon>
             <HourglassEmptyIcon />
@@ -72,7 +87,7 @@ export default function SelectedListItem() {
         <ListItem
           button
           selected={selectedIndex === 3}
-          onClick={(event) => handleListItemClick(event, 3)}
+          onClick={(event) => handleListItemClick(event, 3, "scheduled")}
         >
           <ListItemIcon>
             <ScheduleIcon />
@@ -82,7 +97,7 @@ export default function SelectedListItem() {
         <ListItem
           button
           selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}
+          onClick={(event) => handleListItemClick(event, 4, "someday")}
         >
           <ListItemIcon>
             <CakeIcon />
@@ -95,7 +110,7 @@ export default function SelectedListItem() {
         <ListItem
           button
           selected={selectedIndex === 5}
-          onClick={(event) => handleListItemClick(event, 5)}
+          onClick={(event) => handleListItemClick(event, 5, "focus")}
         >
           <ListItemIcon>
             <StarIcon />
@@ -105,7 +120,7 @@ export default function SelectedListItem() {
         <ListItem
           button
           selected={selectedIndex === 6}
-          onClick={(event) => handleListItemClick(event, 6)}
+          onClick={(event) => handleListItemClick(event, 6, "tag")}
         >
           <ListItemIcon>
             <LabelIcon />
@@ -118,7 +133,7 @@ export default function SelectedListItem() {
         <ListItem
           button
           selected={selectedIndex === 7}
-          onClick={(event) => handleListItemClick(event, 7)}
+          onClick={(event) => handleListItemClick(event, 7, "projects")}
         >
           <ListItemIcon>
             <ListIcon />
@@ -128,7 +143,7 @@ export default function SelectedListItem() {
         <ListItem
           button
           selected={selectedIndex === 8}
-          onClick={(event) => handleListItemClick(event, 8)}
+          onClick={(event) => handleListItemClick(event, 8, "notebooks")}
         >
           <ListItemIcon>
             <NoteIcon />
@@ -141,7 +156,7 @@ export default function SelectedListItem() {
       <ListItem
           button
           selected={selectedIndex === 9}
-          onClick={(event) => handleListItemClick(event, 9)}
+          onClick={(event) => handleListItemClick(event, 9, "trash")}
         >
           <ListItemIcon>
             <DeleteIcon />

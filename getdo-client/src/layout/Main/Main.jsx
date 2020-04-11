@@ -15,7 +15,7 @@ import {
 import MainHeader from "./MainHeader";
 import MainNavContent from "./MainNavContent";
 import MainContent from "./MainContent";
-import MainAddDialog from "./MainAddDialog";
+import MainAddDialog from "../../components/MainAddDialog";
 
 
 const config = {
