@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -26,6 +26,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+
+import itemsContext from '../context/items/itemsContext';
+import sidebarContext from '../context/sidebar/sidebarContext';
+
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -87,7 +91,15 @@ const useStyles = makeStyles((theme) => ({
 
 const MainCard = ({ item, handleDelete }) => {
 	const classes = useStyles();
-	const { id, category ,name, note } = item;
+	const {name, note} = item;
+
+	//get itemsState
+	const itemlistContext = useContext(itemsContext);
+	const {getItems, focusItem } = itemlistContext;
+
+	//get sidebarState
+	const categoriesContext = useContext(sidebarContext);
+	const { category } = categoriesContext;
 
 	//collapse and expand state
 	const [expanded, setExpanded] = useState(false);
@@ -114,6 +126,13 @@ const MainCard = ({ item, handleDelete }) => {
 		handleDelete(item);
 	}
 
+	const handleItemFocus = () => {
+		focusItem(item);
+		if(category === "focus"){
+			getItems(category);
+		}
+	}
+
 	return (
 		<Card>
 			<CardHeader
@@ -136,6 +155,8 @@ const MainCard = ({ item, handleDelete }) => {
 									icon={<StarBorderIcon />}
 									checkedIcon={<StarIcon />}
 									name="checkedH"
+									checked={item.focus}
+									onChange={handleItemFocus}
 								/>
 							}
 						/>

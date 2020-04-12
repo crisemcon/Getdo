@@ -9,6 +9,7 @@ import {
 	ADD_ITEM,
 	VALIDATE_ITEM,
 	DELETE_ITEM,
+	FOCUS_ITEM,
 	/*
 	UPDATE_ITEM,
 	ITEM_STATE,
@@ -20,41 +21,146 @@ const ItemsState = (props) => {
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 	const initialState = {
 		items: [
-			{ id: 1, category: "inbox", name: "test inbox", note: lorem },
-			{ id: 2, category: "next", name: "test next", note: lorem },
-			{ id: 3, category: "projects", name: "test project", note: lorem },
+			{
+				id: 1,
+				category: "inbox",
+				name: "test inbox",
+				note: lorem,
+				focus: false,
+			},
+			{
+				id: 2,
+				category: "next",
+				name: "test next",
+				note: lorem,
+				focus: false,
+			},
+			{
+				id: 3,
+				category: "projects",
+				name: "test project",
+				note: lorem,
+				focus: false,
+			},
 			{
 				id: 4,
 				category: "notebooks",
 				name: "test name",
 				note: lorem,
+				focus: false,
 			},
-			{ id: 5, category: "inbox", name: "test inbox", note: lorem },
-			{ id: 6, category: "inbox", name: "test inbox", note: lorem },
-			{ id: 7, category: "waiting", name: "test waiting", note: lorem },
-			{ id: 8, category: "someday", name: "test someday", note: lorem },
-			{ id: 9, category: "focus", name: "test focus", note: lorem },
-			{ id: 10, category: "trash", name: "test trash", note: lorem },
-			{ id: 11, category: "trash", name: "test trash", note: lorem },
-			{ id: 12, category: "focus", name: "test focus", note: lorem },
-			{ id: 13, category: "someday", name: "test someday", note: lorem },
+			{
+				id: 5,
+				category: "inbox",
+				name: "test inbox",
+				note: lorem,
+				focus: false,
+			},
+			{
+				id: 6,
+				category: "inbox",
+				name: "test inbox",
+				note: lorem,
+				focus: true,
+			},
+			{
+				id: 7,
+				category: "waiting",
+				name: "test waiting",
+				note: lorem,
+				focus: false,
+			},
+			{
+				id: 8,
+				category: "someday",
+				name: "test someday",
+				note: lorem,
+				focus: true,
+			},
+			{
+				id: 9,
+				category: "next",
+				name: "test next",
+				note: lorem,
+				focus: false,
+			},
+			{
+				id: 10,
+				category: "trash",
+				name: "test trash",
+				note: lorem,
+				focus: true,
+			},
+			{
+				id: 11,
+				category: "trash",
+				name: "test trash",
+				note: lorem,
+				focus: false,
+			},
+			{
+				id: 12,
+				category: "next",
+				name: "test next",
+				note: lorem,
+				focus: true,
+			},
+			{
+				id: 13,
+				category: "someday",
+				name: "test someday",
+				note: lorem,
+				focus: false,
+			},
 			{
 				id: 14,
 				category: "notebooks",
 				name: "test name",
 				note: lorem,
+				focus: true,
 			},
-			{ id: 15, category: "next", name: "test next", note: lorem },
-			{ id: 16, category: "inbox", name: "test inbox", note: lorem },
-			{ id: 17, category: "someday", name: "test someday", note: lorem },
-			{ id: 18, category: "waiting", name: "test waiting", note: lorem },
+			{
+				id: 15,
+				category: "next",
+				name: "test next",
+				note: lorem,
+				focus: true,
+			},
+			{
+				id: 16,
+				category: "inbox",
+				name: "test inbox",
+				note: lorem,
+				focus: false,
+			},
+			{
+				id: 17,
+				category: "someday",
+				name: "test someday",
+				note: lorem,
+				focus: false,
+			},
+			{
+				id: 18,
+				category: "waiting",
+				name: "test waiting",
+				note: lorem,
+				focus: false,
+			},
 			{
 				id: 19,
 				category: "projects",
 				name: "test project",
 				note: lorem,
+				focus: false,
 			},
-			{ id: 20, category: "next", name: "test next", note: lorem },
+			{
+				id: 20,
+				category: "next",
+				name: "test next",
+				note: lorem,
+				focus: false,
+			},
 		],
 		categoryitems: [],
 		erroritem: false,
@@ -73,31 +179,37 @@ const ItemsState = (props) => {
 		});
 	};
 
-	
-    //add new item
-    const addItem = item => {
-        item.id = uuid();
-        dispatch({
-            type: ADD_ITEM,
-            payload: item
-        })
-    }
-	
-	
-    //validate the itemname and display an error if it is empty
-    const validateItem= () => {
-        dispatch({
-            type: VALIDATE_ITEM
-        })
+	//add new item
+	const addItem = (item) => {
+		item.id = uuid();
+		dispatch({
+			type: ADD_ITEM,
+			payload: item,
+		});
+	};
+
+	//validate the itemname and display an error if it is empty
+	const validateItem = () => {
+		dispatch({
+			type: VALIDATE_ITEM,
+		});
+	};
+
+	//permanently deletes an item by its id
+	const deleteItem = (id) => {
+		dispatch({
+			type: DELETE_ITEM,
+			payload: id,
+		});
+	};
+
+	//focus or unfocus an item
+	const focusItem = item => {
+		dispatch({
+			type: FOCUS_ITEM,
+			payload: item
+		})
 	}
-	
-    //elimina tarea por id
-    const deleteItem= id => {
-        dispatch({
-            type: DELETE_ITEM,
-            payload: id
-        })
-    }
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -133,6 +245,7 @@ const ItemsState = (props) => {
 				addItem,
 				validateItem,
 				deleteItem,
+				focusItem,
 			}}
 		>
 			{props.children}

@@ -1,9 +1,15 @@
-import {ITEM_CATEGORIE, ADD_ITEM, VALIDATE_ITEM, DELETE_ITEM, ITEM_STATE, CURRENT_ITEM, UPDATE_ITEM} from '../../types';
+import {ITEM_CATEGORIE, ADD_ITEM, VALIDATE_ITEM, DELETE_ITEM, FOCUS_ITEM, ITEM_STATE, CURRENT_ITEM, UPDATE_ITEM} from '../../types';
 
 export default(state, action) => {
     switch(action.type) {
 
         case ITEM_CATEGORIE:
+            if (action.payload === "focus"){
+                return {
+                    ...state,
+                    categoryitems: state.items.filter(item => item.focus === true)
+                }
+            }
             return {
                 ...state,
                 categoryitems: state.items.filter(item => item.category === action.payload)
@@ -26,6 +32,12 @@ export default(state, action) => {
             return {
                 ...state,
                 items: state.items.filter(item => item.id !== action.payload),
+            }
+        case FOCUS_ITEM:
+            const focus = action.payload.focus;
+            return {
+                ...state,
+                items: [...state.items, state.items.filter(item => item.id === action.payload.id)[0].focus =  !focus]
             }
         case UPDATE_ITEM:
         case ITEM_STATE:

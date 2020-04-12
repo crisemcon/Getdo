@@ -8,7 +8,6 @@ import itemsContext from "../../context/items/itemsContext";
 import MainCard from "../../components/MainCard";
 import { Typography } from "@material-ui/core";
 
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
