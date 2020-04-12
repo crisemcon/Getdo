@@ -25,8 +25,9 @@ const ItemsState = (props) => {
 				id: 1,
 				category: "inbox",
 				name: "test inbox",
-				note: lorem,
+				note: "",
 				focus: false,
+				tags: [1,2,3],
 			},
 			{
 				id: 2,
@@ -34,6 +35,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
+				tags: [1],
 			},
 			{
 				id: 3,
@@ -41,6 +43,7 @@ const ItemsState = (props) => {
 				name: "test project",
 				note: lorem,
 				focus: false,
+				tags: [3],
 			},
 			{
 				id: 4,
@@ -48,6 +51,7 @@ const ItemsState = (props) => {
 				name: "test name",
 				note: lorem,
 				focus: false,
+				tags: [1,2],
 			},
 			{
 				id: 5,
@@ -55,6 +59,7 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: false,
+				tags: [2,3],
 			},
 			{
 				id: 6,
@@ -62,6 +67,7 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: true,
+				tags: [1,2,3],
 			},
 			{
 				id: 7,
@@ -69,6 +75,7 @@ const ItemsState = (props) => {
 				name: "test waiting",
 				note: lorem,
 				focus: false,
+				tags: [3],
 			},
 			{
 				id: 8,
@@ -76,6 +83,7 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: true,
+				tags: [1,2],
 			},
 			{
 				id: 9,
@@ -83,6 +91,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
+				tags: [1,2,3],
 			},
 			{
 				id: 10,
@@ -90,6 +99,7 @@ const ItemsState = (props) => {
 				name: "test trash",
 				note: lorem,
 				focus: true,
+				tags: [1,2,3],
 			},
 			{
 				id: 11,
@@ -97,6 +107,7 @@ const ItemsState = (props) => {
 				name: "test trash",
 				note: lorem,
 				focus: false,
+				tags: [1,2],
 			},
 			{
 				id: 12,
@@ -104,6 +115,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: true,
+				tags: [1,2,3],
 			},
 			{
 				id: 13,
@@ -111,6 +123,7 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: false,
+				tags: [2],
 			},
 			{
 				id: 14,
@@ -118,6 +131,7 @@ const ItemsState = (props) => {
 				name: "test name",
 				note: lorem,
 				focus: true,
+				tags: [1],
 			},
 			{
 				id: 15,
@@ -125,6 +139,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: true,
+				tags: [3],
 			},
 			{
 				id: 16,
@@ -132,6 +147,7 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: false,
+				tags: [2,3],
 			},
 			{
 				id: 17,
@@ -139,6 +155,7 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: false,
+				tags: [1,3],
 			},
 			{
 				id: 18,
@@ -146,6 +163,7 @@ const ItemsState = (props) => {
 				name: "test waiting",
 				note: lorem,
 				focus: false,
+				tags: [1,2,3],
 			},
 			{
 				id: 19,
@@ -153,6 +171,7 @@ const ItemsState = (props) => {
 				name: "test project",
 				note: lorem,
 				focus: false,
+				tags: [1,2,3],
 			},
 			{
 				id: 20,
@@ -160,6 +179,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
+				tags: [1,2],
 			},
 		],
 		categoryitems: [],

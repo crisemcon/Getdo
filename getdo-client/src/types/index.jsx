@@ -8,3 +8,6 @@ export const FOCUS_ITEM = 'FOCUS_ITEM';
 export const UPDATE_ITEM = 'UPDATE_ITEM';
 export const ITEM_STATE = 'ITEM_STATE';
 export const CURRENT_ITEM = 'CURRENT_ITEM';
+
+export const ADD_TAG = 'ADD_TAG';
+export const VALIDATE_TAG = 'VALIDATE_TAG';

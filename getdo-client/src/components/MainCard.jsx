@@ -26,10 +26,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import PersonIcon from '@material-ui/icons/Person';
 
-import itemsContext from '../context/items/itemsContext';
-import sidebarContext from '../context/sidebar/sidebarContext';
-
+import itemsContext from "../context/items/itemsContext";
+import sidebarContext from "../context/sidebar/sidebarContext";
+import tagsContext from "../context/tags/tagsContext";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -76,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: 4,
 		marginBottom: 4,
 		marginRight: 8,
+		padding: 2,
 	},
 	cardContent: {
 		padding: 16,
@@ -91,15 +95,32 @@ const useStyles = makeStyles((theme) => ({
 
 const MainCard = ({ item, handleDelete }) => {
 	const classes = useStyles();
-	const {name, note} = item;
+	const { name, note } = item;
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const {getItems, focusItem } = itemlistContext;
+	const { getItems, focusItem } = itemlistContext;
 
 	//get sidebarState
 	const categoriesContext = useContext(sidebarContext);
 	const { category } = categoriesContext;
+
+	//get tagsState
+	const tagContext = useContext(tagsContext);
+	const { getTags } = tagContext;
+	const tagsArray = getTags(item.tags);
+
+	const tagIcon = (tag) => {
+		if(tag.type === "label"){
+			return <LocalOfferIcon />
+		}
+		else if (tag.type === "area"){
+			return <LocationOnIcon />
+		} 
+		return <PersonIcon />
+	}
+
+	
 
 	//collapse and expand state
 	const [expanded, setExpanded] = useState(false);
@@ -124,14 +145,14 @@ const MainCard = ({ item, handleDelete }) => {
 
 	const handleDeleteClick = () => {
 		handleDelete(item);
-	}
+	};
 
 	const handleItemFocus = () => {
 		focusItem(item);
-		if(category === "focus"){
+		if (category === "focus") {
 			getItems(category);
 		}
-	}
+	};
 
 	return (
 		<Card>
@@ -194,18 +215,18 @@ const MainCard = ({ item, handleDelete }) => {
 			/>
 			<CardActions disableSpacing classes={{ root: classes.cardActions }}>
 				<Grid className={classes.tagContainer} container>
-					<Chip
-						classes={{ root: classes.tag }}
-						variant="outlined"
-						size="small"
-						label="Computador"
-					/>
-					<Chip
-						classes={{ root: classes.tag }}
-						variant="outlined"
-						size="small"
-						label="Universidad"
-					/>
+					{tagsArray.length === 0
+						? null
+						: tagsArray.map((tag) => (
+								<Chip
+									icon={tagIcon(tag)}
+									key={tag.id}
+									classes={{ root: classes.tag }}
+									variant="outlined"
+									size="small"
+									label={tag.name}
+								/>
+						))}
 					<Grid className={classes.marginAuto} item></Grid>
 					<Chip
 						classes={{ root: classes.tag }}
