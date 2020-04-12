@@ -113,6 +113,7 @@ export default function MainAddDialog() {
 			name: "",
 			note: "",
 			category: "inbox",
+			tags: [],
 		});
 	};
 
@@ -122,6 +123,7 @@ export default function MainAddDialog() {
 		name: "",
 		note: "",
 		category: "inbox",
+		tags: [],
 	});
 
 	//function to read form values

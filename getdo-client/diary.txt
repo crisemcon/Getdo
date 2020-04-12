@@ -27,3 +27,13 @@ Then I maked the items context, reducer and state, that is the main feature and 
 can be displayed in the main content. Also fixed some bugs, for example when I clicked a category on phone devices it did'nt close the sidebar. It was
 solved by using a function provided by the component (mui-treasury). Another fix was that when the page was loaded (inbox selected by default), it will
 not display any items, so I had to add an useEffect in the main component.
+
+DAY 4 (11/04/2020) 5hr 46min:
+
+Today was tough. I figured that focus cant be a category, cause for example, if I have an item with inbox category, and I want to focus it, it will change
+its category from inbox to focus. So, i made a focus property in items and added a focusitem function in the itemstate. So now the user can focus a item
+and it will belong to its original category but also it will be displayed in the focus section. Then I made the tags context api, so the items have an array
+of tags of 3 different types: area, label and contact. Now the cards render the tags that matches the item tags. Finally I wanted to be able to add tags
+to the new item that is beign created in the addDialog with a multiple select inside it. The problem is that it seems to be a bug when you use a multiple
+select in a dialog/modal. The selection div starts to move vertically as you press the selection items. Tried and tried but I guess no success today:( I hope
+tomorrow I figure out a solution for this issue.
