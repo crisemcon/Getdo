@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -8,15 +8,16 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import Switch from "@material-ui/core/Switch";
 import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
+
+import Alert from "@material-ui/lab/Alert";
+
+import itemsContext from "../context/items/itemsContext";
+import sidebarContext from "../context/sidebar/sidebarContext";
 
 //icons
 import InboxIcon from "@material-ui/icons/Inbox";
@@ -26,7 +27,10 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import CakeIcon from "@material-ui/icons/Cake";
 import StarIcon from "@material-ui/icons/Star";
 import LabelIcon from "@material-ui/icons/Label";
-import DoneIcon from '@material-ui/icons/Done';
+import DoneIcon from "@material-ui/icons/Done";
+import CloseIcon from "@material-ui/icons/Close";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import AddIcon from "@material-ui/icons/Add";
 
 import TextField from "@material-ui/core/TextField";
 
@@ -76,27 +80,91 @@ const useStyles = makeStyles((theme) => ({
 	doneButton: {
 		fontSize: 36,
 	},
+	alert: {
+		marginRight: "auto",
+		marginLeft: 16,
+	},
 }));
 
-export default function MaxWidthDialog() {
+export default function MainAddDialog() {
 	const classes = useStyles();
 
-	const [open, setOpen] = React.useState(false);
+	//get itemsState
+	const itemlistContext = useContext(itemsContext);
+	const { erroritem, getItems, addItem, validateItem } = itemlistContext;
 
+	//get currentCategory State
+	const categoryContext = useContext(sidebarContext);
+	const { category } = categoryContext;
+
+	const [open, setOpen] = React.useState(false);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-
 	const handleClose = () => {
 		setOpen(false);
+		resetState();
+	};
+
+	const resetState = () => {
+		updateItem({
+			name: "",
+			note: "",
+			category: "inbox",
+		});
 	};
 
 	//form
+	//form item state
+	const [item, updateItem] = useState({
+		name: "",
+		note: "",
+		category: "inbox",
+	});
 
-	//action name textfield
+	//function to read form values
+	const handleFormChange = (e) => {
+		updateItem({
+			...item,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const handleSubmit = () => {
+		//e.preventDefault();
+		//validate if itemname is empty
+		if (item.name.trim() === "") {
+			validateItem();
+			return;
+		}
+
+		///////////////////////TODO revisa si es edicion o nueva tarea
+		/*if(tareaseleccionada === null){
+            //tarea nueva
+            //agregar la nueva tarea al state de tareas
+            tarea.proyectoId = proyectoActual.id;
+            tarea.estado = false;
+            agregarTarea(tarea);   
+        } else {
+            //actualizar tarea existente
+            actualizarTarea(tarea);
+		}*/
+
+		//new item
+		addItem(item);
+
+		//get and display the new item if it belongs to the current category
+		if (category === item.category) {
+			getItems(category);
+		}
+		//reset form and close dialog
+		setOpen(false);
+		resetState();
+	};
+
+	/*//action name textfield
 	const [namevalue, setNameValue] = React.useState("");
 	const handleNameChange = (event) => {
 		setNameValue(event.target.value);
@@ -105,7 +173,9 @@ export default function MaxWidthDialog() {
 	const [notevalue, setNoteValue] = React.useState("");
 	const handleNoteChange = (event) => {
 		setNoteValue(event.target.value);
-	};
+	};*/
+
+	//category select
 
 	return (
 		<>
@@ -142,31 +212,32 @@ export default function MaxWidthDialog() {
 						<FormControl className={classes.formControl}>
 							<TextField
 								autoFocus
-								id="standard-multiline-flexible"
+								id="itemname"
+								name="name"
 								label="Action Name"
 								multiline
 								rowsMax="2"
-								value={namevalue}
-								onChange={handleNameChange}
+								value={item.name}
+								onChange={handleFormChange}
 							/>
 						</FormControl>
 						<FormControl className={classes.formControl}>
 							<TextField
-								id="standard-multiline-flexible"
+								id="itemnote"
+								name="note"
 								label="Note or Description"
 								multiline
 								rowsMax="5"
-								value={notevalue}
-								onChange={handleNoteChange}
+								value={item.note}
+								onChange={handleFormChange}
 							/>
 						</FormControl>
 						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="max-width">
-								Category
-							</InputLabel>
+							<InputLabel htmlFor="category">Category</InputLabel>
 							<Select
-								//value={maxWidth}
-								//onChange={handleMaxWidthChange}
+								name="category"
+								value={item.category}
+								onChange={handleFormChange}
 								/*inputProps={{
 									name: "max-width",
 									id: "max-width",
@@ -219,11 +290,17 @@ export default function MaxWidthDialog() {
 					</form>
 				</DialogContent>
 				<DialogActions>
-					<IconButton
-						aria-label="close"
-						onClick={handleClose}
-					>
-						<DoneIcon classes={{ root: classes.doneButton}} />
+					{erroritem ? (
+						<Alert
+							classes={{ root: classes.alert }}
+							variant="outlined"
+							severity="error"
+						>
+							Action name is required
+						</Alert>
+					) : null}
+					<IconButton aria-label="submit" onClick={handleSubmit}>
+						<DoneIcon classes={{ root: classes.doneButton }} />
 					</IconButton>
 				</DialogActions>
 			</Dialog>

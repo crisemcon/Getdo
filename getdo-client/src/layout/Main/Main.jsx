@@ -103,8 +103,9 @@ const Main = () => {
 	//showing inbox items at start
 	useEffect(() => {
 		getItems("inbox");
+		//eslint-disable-next-line
 	}, []);
-	
+
 	return (
 		<Root config={config}>
 			{({ headerStyles, sidebarStyles, collapsed, opened, setOpened}) => (

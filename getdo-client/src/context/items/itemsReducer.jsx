@@ -12,20 +12,20 @@ export default(state, action) => {
         case ADD_ITEM:
             return {
                 ...state,
-                tareas: [ action.payload, ...state.tareas],
-                errortarea: false
+                items: [...state.items, action.payload],
+                erroritem: false
             }
 
         case VALIDATE_ITEM:
             return {
                 ...state,
-                errortarea: true
+                erroritem: true
             }
 
         case DELETE_ITEM:
             return {
                 ...state,
-                tareas: state.tareas.filter(tarea => tarea.id !== action.payload),
+                items: state.items.filter(item => item.id !== action.payload),
             }
         case UPDATE_ITEM:
         case ITEM_STATE:

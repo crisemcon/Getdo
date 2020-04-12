@@ -9,9 +9,10 @@ import {
 	ADD_ITEM,
 	VALIDATE_ITEM,
 	DELETE_ITEM,
+	/*
 	UPDATE_ITEM,
 	ITEM_STATE,
-	CURRENT_ITEM,
+	CURRENT_ITEM,*/
 } from "../../types";
 
 const ItemsState = (props) => {
@@ -64,7 +65,7 @@ const ItemsState = (props) => {
 	const [state, dispatch] = useReducer(itemsReducer, initialState);
 
 	//FUNCTIONS
-	//obtener las tareas de un proyecto
+	//get items from selected category
 	const getItems = (category) => {
 		dispatch({
 			type: ITEM_CATEGORIE,
@@ -72,31 +73,32 @@ const ItemsState = (props) => {
 		});
 	};
 
-	/*
-    //agregar una tarea al proyecto seleccionado
-    const agregarTarea = tarea => {
-        tarea.id = uuid();
+	
+    //add new item
+    const addItem = item => {
+        item.id = uuid();
         dispatch({
-            type: AGREGAR_TAREA,
-            payload: tarea
+            type: ADD_ITEM,
+            payload: item
         })
     }
-
-    //valida y muestra un erro en caso de que sea necesario
-    const validarTarea= () => {
+	
+	
+    //validate the itemname and display an error if it is empty
+    const validateItem= () => {
         dispatch({
-            type: VALIDAR_TAREA
+            type: VALIDATE_ITEM
         })
-    }
-
+	}
+	
     //elimina tarea por id
-    const eliminarTarea= id => {
+    const deleteItem= id => {
         dispatch({
-            type: ELIMINAR_TAREA,
+            type: DELETE_ITEM,
             payload: id
         })
     }
-
+	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
         dispatch({
@@ -128,6 +130,9 @@ const ItemsState = (props) => {
 				erroritem: state.erroritem,
 				selecteditem: state.selecteditem,
 				getItems,
+				addItem,
+				validateItem,
+				deleteItem,
 			}}
 		>
 			{props.children}

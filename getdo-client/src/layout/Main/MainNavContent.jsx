@@ -44,8 +44,8 @@ export default function SelectedListItem({ setOpened }) {
 	const handleListItemClick = (event, index, name) => {
 		setSelectedIndex(index);
 		currentCategory(name); //set current category
-    getItems(name); //filter items with category name
-    setOpened(false);//closes the navbar when clicked
+		getItems(name); //filter items with category name
+		setOpened(false);//closes the navbar when clicked
 	};
 
 	return (

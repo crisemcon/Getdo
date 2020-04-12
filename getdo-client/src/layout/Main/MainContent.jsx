@@ -31,7 +31,17 @@ const MainContent = () => {
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { categoryitems } = itemlistContext;
+	const { categoryitems, getItems, deleteItem } = itemlistContext;
+
+	const handleDelete = (item) => {
+		const currentcategory = item.category;
+		if(item.category === "trash") {
+			deleteItem(item.id);
+		} else {
+			item.category = "trash";
+		}
+		getItems(currentcategory);
+	}
 
 	return (
 		<Grid
@@ -45,7 +55,7 @@ const MainContent = () => {
 			) : (
 				categoryitems.map((item) => (
 					<Grid key={item.id} item xs={12} className={classes.item}>
-						<MainCard item={item} />
+						<MainCard item={item} handleDelete={handleDelete} />
 					</Grid>
 				))
 			)}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -13,13 +13,13 @@ import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Checkbox from "@material-ui/core/Checkbox";
-import Favorite from "@material-ui/icons/Favorite";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import StarIcon from "@material-ui/icons/Star";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Chip from "@material-ui/core/Chip";
 import Battery20Icon from "@material-ui/icons/Battery20";
-import Battery50Icon from "@material-ui/icons/Battery50";
-import Battery80Icon from "@material-ui/icons/Battery80";
+/*import Battery50Icon from "@material-ui/icons/Battery50";
+import Battery80Icon from "@material-ui/icons/Battery80";*/
 import TimerIcon from "@material-ui/icons/Timer";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -82,27 +82,27 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardHeaderAction: {
 		paddingTop: 4,
-	}
+	},
 }));
 
-const MainCard = ({item}) => {
+const MainCard = ({ item, handleDelete }) => {
 	const classes = useStyles();
-	const {id, name, note} = item;
+	const { id, category ,name, note } = item;
 
 	//collapse and expand state
-	const [expanded, setExpanded] = React.useState(false);
+	const [expanded, setExpanded] = useState(false);
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
 
 	//check button state
-	const [checked, setChecked] = React.useState(false);
+	const [checked, setChecked] = useState(false);
 	const handleChange = (event) => {
 		setChecked(event.target.checked);
 	};
 
 	//options menu state
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -110,10 +110,17 @@ const MainCard = ({item}) => {
 		setAnchorEl(null);
 	};
 
+	const handleDeleteClick = () => {
+		handleDelete(item);
+	}
+
 	return (
 		<Card>
 			<CardHeader
-				classes={{ root: classes.cardHeader , action: classes.cardHeaderAction}}//this is the way to customize children
+				classes={{
+					root: classes.cardHeader,
+					action: classes.cardHeaderAction,
+				}} //this is the way to customize children
 				avatar={
 					<Checkbox
 						checked={checked}
@@ -126,8 +133,8 @@ const MainCard = ({item}) => {
 						<FormControlLabel
 							control={
 								<Checkbox
-									icon={<FavoriteBorder />}
-									checkedIcon={<Favorite />}
+									icon={<StarBorderIcon />}
+									checkedIcon={<StarIcon />}
 									name="checkedH"
 								/>
 							}
@@ -152,7 +159,7 @@ const MainCard = ({item}) => {
 								</ListItemIcon>
 								Edit
 							</MenuItem>
-							<MenuItem onClick={handleClose}>
+							<MenuItem onClick={handleDeleteClick}>
 								<ListItemIcon>
 									<DeleteIcon fontSize="small" />
 								</ListItemIcon>
@@ -196,22 +203,22 @@ const MainCard = ({item}) => {
 						label="Easy"
 					/>
 				</Grid>
-				<IconButton
-					className={clsx(classes.expand, {
-						[classes.expandOpen]: expanded,
-					})}
-					onClick={handleExpandClick}
-					aria-expanded={expanded}
-					aria-label="show more"
-				>
-					<ExpandMoreIcon />
-				</IconButton>
+				{note.length === 0 ? null : (
+					<IconButton
+						className={clsx(classes.expand, {
+							[classes.expandOpen]: expanded,
+						})}
+						onClick={handleExpandClick}
+						aria-expanded={expanded}
+						aria-label="show more"
+					>
+						<ExpandMoreIcon />
+					</IconButton>
+				)}
 			</CardActions>
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent classes={{ root: classes.cardContent }}>
-					<Typography variant="body2">
-						{note}
-					</Typography>
+					<Typography variant="body2">{note}</Typography>
 				</CardContent>
 			</Collapse>
 		</Card>
