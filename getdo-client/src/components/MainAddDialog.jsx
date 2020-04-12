@@ -16,8 +16,14 @@ import IconButton from "@material-ui/core/IconButton";
 
 import Alert from "@material-ui/lab/Alert";
 
+import Input from "@material-ui/core/Input";
+import Chip from "@material-ui/core/Chip";
+
+
+
 import itemsContext from "../context/items/itemsContext";
 import sidebarContext from "../context/sidebar/sidebarContext";
+import tagsContext from "../context/tags/tagsContext";
 
 //icons
 import InboxIcon from "@material-ui/icons/Inbox";
@@ -31,6 +37,9 @@ import DoneIcon from "@material-ui/icons/Done";
 import CloseIcon from "@material-ui/icons/Close";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import AddIcon from "@material-ui/icons/Add";
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import PersonIcon from '@material-ui/icons/Person';
 
 import TextField from "@material-ui/core/TextField";
 
@@ -84,6 +93,16 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: "auto",
 		marginLeft: 16,
 	},
+	chips: {
+		display: "flex",
+		flexWrap: "wrap",
+	},
+	chip: {
+		margin: 2,
+	},
+	noLabel: {
+		marginTop: theme.spacing(3),
+	},
 }));
 
 export default function MainAddDialog() {
@@ -96,6 +115,10 @@ export default function MainAddDialog() {
 	//get currentCategory State
 	const categoryContext = useContext(sidebarContext);
 	const { category } = categoryContext;
+
+	//get tags State
+	const tagContext = useContext(tagsContext);
+	const { tags } = tagContext;
 
 	const [open, setOpen] = React.useState(false);
 	const theme = useTheme();
@@ -134,6 +157,22 @@ export default function MainAddDialog() {
 		});
 	};
 
+	//tags functions
+	const [tagsArray, setTagsArray] = React.useState([]);
+
+	/*const handleTagChange = (event) => {
+		setTagsArray(event.target.value);
+	};*/
+	const tagIcon = (tag) => {
+		if(tag.type === "label"){
+			return <LocalOfferIcon />
+		}
+		else if (tag.type === "area"){
+			return <LocationOnIcon />
+		} 
+		return <PersonIcon />
+	}
+
 	const handleSubmit = () => {
 		//e.preventDefault();
 		//validate if itemname is empty
@@ -153,6 +192,7 @@ export default function MainAddDialog() {
             //actualizar tarea existente
             actualizarTarea(tarea);
 		}*/
+		
 
 		//new item
 		addItem(item);
@@ -289,6 +329,46 @@ export default function MainAddDialog() {
 								</MenuItem>
 							</Select>
 						</FormControl>
+						<FormControl className={classes.formControl}>
+						<InputLabel id="tags-multiple-select">
+							Tags
+						</InputLabel>
+						<Select
+							labelId="tags-multiple-select"
+							id="tags-multiple-select"
+							name="tags"
+							multiple
+							value={item.tags}
+							onChange={handleFormChange}
+							input={<Input id="select-multiple-chip" />}
+							renderValue={(selected) => (
+								<div className={classes.chips}>
+									{selected.map((tag) => {
+										return(
+										<Chip
+											key={tag.id}
+											label={tag.name}
+											className={classes.chip}
+										/>)
+							})}
+								</div>
+							)}
+							MenuProps={{variant: 'menu'}}
+						>
+							{tags.map(tag => (
+								//
+								<MenuItem
+									key={tag.id}
+									value={tag}
+									//style={getStyles(name, personName, theme)}
+								><ListItemIcon>
+								{tagIcon(tag)}
+							  </ListItemIcon>
+									{tag.name}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
 					</form>
 				</DialogContent>
 				<DialogActions>

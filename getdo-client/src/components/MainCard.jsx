@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MainCard = ({ item, handleDelete }) => {
 	const classes = useStyles();
-	const { name, note } = item;
+	const { name, note, tags } = item;
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
@@ -106,9 +106,9 @@ const MainCard = ({ item, handleDelete }) => {
 	const { category } = categoriesContext;
 
 	//get tagsState
-	const tagContext = useContext(tagsContext);
+	/*const tagContext = useContext(tagsContext);
 	const { getTags } = tagContext;
-	const tagsArray = getTags(item.tags);
+	const tagsArray = getTags(item.tags);*/
 
 	const tagIcon = (tag) => {
 		if(tag.type === "label"){
@@ -215,9 +215,9 @@ const MainCard = ({ item, handleDelete }) => {
 			/>
 			<CardActions disableSpacing classes={{ root: classes.cardActions }}>
 				<Grid className={classes.tagContainer} container>
-					{tagsArray.length === 0
+					{tags.length === 0
 						? null
-						: tagsArray.map((tag) => (
+						: tags.map((tag) => (
 								<Chip
 									icon={tagIcon(tag)}
 									key={tag.id}

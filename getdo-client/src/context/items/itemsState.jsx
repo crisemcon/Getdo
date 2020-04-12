@@ -27,7 +27,11 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: "",
 				focus: false,
-				tags: [1,2,3],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 2,
@@ -35,7 +39,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
-				tags: [1],
+				tags: [{ id: 1, name: "Universidad", type: "area" }],
 			},
 			{
 				id: 3,
@@ -43,7 +47,7 @@ const ItemsState = (props) => {
 				name: "test project",
 				note: lorem,
 				focus: false,
-				tags: [3],
+				tags: [{ id: 3, name: "Computador", type: "label" }],
 			},
 			{
 				id: 4,
@@ -51,7 +55,10 @@ const ItemsState = (props) => {
 				name: "test name",
 				note: lorem,
 				focus: false,
-				tags: [1,2],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+				],
 			},
 			{
 				id: 5,
@@ -59,7 +66,10 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: false,
-				tags: [2,3],
+				tags: [
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 6,
@@ -67,7 +77,11 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: true,
-				tags: [1,2,3],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 7,
@@ -75,7 +89,7 @@ const ItemsState = (props) => {
 				name: "test waiting",
 				note: lorem,
 				focus: false,
-				tags: [3],
+				tags: [{ id: 3, name: "Computador", type: "label" }],
 			},
 			{
 				id: 8,
@@ -83,7 +97,10 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: true,
-				tags: [1,2],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+				],
 			},
 			{
 				id: 9,
@@ -91,7 +108,11 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
-				tags: [1,2,3],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 10,
@@ -99,7 +120,11 @@ const ItemsState = (props) => {
 				name: "test trash",
 				note: lorem,
 				focus: true,
-				tags: [1,2,3],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 11,
@@ -107,7 +132,10 @@ const ItemsState = (props) => {
 				name: "test trash",
 				note: lorem,
 				focus: false,
-				tags: [1,2],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+				],
 			},
 			{
 				id: 12,
@@ -115,7 +143,11 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: true,
-				tags: [1,2,3],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 13,
@@ -123,7 +155,7 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: false,
-				tags: [2],
+				tags: [{ id: 2, name: "Mariella", type: "contact" }],
 			},
 			{
 				id: 14,
@@ -131,7 +163,7 @@ const ItemsState = (props) => {
 				name: "test name",
 				note: lorem,
 				focus: true,
-				tags: [1],
+				tags: [{ id: 1, name: "Universidad", type: "area" }],
 			},
 			{
 				id: 15,
@@ -139,7 +171,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: true,
-				tags: [3],
+				tags: [{ id: 3, name: "Computador", type: "label" }],
 			},
 			{
 				id: 16,
@@ -147,7 +179,10 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: false,
-				tags: [2,3],
+				tags: [
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 17,
@@ -155,7 +190,11 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: false,
-				tags: [1,3],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 18,
@@ -163,7 +202,11 @@ const ItemsState = (props) => {
 				name: "test waiting",
 				note: lorem,
 				focus: false,
-				tags: [1,2,3],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 19,
@@ -171,7 +214,11 @@ const ItemsState = (props) => {
 				name: "test project",
 				note: lorem,
 				focus: false,
-				tags: [1,2,3],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+					{ id: 3, name: "Computador", type: "label" },
+				],
 			},
 			{
 				id: 20,
@@ -179,7 +226,10 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
-				tags: [1,2],
+				tags: [
+					{ id: 1, name: "Universidad", type: "area" },
+					{ id: 2, name: "Mariella", type: "contact" },
+				],
 			},
 		],
 		categoryitems: [],
@@ -224,12 +274,12 @@ const ItemsState = (props) => {
 	};
 
 	//focus or unfocus an item
-	const focusItem = item => {
+	const focusItem = (item) => {
 		dispatch({
 			type: FOCUS_ITEM,
-			payload: item
-		})
-	}
+			payload: item,
+		});
+	};
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
