@@ -19,8 +19,6 @@ import Alert from "@material-ui/lab/Alert";
 import Input from "@material-ui/core/Input";
 import Chip from "@material-ui/core/Chip";
 
-
-
 import itemsContext from "../context/items/itemsContext";
 import sidebarContext from "../context/sidebar/sidebarContext";
 import tagsContext from "../context/tags/tagsContext";
@@ -158,11 +156,6 @@ export default function MainAddDialog() {
 	};
 
 	//tags functions
-	const [tagsArray, setTagsArray] = React.useState([]);
-
-	/*const handleTagChange = (event) => {
-		setTagsArray(event.target.value);
-	};*/
 	const tagIcon = (tag) => {
 		if(tag.type === "label"){
 			return <LocalOfferIcon />

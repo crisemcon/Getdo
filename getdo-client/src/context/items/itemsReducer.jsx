@@ -9,6 +9,11 @@ export default(state, action) => {
                     ...state,
                     categoryitems: state.items.filter(item => item.focus === true)
                 }
+            } else if(action.payload ==="tags"){
+                return {
+                    ...state,
+                    categoryitems: []
+                }
             }
             return {
                 ...state,

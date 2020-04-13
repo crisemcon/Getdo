@@ -12,6 +12,9 @@ const TagsState = (props) => {
 			{ id: 1, name: "Universidad", type: "area" },
 			{ id: 2, name: "Mariella", type: "contact" },
 			{ id: 3, name: "Computador", type: "label" },
+			{ id: 4, name: "Casa", type: "area" },
+			{ id: 5, name: "Bastianex", type: "contact" },
+			{ id: 6, name: "Celular", type: "label" },
 		],
 		errortag: false,
 	};

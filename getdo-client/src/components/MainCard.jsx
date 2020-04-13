@@ -32,7 +32,6 @@ import PersonIcon from '@material-ui/icons/Person';
 
 import itemsContext from "../context/items/itemsContext";
 import sidebarContext from "../context/sidebar/sidebarContext";
-import tagsContext from "../context/tags/tagsContext";
 
 const useStyles = makeStyles((theme) => ({
 	root: {

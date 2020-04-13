@@ -126,12 +126,12 @@ export default function SelectedListItem({ setOpened }) {
 				<ListItem
 					button
 					selected={selectedIndex === 6}
-					onClick={(event) => handleListItemClick(event, 6, "tag")}
+					onClick={(event) => handleListItemClick(event, 6, "tags")}
 				>
 					<ListItemIcon>
 						<LabelIcon />
 					</ListItemIcon>
-					<ListItemText primary="Tag" />
+					<ListItemText primary="Tags" />
 				</ListItem>
 			</List>
 			<Divider />
