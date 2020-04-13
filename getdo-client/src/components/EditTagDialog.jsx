@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -14,11 +13,14 @@ import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import Alert from "@material-ui/lab/Alert";
 
-import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 
 import tagsContext from "../context/tags/tagsContext";
+
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles((theme) => ({
 	button: {
@@ -48,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function NewTagDialog({ type }) {
+export default function EditTagDialog({ tag, handleMenuClose }) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -57,6 +59,7 @@ export default function NewTagDialog({ type }) {
 
 	const handleClickOpen = () => {
 		setOpen(true);
+		handleMenuClose();
 	};
 
 	const handleClose = () => {
@@ -66,25 +69,25 @@ export default function NewTagDialog({ type }) {
 
 	//get tags State
 	const tagContext = useContext(tagsContext);
-	const { errortag, addTag, validateTag } = tagContext;
+	const { errortag, validateTag, updateTag } = tagContext;
 
 	//form
 	//form tag state
-	const [tag, updateTag] = useState({
-		name: "",
-		type: type,
+	const [editedtag, editTag] = useState({
+		id: tag.id,
+		name: tag.name,
+		type: tag.type,
 	});
 	//reset tag state
 	const resetState = () => {
-		updateTag({
-			name: "",
-			type: type,
+		editTag({
+			name: tag.name,
 		});
 	};
 	//function to read form values
 	const handleFormChange = (e) => {
-		updateTag({
-			...tag,
+		editTag({
+			...editedtag,
 			[e.target.name]: e.target.value,
 		});
 	};
@@ -92,7 +95,7 @@ export default function NewTagDialog({ type }) {
 	const handleSubmit = () => {
 		//e.preventDefault();
 		//validate if tagname is empty
-		if (tag.name.trim() === "") {
+		if (editedtag.name.trim() === "") {
 			validateTag();
 			return;
 		}
@@ -109,8 +112,9 @@ export default function NewTagDialog({ type }) {
             actualizarTarea(tarea);
 		}*/
 
+		console.log(editedtag);
 		//new tag
-		addTag(tag);
+		updateTag(editedtag);
 
 		//reset form and close dialog
 		setOpen(false);
@@ -119,15 +123,12 @@ export default function NewTagDialog({ type }) {
 
 	return (
 		<div>
-			<Button
-				variant="outlined"
-				color="default"
-				onClick={handleClickOpen}
-				className={classes.button}
-				startIcon={<AddIcon />}
-			>
-				{`New ${type} tag`}
-			</Button>
+			<MenuItem onClick={handleClickOpen}>
+				<ListItemIcon>
+					<EditIcon fontSize="small" />
+				</ListItemIcon>
+				Edit
+			</MenuItem>
 			<Dialog
 				fullScreen={fullScreen}
 				fullWidth={true}
@@ -137,7 +138,7 @@ export default function NewTagDialog({ type }) {
 				aria-labelledby="form-dialog-title"
 			>
 				<DialogTitle disableTypography id="form-dialog-title">
-					<Typography variant="h6">{`New ${type} tag`}</Typography>
+					<Typography variant="h6">{`New ${tag.type} tag`}</Typography>
 					<IconButton
 						aria-label="close"
 						className={classes.closeButton}
@@ -154,14 +155,14 @@ export default function NewTagDialog({ type }) {
 								id="tagname"
 								name="name"
 								label="Tag Name"
-								value={tag.name}
+								value={editedtag.name}
 								onChange={handleFormChange}
 							/>
 						</FormControl>
 					</form>
 				</DialogContent>
 				<DialogActions>
-				{errortag ? (
+					{errortag ? (
 						<Alert
 							classes={{ root: classes.alert }}
 							variant="outlined"

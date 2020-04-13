@@ -230,7 +230,7 @@ export default function NewItemDialog() {
 				onClose={handleClose}
 				aria-labelledby="max-width-dialog-title"
 			>
-				<DialogTitle id="max-width-dialog-title">
+				<DialogTitle disableTypography id="max-width-dialog-title">
 					<>
 						<Typography variant="h6">New Action</Typography>
 						<IconButton

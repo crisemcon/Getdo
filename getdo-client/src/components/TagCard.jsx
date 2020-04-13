@@ -8,13 +8,13 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import PersonIcon from '@material-ui/icons/Person';
+import EditTagDialog from "./EditTagDialog";
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -57,7 +57,7 @@ const TagCard = ({ tag, handleTagDelete }) => {
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
-	const handleClose = () => {
+	const handleMenuClose = () => {
 		setAnchorEl(null);
 	};
 	const handleDeleteClick = () => {
@@ -90,14 +90,9 @@ const TagCard = ({ tag, handleTagDelete }) => {
 							anchorEl={anchorEl}
 							keepMounted
 							open={Boolean(anchorEl)}
-							onClose={handleClose}
+							onClose={handleMenuClose}
 						>
-							<MenuItem onClick={handleClose}>
-								<ListItemIcon>
-									<EditIcon fontSize="small" />
-								</ListItemIcon>
-								Edit
-							</MenuItem>
+							<EditTagDialog tag={tag} handleMenuClose={handleMenuClose}/>
 							<MenuItem onClick={handleDeleteClick}>
 								<ListItemIcon>
 									<DeleteIcon fontSize="small" />

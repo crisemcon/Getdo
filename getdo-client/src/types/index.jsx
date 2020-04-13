@@ -12,3 +12,4 @@ export const CURRENT_ITEM = 'CURRENT_ITEM';
 export const ADD_TAG = 'ADD_TAG';
 export const VALIDATE_TAG = 'VALIDATE_TAG';
 export const DELETE_TAG = 'DELETE_TAG';
+export const UPDATE_TAG = 'UPDATE_TAG';

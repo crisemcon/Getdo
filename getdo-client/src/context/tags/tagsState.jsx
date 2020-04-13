@@ -4,7 +4,7 @@ import tagsReducer from "./tagsReducer";
 
 import { v4 as uuid } from "uuid";
 
-import {ADD_TAG, VALIDATE_TAG, DELETE_TAG } from "../../types";
+import {ADD_TAG, VALIDATE_TAG, DELETE_TAG, UPDATE_TAG } from "../../types";
 
 const TagsState = (props) => {
 	const initialState = {
@@ -55,6 +55,14 @@ const TagsState = (props) => {
 		});
 	};
 
+	//updates a tag
+	const updateTag = (tag) => {
+		dispatch({
+			type: UPDATE_TAG,
+			payload: tag,
+		})
+	}
+
 
 	return (
 		<tagsContext.Provider value={{
@@ -64,6 +72,7 @@ const TagsState = (props) => {
 			addTag,
 			validateTag,
 			deleteTag,
+			updateTag,
 
 		}}>{props.children}</tagsContext.Provider>
 	);
