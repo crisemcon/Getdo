@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function MainAddDialog() {
+export default function NewItemDialog() {
 	const classes = useStyles();
 
 	//get itemsState

@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const MainCard = ({ item, handleDelete }) => {
+const ItemCard = ({ item, handleDelete }) => {
 	const classes = useStyles();
 	const { name, note, tags } = item;
 
@@ -266,4 +266,4 @@ const MainCard = ({ item, handleDelete }) => {
 	);
 };
 
-export default MainCard;
+export default ItemCard;

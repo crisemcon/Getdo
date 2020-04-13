@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const MainTag = ({ tag }) => {
+const TagCard = ({ tag }) => {
 	const classes = useStyles();
 
 	const tagIcon = (tag) => {
@@ -113,4 +113,4 @@ const MainTag = ({ tag }) => {
 	);
 };
 
-export default MainTag;
+export default TagCard;

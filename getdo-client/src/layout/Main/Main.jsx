@@ -15,7 +15,7 @@ import {
 import MainHeader from "./MainHeader";
 import MainNavContent from "./MainNavContent";
 import MainContent from "./MainContent";
-import MainAddDialog from "../../components/MainAddDialog";
+import NewItemDialog from "../../components/NewItemDialog";
 
 import itemsContext from "../../context/items/itemsContext";
 
@@ -135,7 +135,7 @@ const Main = () => {
 					</Sidebar>
 					<Content>
 						<MainContent />
-						<MainAddDialog />
+						<NewItemDialog />
 					</Content>
 				</>
 			)}

@@ -7,14 +7,18 @@ import itemsContext from "../../context/items/itemsContext";
 import sidebarContext from "../../context/sidebar/sidebarContext";
 import tagsContext from "../../context/tags/tagsContext";
 
-import MainCard from "../../components/MainCard";
+import ItemCard from "../../components/ItemCard";
 import { Typography } from "@material-ui/core";
 
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MainTag from "../../components/MainTag";
+import MainTag from "../../components/TagCard";
+import Button from '@material-ui/core/Button';
+
+import AddIcon from '@material-ui/icons/Add';
+import NewTagDialog from "../../components/NewTagDialog";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -30,9 +34,11 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 	},
 	item: {
-		marginTop: 6,
 		marginBottom: 6,
 	},
+	button: {
+		marginTop: 6,
+	}
 }));
 
 const MainContent = () => {
@@ -93,6 +99,7 @@ const MainContent = () => {
 											<MainTag tag={tag} />
 										</Grid>
 									))}
+									<NewTagDialog type="area"/>
 								</Grid>
 							</ExpansionPanelDetails>
 						</ExpansionPanel>
@@ -106,7 +113,6 @@ const MainContent = () => {
 							</ExpansionPanelSummary>
 							<ExpansionPanelDetails>
 								<Grid container>
-									
 									{labelTags.map((tag) => (
 										<Grid
 											key={tag.id}
@@ -117,6 +123,7 @@ const MainContent = () => {
 											<MainTag tag={tag} />
 										</Grid>
 									))}
+									<NewTagDialog type="label"/>
 								</Grid>
 							</ExpansionPanelDetails>
 						</ExpansionPanel>
@@ -140,6 +147,7 @@ const MainContent = () => {
 											<MainTag tag={tag} />
 										</Grid>
 									))}
+									<NewTagDialog type="contact"/>
 								</Grid>
 							</ExpansionPanelDetails>
 						</ExpansionPanel>
@@ -150,7 +158,7 @@ const MainContent = () => {
 			) : (
 				categoryitems.map((item) => (
 					<Grid key={item.id} item xs={12} className={classes.item}>
-						<MainCard item={item} handleDelete={handleDelete} />
+						<ItemCard item={item} handleDelete={handleDelete} />
 					</Grid>
 				))
 			)}
