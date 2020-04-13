@@ -17,7 +17,7 @@ with the label inside. Next to them there is the time badge and the energy badge
 and the effort, respectively. Finally we have a collapse button that expands the card to show the notes/description of the item, and if it is
 pressed again it will collapse
 
-DAY 3 (10/04/2020) 5hr 07min:
+DAY 3 (10/04/2020) 3hr 25min:
 
 I started to make some functionality. I developed the Context API for the items to be displayed and the categories in the sidebar. So here is where 
 I found some guideness from the MERNTasks tutorial. So first I created the sidebar context, reducer and state to detect when the user selects a
@@ -28,7 +28,7 @@ can be displayed in the main content. Also fixed some bugs, for example when I c
 solved by using a function provided by the component (mui-treasury). Another fix was that when the page was loaded (inbox selected by default), it will
 not display any items, so I had to add an useEffect in the main component.
 
-DAY 4 (11/04/2020) 5hr 46min:
+DAY 4 (11/04/2020) 5hr 05min:
 
 Today was tough. I figured that focus cant be a category, cause for example, if I have an item with inbox category, and I want to focus it, it will change
 its category from inbox to focus. So, i made a focus property in items and added a focusitem function in the itemstate. So now the user can focus a item
@@ -37,3 +37,15 @@ of tags of 3 different types: area, label and contact. Now the cards render the 
 to the new item that is beign created in the addDialog with a multiple select inside it. The problem is that it seems to be a bug when you use a multiple
 select in a dialog/modal. The selection div starts to move vertically as you press the selection items. Tried and tried but I guess no success today:( I hope
 tomorrow I figure out a solution for this issue.
+
+DAY 5 (12/04/2020) 6hr 07min:
+
+At the start of my coding journey I tested the app and notice that when I created a new item without tags it crashed.Quick fix, the item that is beign created
+has to have an empty tag array. Then I moved to research about yesterday's bug and in the material-ui github repo it is actually a issue. A simple fix is to 
+pass a certain menuprop. Then I noticed that filtering every tagid in every card with the tags context was very inefficient, so now items have a tag array
+that has tags with all their info, and not only the id. Then I finished the addDialog tag select and It worked. After that I moved to create the content of
+the tag category that is displayed after clicking it in the sidebar. It is composed of 3 expansion panels: areas, labels and contacts. Finally I created the
+tag cards that includes their name, their type icon and a simple menu where u can edit or delete it(not functional). Thats it for today, i'm really happy to
+finally get commited to a personal project, so for this week I have to work on Getdo at least 10 hours.
+
+

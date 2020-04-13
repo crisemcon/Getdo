@@ -72,7 +72,7 @@ const MainContent = () => {
 		>
 			{categoryitems.length === 0 ? (
 				category === "tags" ? (
-					<div className = {classes.maxWidth}>
+					<div className={classes.maxWidth}>
 						<ExpansionPanel>
 							<ExpansionPanelSummary
 								expandIcon={<ExpandMoreIcon />}
@@ -82,14 +82,16 @@ const MainContent = () => {
 								<Typography>Areas</Typography>
 							</ExpansionPanelSummary>
 							<ExpansionPanelDetails>
-								<Grid
-									key={tags[0].id}
-									item
-									xs={12}
-									className={classes.item}
-								>
+								<Grid container>
 									{areaTags.map((tag) => (
-										<MainTag tag={tag} />
+										<Grid
+											key={tag.id}
+											item
+											xs={12}
+											className={classes.item}
+										>
+											<MainTag tag={tag} />
+										</Grid>
 									))}
 								</Grid>
 							</ExpansionPanelDetails>
@@ -103,14 +105,17 @@ const MainContent = () => {
 								<Typography>Labels</Typography>
 							</ExpansionPanelSummary>
 							<ExpansionPanelDetails>
-								<Grid
-									key={tags[0].id}
-									item
-									xs={12}
-									className={classes.item}
-								>
+								<Grid container>
+									
 									{labelTags.map((tag) => (
-										<MainTag tag={tag} />
+										<Grid
+											key={tag.id}
+											item
+											xs={12}
+											className={classes.item}
+										>
+											<MainTag tag={tag} />
+										</Grid>
 									))}
 								</Grid>
 							</ExpansionPanelDetails>
@@ -124,14 +129,16 @@ const MainContent = () => {
 								<Typography>Contacts</Typography>
 							</ExpansionPanelSummary>
 							<ExpansionPanelDetails>
-								<Grid
-									key={tags[0].id}
-									item
-									xs={12}
-									className={classes.item}
-								>
+								<Grid container>
 									{contactTags.map((tag) => (
-										<MainTag tag={tag} />
+										<Grid
+											key={tag.id}
+											item
+											xs={12}
+											className={classes.item}
+										>
+											<MainTag tag={tag} />
+										</Grid>
 									))}
 								</Grid>
 							</ExpansionPanelDetails>
