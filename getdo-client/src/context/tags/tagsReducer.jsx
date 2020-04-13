@@ -1,8 +1,8 @@
 import {
 	ADD_TAG,
 	VALIDATE_TAG,
-	/*DELETE_ITEM,
-	FOCUS_ITEM,
+	DELETE_TAG,
+	/*FOCUS_ITEM,
 	ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -11,18 +11,22 @@ import {
 export default (state, action) => {
 	switch (action.type) {
 		case ADD_TAG:
-            return {
-                ...state,
-                tags: [...state.tags, action.payload],
-                errortag: false
-			}
+			return {
+				...state,
+				tags: [...state.tags, action.payload],
+				errortag: false,
+			};
 		case VALIDATE_TAG:
-            return {
-                ...state,
-                errortag: true
-            }
+			return {
+				...state,
+				errortag: true,
+			};
+		case DELETE_TAG:
+			return {
+				...state,
+				tags: state.tags.filter((tag) => tag.id !== action.payload),
+			};
 		default:
 			return state;
-			
 	}
 };

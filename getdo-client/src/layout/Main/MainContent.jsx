@@ -54,12 +54,13 @@ const MainContent = () => {
 
 	//get tagsState
 	const tagContext = useContext(tagsContext);
-	const { tags } = tagContext;
+	const { tags, deleteTag } = tagContext;
 	const areaTags = tags.filter((tag) => tag.type === "area");
 	const labelTags = tags.filter((tag) => tag.type === "label");
 	const contactTags = tags.filter((tag) => tag.type === "contact");
 
-	const handleDelete = (item) => {
+	//delete item
+	const handleItemDelete = (item) => {
 		const currentcategory = item.category;
 		if (item.category === "trash") {
 			deleteItem(item.id);
@@ -67,6 +68,12 @@ const MainContent = () => {
 			item.category = "trash";
 		}
 		getItems(currentcategory);
+	};
+
+	//delete tag
+	const handleTagDelete = (tag) => {
+		deleteTag(tag.id);
+		getItems("tags");
 	};
 
 	return (
@@ -96,7 +103,7 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<MainTag tag={tag} />
+											<MainTag tag={tag} handleTagDelete={handleTagDelete}/>
 										</Grid>
 									))}
 									<NewTagDialog type="area"/>
@@ -120,7 +127,7 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<MainTag tag={tag} />
+											<MainTag tag={tag} handleTagDelete={handleTagDelete}/>
 										</Grid>
 									))}
 									<NewTagDialog type="label"/>
@@ -144,7 +151,7 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<MainTag tag={tag} />
+											<MainTag tag={tag} handleTagDelete={handleTagDelete}/>
 										</Grid>
 									))}
 									<NewTagDialog type="contact"/>
@@ -158,7 +165,7 @@ const MainContent = () => {
 			) : (
 				categoryitems.map((item) => (
 					<Grid key={item.id} item xs={12} className={classes.item}>
-						<ItemCard item={item} handleDelete={handleDelete} />
+						<ItemCard item={item} handleItemDelete={handleItemDelete} />
 					</Grid>
 				))
 			)}

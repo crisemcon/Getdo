@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const TagCard = ({ tag }) => {
+const TagCard = ({ tag, handleTagDelete }) => {
 	const classes = useStyles();
 
 	const tagIcon = (tag) => {
@@ -61,7 +61,7 @@ const TagCard = ({ tag }) => {
 		setAnchorEl(null);
 	};
 	const handleDeleteClick = () => {
-		return null;
+		handleTagDelete(tag);
 	};
 
 

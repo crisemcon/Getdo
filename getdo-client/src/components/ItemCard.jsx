@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const ItemCard = ({ item, handleDelete }) => {
+const ItemCard = ({ item, handleItemDelete }) => {
 	const classes = useStyles();
 	const { name, note, tags } = item;
 
@@ -143,7 +143,7 @@ const ItemCard = ({ item, handleDelete }) => {
 	};
 
 	const handleDeleteClick = () => {
-		handleDelete(item);
+		handleItemDelete(item);
 	};
 
 	const handleItemFocus = () => {

@@ -4,7 +4,7 @@ import tagsReducer from "./tagsReducer";
 
 import { v4 as uuid } from "uuid";
 
-import {ADD_TAG, VALIDATE_TAG } from "../../types";
+import {ADD_TAG, VALIDATE_TAG, DELETE_TAG } from "../../types";
 
 const TagsState = (props) => {
 	const initialState = {
@@ -47,6 +47,14 @@ const TagsState = (props) => {
 		});
 	};
 
+	//permanently deletes a tag by its id
+	const deleteTag = (tagId) => {
+		dispatch({
+			type: DELETE_TAG,
+			payload: tagId,
+		});
+	};
+
 
 	return (
 		<tagsContext.Provider value={{
@@ -54,7 +62,8 @@ const TagsState = (props) => {
 			errortag: state.errortag,
 			getTags,
 			addTag,
-			validateTag
+			validateTag,
+			deleteTag,
 
 		}}>{props.children}</tagsContext.Provider>
 	);

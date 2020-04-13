@@ -4,7 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,9 +11,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Alert from "@material-ui/lab/Alert";
 
@@ -52,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function NewTagDialog({ type }) {
+export default function NewTagDialog({ type, handleTagDelete }) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -70,7 +66,7 @@ export default function NewTagDialog({ type }) {
 
 	//get tags State
 	const tagContext = useContext(tagsContext);
-	const { tags, errortag, addTag, validateTag } = tagContext;
+	const { errortag, addTag, validateTag } = tagContext;
 
 	//form
 	//form tag state
