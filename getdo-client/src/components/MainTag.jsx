@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 	card: {
 		borderRadius: 0,
 		boxShadow: "none",
+		paddingTop: 6,
 	},
 	cardHeader: {
 		padding: 4,
