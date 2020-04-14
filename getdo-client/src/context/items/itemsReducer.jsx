@@ -4,7 +4,8 @@ import {
 	VALIDATE_ITEM,
 	DELETE_ITEM,
 	FOCUS_ITEM,
-	UPDATE_ITEMSTAG,
+    UPDATE_ITEMSTAG,
+    UPDATE_ITEMSDELETEDTAG
 	/*ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -61,11 +62,10 @@ export default (state, action) => {
 						(item) => item.id === action.payload.id
 					)[0].focus = !focus),
 				],
-			};
+            };
 
 		case UPDATE_ITEMSTAG:
-			const items = state.items;
-			items.forEach((item) => {
+			state.items.forEach((item) => {
 				item.tags.forEach((tag) =>
 					tag.id === action.payload.id
 						? (tag.name = action.payload.name)
@@ -74,8 +74,16 @@ export default (state, action) => {
 			});
 			return {
 				...state,
-				items: items,
-			};
+            };
+            
+        case UPDATE_ITEMSDELETEDTAG:
+            state.items.forEach(item => {
+                const newTags = item.tags.filter(tag => tag.id !== action.payload)
+                item.tags = newTags;
+            })
+            return {
+                ...state,
+            }
 		/*case UPDATE_ITEM:
         case ITEM_STATE:
             return {

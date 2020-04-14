@@ -6,6 +6,7 @@ export const VALIDATE_ITEM = 'VALIDATE_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const FOCUS_ITEM = 'FOCUS_ITEM';
 export const UPDATE_ITEMSTAG = ' UPDATE_ITEMSTAG';
+export const UPDATE_ITEMSDELETEDTAG = 'UPDATE_ITEMSDELETEDTAG';
 export const UPDATE_ITEM = 'UPDATE_ITEM';
 export const ITEM_STATE = 'ITEM_STATE';
 export const CURRENT_ITEM = 'CURRENT_ITEM';

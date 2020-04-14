@@ -14,7 +14,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MainTag from "../../components/TagCard";
+import TagCard from "../../components/TagCard";
 import Button from '@material-ui/core/Button';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -46,7 +46,7 @@ const MainContent = () => {
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { categoryitems, getItems, deleteItem } = itemlistContext;
+	const { categoryitems, getItems, deleteItem, updateItemsDeletedTag } = itemlistContext;
 
 	//get sidebarState
 	const categoryContext = useContext(sidebarContext);
@@ -73,6 +73,7 @@ const MainContent = () => {
 	//delete tag
 	const handleTagDelete = (tag) => {
 		deleteTag(tag.id);
+		updateItemsDeletedTag(tag.id);
 		getItems("tags");
 	};
 
@@ -103,7 +104,7 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<MainTag tag={tag} handleTagDelete={handleTagDelete}/>
+											<TagCard tag={tag} handleTagDelete={handleTagDelete}/>
 										</Grid>
 									))}
 									<NewTagDialog type="area" />
@@ -127,7 +128,7 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<MainTag tag={tag} handleTagDelete={handleTagDelete}/>
+											<TagCard tag={tag} handleTagDelete={handleTagDelete}/>
 										</Grid>
 									))}
 									<NewTagDialog type="label" />
@@ -151,7 +152,7 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<MainTag tag={tag} handleTagDelete={handleTagDelete} />
+											<TagCard tag={tag} handleTagDelete={handleTagDelete} />
 										</Grid>
 									))}
 									<NewTagDialog type="contact" />

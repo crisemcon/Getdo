@@ -11,6 +11,7 @@ import {
 	DELETE_ITEM,
 	FOCUS_ITEM,
 	UPDATE_ITEMSTAG,
+	UPDATE_ITEMSDELETEDTAG,
 	/*
 	UPDATE_ITEM,
 	ITEM_STATE,
@@ -289,6 +290,14 @@ const ItemsState = (props) => {
 			payload: tag,
 		})
 	}
+
+	//update items when a tag is deleted
+	const updateItemsDeletedTag = (tagId) => {
+		dispatch({
+			type: UPDATE_ITEMSDELETEDTAG,
+			payload: tagId,
+		})
+	}
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -326,6 +335,7 @@ const ItemsState = (props) => {
 				deleteItem,
 				focusItem,
 				updateItemsTag,
+				updateItemsDeletedTag,
 			}}
 		>
 			{props.children}
