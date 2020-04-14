@@ -10,6 +10,7 @@ import {
 	VALIDATE_ITEM,
 	DELETE_ITEM,
 	FOCUS_ITEM,
+	UPDATE_ITEMSTAG,
 	/*
 	UPDATE_ITEM,
 	ITEM_STATE,
@@ -280,6 +281,14 @@ const ItemsState = (props) => {
 			payload: item,
 		});
 	};
+
+	//update item when tagState is modified
+	const updateItemsTag = (tag) => {
+		dispatch({
+			type: UPDATE_ITEMSTAG,
+			payload: tag,
+		})
+	}
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -316,6 +325,7 @@ const ItemsState = (props) => {
 				validateItem,
 				deleteItem,
 				focusItem,
+				updateItemsTag,
 			}}
 		>
 			{props.children}

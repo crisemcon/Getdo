@@ -1,50 +1,82 @@
-import {ITEM_CATEGORIE, ADD_ITEM, VALIDATE_ITEM, DELETE_ITEM, FOCUS_ITEM, ITEM_STATE, CURRENT_ITEM, UPDATE_ITEM} from '../../types';
+import {
+	ITEM_CATEGORIE,
+	ADD_ITEM,
+	VALIDATE_ITEM,
+	DELETE_ITEM,
+	FOCUS_ITEM,
+	UPDATE_ITEMSTAG,
+	/*ITEM_STATE,
+	CURRENT_ITEM,
+	UPDATE_ITEM,*/
+} from "../../types";
 
-export default(state, action) => {
-    switch(action.type) {
+export default (state, action) => {
+	switch (action.type) {
+		case ITEM_CATEGORIE:
+			if (action.payload === "focus") {
+				return {
+					...state,
+					categoryitems: state.items.filter(
+						(item) => item.focus === true
+					),
+				};
+			} else if (action.payload === "tags") {
+				return {
+					...state,
+					categoryitems: [],
+				};
+			}
+			return {
+				...state,
+				categoryitems: state.items.filter(
+					(item) => item.category === action.payload
+				),
+			};
 
-        case ITEM_CATEGORIE:
-            if (action.payload === "focus"){
-                return {
-                    ...state,
-                    categoryitems: state.items.filter(item => item.focus === true)
-                }
-            } else if(action.payload ==="tags"){
-                return {
-                    ...state,
-                    categoryitems: []
-                }
-            }
-            return {
-                ...state,
-                categoryitems: state.items.filter(item => item.category === action.payload)
-            }
+		case ADD_ITEM:
+			return {
+				...state,
+				items: [...state.items, action.payload],
+				erroritem: false,
+			};
 
-        case ADD_ITEM:
-            return {
-                ...state,
-                items: [...state.items, action.payload],
-                erroritem: false
-            }
+		case VALIDATE_ITEM:
+			return {
+				...state,
+				erroritem: true,
+			};
 
-        case VALIDATE_ITEM:
-            return {
-                ...state,
-                erroritem: true
-            }
+		case DELETE_ITEM:
+			return {
+				...state,
+				items: state.items.filter((item) => item.id !== action.payload),
+			};
+		case FOCUS_ITEM:
+			const focus = action.payload.focus;
+			return {
+				...state,
+				items: [
+					...state.items,
+					(state.items.filter(
+						(item) => item.id === action.payload.id
+					)[0].focus = !focus),
+				],
+			};
 
-        case DELETE_ITEM:
-            return {
-                ...state,
-                items: state.items.filter(item => item.id !== action.payload),
-            }
-        case FOCUS_ITEM:
-            const focus = action.payload.focus;
-            return {
-                ...state,
-                items: [...state.items, state.items.filter(item => item.id === action.payload.id)[0].focus =  !focus]
-            }
-        case UPDATE_ITEM:
+		case UPDATE_ITEMSTAG:
+			const items = state.items;
+			items.forEach((item) => {
+				item.tags.forEach((tag) =>
+					tag.id === action.payload.id
+						? (tag.name = action.payload.name)
+						: null
+				);
+			});
+			return {
+				...state,
+				items: items,
+			};
+		/*case UPDATE_ITEM:
         case ITEM_STATE:
             return {
                 ...state,
@@ -56,9 +88,9 @@ export default(state, action) => {
             return {
                 ...state,
                 tareaseleccionada: action.payload
-            }
+            }*/
 
-        default:
-            return state;
-    }
-}
+		default:
+			return state;
+	}
+};

@@ -17,6 +17,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 
 import tagsContext from "../context/tags/tagsContext";
+import itemsContext from "../context/items/itemsContext";
 
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -67,9 +68,13 @@ export default function EditTagDialog({ tag, handleMenuClose }) {
 		setOpen(false);
 	};
 
+	//get itemsState
+	const itemlistContext = useContext(itemsContext);
+	const {updateItemsTag } = itemlistContext;
+
 	//get tags State
 	const tagContext = useContext(tagsContext);
-	const { errortag, validateTag, updateTag } = tagContext;
+	const {errortag, validateTag, updateTag } = tagContext;
 
 	//form
 	//form tag state
@@ -112,9 +117,9 @@ export default function EditTagDialog({ tag, handleMenuClose }) {
             actualizarTarea(tarea);
 		}*/
 
-		console.log(editedtag);
 		//new tag
 		updateTag(editedtag);
+		updateItemsTag(editedtag);
 
 		//reset form and close dialog
 		setOpen(false);

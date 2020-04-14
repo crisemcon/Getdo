@@ -106,7 +106,7 @@ const MainContent = () => {
 											<MainTag tag={tag} handleTagDelete={handleTagDelete}/>
 										</Grid>
 									))}
-									<NewTagDialog type="area"/>
+									<NewTagDialog type="area" />
 								</Grid>
 							</ExpansionPanelDetails>
 						</ExpansionPanel>
@@ -130,7 +130,7 @@ const MainContent = () => {
 											<MainTag tag={tag} handleTagDelete={handleTagDelete}/>
 										</Grid>
 									))}
-									<NewTagDialog type="label"/>
+									<NewTagDialog type="label" />
 								</Grid>
 							</ExpansionPanelDetails>
 						</ExpansionPanel>
@@ -151,10 +151,10 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<MainTag tag={tag} handleTagDelete={handleTagDelete}/>
+											<MainTag tag={tag} handleTagDelete={handleTagDelete} />
 										</Grid>
 									))}
-									<NewTagDialog type="contact"/>
+									<NewTagDialog type="contact" />
 								</Grid>
 							</ExpansionPanelDetails>
 						</ExpansionPanel>
