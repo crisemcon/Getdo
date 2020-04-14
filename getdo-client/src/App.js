@@ -8,11 +8,11 @@ import TagsState from "./context/tags/tagsState";
 function App() {
 	return (
 		<SidebarState>
-			<ItemsState>
-				<TagsState>
-					<Main />
-				</TagsState>
-			</ItemsState>
+				<ItemsState>
+					<TagsState>
+						<Main />
+					</TagsState>
+				</ItemsState>
 		</SidebarState>
 	);
 }

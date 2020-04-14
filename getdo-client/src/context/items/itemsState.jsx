@@ -50,6 +50,7 @@ const ItemsState = (props) => {
 				note: lorem,
 				focus: false,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
+				items: [2, 6, 8],
 			},
 			{
 				id: 4,
@@ -221,6 +222,7 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				items: [16, 17, 18],
 			},
 			{
 				id: 20,
@@ -288,16 +290,25 @@ const ItemsState = (props) => {
 		dispatch({
 			type: UPDATE_ITEMSTAG,
 			payload: tag,
-		})
-	}
+		});
+	};
 
 	//update items when a tag is deleted
 	const updateItemsDeletedTag = (tagId) => {
 		dispatch({
 			type: UPDATE_ITEMSDELETEDTAG,
 			payload: tagId,
+		});
+	};
+
+	//get items by id
+	const getItemsById = itemsid => {
+		const itemArray = state.items.filter(function(item){
+			return itemsid.indexOf(item.id) !== -1;
 		})
-	}
+		return itemArray;
+	};
+
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -336,6 +347,7 @@ const ItemsState = (props) => {
 				focusItem,
 				updateItemsTag,
 				updateItemsDeletedTag,
+				getItemsById,
 			}}
 		>
 			{props.children}

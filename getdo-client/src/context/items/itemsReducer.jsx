@@ -53,15 +53,11 @@ export default (state, action) => {
 				items: state.items.filter((item) => item.id !== action.payload),
 			};
 		case FOCUS_ITEM:
-			const focus = action.payload.focus;
+			(state.items.filter(
+				(item) => item.id === action.payload.id
+			)[0].focus = !action.payload.focus);
 			return {
 				...state,
-				items: [
-					...state.items,
-					(state.items.filter(
-						(item) => item.id === action.payload.id
-					)[0].focus = !focus),
-				],
             };
 
 		case UPDATE_ITEMSTAG:

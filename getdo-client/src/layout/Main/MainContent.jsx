@@ -8,6 +8,7 @@ import sidebarContext from "../../context/sidebar/sidebarContext";
 import tagsContext from "../../context/tags/tagsContext";
 
 import ItemCard from "../../components/ItemCard";
+import ProjectCard from "../../components/ProjectCard";
 import { Typography } from "@material-ui/core";
 
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -15,19 +16,17 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TagCard from "../../components/TagCard";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from "@material-ui/icons/Add";
 import NewTagDialog from "../../components/NewTagDialog";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		padding: 12,
-		paddingTop: 6,
+		padding: 6,
 		transition: theme.transitions.create(),
 		[theme.breakpoints.up("sm")]: {
-			padding: 18,
-			paddingTop: 12,
+			padding: 12,
 		},
 	},
 	maxWidth: {
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		marginTop: 6,
-	}
+	},
 }));
 
 const MainContent = () => {
@@ -46,7 +45,12 @@ const MainContent = () => {
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { categoryitems, getItems, deleteItem, updateItemsDeletedTag } = itemlistContext;
+	const {
+		categoryitems,
+		getItems,
+		deleteItem,
+		updateItemsDeletedTag,
+	} = itemlistContext;
 
 	//get sidebarState
 	const categoryContext = useContext(sidebarContext);
@@ -104,7 +108,12 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<TagCard tag={tag} handleTagDelete={handleTagDelete}/>
+											<TagCard
+												tag={tag}
+												handleTagDelete={
+													handleTagDelete
+												}
+											/>
 										</Grid>
 									))}
 									<NewTagDialog type="area" />
@@ -128,7 +137,12 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<TagCard tag={tag} handleTagDelete={handleTagDelete}/>
+											<TagCard
+												tag={tag}
+												handleTagDelete={
+													handleTagDelete
+												}
+											/>
 										</Grid>
 									))}
 									<NewTagDialog type="label" />
@@ -152,7 +166,12 @@ const MainContent = () => {
 											xs={12}
 											className={classes.item}
 										>
-											<TagCard tag={tag} handleTagDelete={handleTagDelete} />
+											<TagCard
+												tag={tag}
+												handleTagDelete={
+													handleTagDelete
+												}
+											/>
 										</Grid>
 									))}
 									<NewTagDialog type="contact" />
@@ -163,13 +182,23 @@ const MainContent = () => {
 				) : (
 					<Typography>No hay tareas</Typography>
 				)
-			) : (
+			) : category !== "projects" ? (
 				categoryitems.map((item) => (
 					<Grid key={item.id} item xs={12} className={classes.item}>
-						<ItemCard item={item} handleItemDelete={handleItemDelete} />
+						<ItemCard
+							item={item}
+							handleItemDelete={handleItemDelete}
+						/>
 					</Grid>
 				))
-			)}
+			) : categoryitems.map((item) => (
+				<Grid key={item.id} item xs={12} className={classes.item}>
+					<ProjectCard
+						item={item}
+						handleItemDelete={handleItemDelete}
+					/>
+				</Grid>
+			))}
 		</Grid>
 	);
 };
