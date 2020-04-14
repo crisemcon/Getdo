@@ -89,8 +89,8 @@ export default function NewTagDialog({ type }) {
 		});
 	};
 
-	const handleSubmit = () => {
-		//e.preventDefault();
+	const handleSubmit = (e) => {
+		e.preventDefault();
 		//validate if tagname is empty
 		if (tag.name.trim() === "") {
 			validateTag();
@@ -147,7 +147,7 @@ export default function NewTagDialog({ type }) {
 					</IconButton>
 				</DialogTitle>
 				<DialogContent dividers>
-					<form className={classes.form} noValidate>
+					<form className={classes.form} noValidate onSubmit={handleSubmit}>
 						<FormControl className={classes.formControl}>
 							<TextField
 								autoFocus

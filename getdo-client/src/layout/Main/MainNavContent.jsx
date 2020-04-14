@@ -31,14 +31,14 @@ const useStyles = makeStyles((theme) => ({
 export default function SelectedListItem({ setOpened }) {
 	//get sidebarState
 	const categoriesContext = useContext(sidebarContext);
-	const { currentCategory } = categoriesContext;
+	const { currentCategory, currentCategoryIndex } = categoriesContext;
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
 	const { getItems } = itemlistContext;
 
 	const classes = useStyles();
 
-	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [selectedIndex, setSelectedIndex] = useState(currentCategoryIndex);
 
 
 	const handleListItemClick = (event, index, name) => {

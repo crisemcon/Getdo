@@ -48,4 +48,12 @@ the tag category that is displayed after clicking it in the sidebar. It is compo
 tag cards that includes their name, their type icon and a simple menu where u can edit or delete it(not functional). Thats it for today, i'm really happy to
 finally get commited to a personal project, so for this week I have to work on Getdo at least 10 hours.
 
+DAY 6 (13/04/2020) 4hr 34min:
+
+Today I worked with the menu inside tag cards. It has the options to delete or edit a tag, so first i made the delete of the tag. Then, to edit, I have made a
+editTagDialog where u can change the name of a the tag but keeps its id and its type. But the problem was that this edition and deletion only affected the global
+tags and not the tags that are inside action cards. So, I had to think to make this actions in cascade to affect items as well. This give me a hard time because
+i'm not that familiarized with array functions in javascript (ES6). After all, I figured out how to make the edit tags in cascade and then quickly found the way to
+delete tags on cascade. I felt like when I was solving programming problems in C/C++ at college in it second year. Also I'm thinking about how the hell I'm going to
+implement the projects that have multiple children listed. Well, I think I just will figure it out
 
