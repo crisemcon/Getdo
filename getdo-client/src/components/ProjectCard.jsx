@@ -1,4 +1,4 @@
-import React, { useState, useContext , Fragment} from "react";
+import React, { useState, useContext, Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -32,8 +32,7 @@ import PersonIcon from "@material-ui/icons/Person";
 
 import itemsContext from "../context/items/itemsContext";
 import ItemCard from "../components/ItemCard";
-import Divider from '@material-ui/core/Divider';
-
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -96,8 +95,7 @@ const useStyles = makeStyles((theme) => ({
 	note: {
 		padding: 10,
 		paddingTop: 2,
-		
-	}
+	},
 }));
 
 const ProjectCard = ({ item, handleItemDelete }) => {
@@ -106,7 +104,14 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { focusItem, getItemsById } = itemlistContext;
+	const {
+		categoryitems,
+		focusItem,
+		getItemsById,
+		getItems,
+		deleteItem,
+		updateItemsDeletedTag,
+	} = itemlistContext;
 
 	//get tagsState
 	/*const tagContext = useContext(tagsContext);
@@ -120,6 +125,16 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 			return <LocationOnIcon />;
 		}
 		return <PersonIcon />;
+	};
+
+	//delete item
+	const handleChildItemDelete = (item) => {
+		if (item.category === "trash") {
+			deleteItem(item.id);
+		} else {
+			item.category = "trash";
+		}
+		getItems("projects");
 	};
 
 	//collapse and expand state
@@ -258,15 +273,17 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent classes={{ root: classes.cardContent }}>
 					<div className={classes.note}>
-					<Typography variant="body2">{note}</Typography>
+						<Typography variant="body2">{note}</Typography>
 					</div>
 					<Divider light />
-					{item.items !== undefined ? getItemsById(item.items).map((item) => (
-						<Fragment key={item.id}>
-							<ItemCard item={item} />
-							<Divider light />
-						</Fragment>
-					)) : null}
+					{item.items !== undefined
+						? getItemsById(item.items).map((item) => (
+								<Fragment key={item.id}>
+									<ItemCard item={item} handleItemDelete={handleChildItemDelete} />
+									<Divider light />
+								</Fragment>
+						  ))
+						: null}
 				</CardContent>
 			</Collapse>
 		</Card>
