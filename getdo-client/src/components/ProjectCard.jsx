@@ -105,12 +105,10 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
 	const {
-		categoryitems,
 		focusItem,
 		getItemsById,
 		getItems,
 		deleteItem,
-		updateItemsDeletedTag,
 	} = itemlistContext;
 
 	//get tagsState

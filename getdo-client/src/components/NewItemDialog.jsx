@@ -29,15 +29,16 @@ import DoubleArrowSharpIcon from "@material-ui/icons/DoubleArrowSharp";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import CakeIcon from "@material-ui/icons/Cake";
-import StarIcon from "@material-ui/icons/Star";
+import ListIcon from "@material-ui/icons/List";
 import LabelIcon from "@material-ui/icons/Label";
 import DoneIcon from "@material-ui/icons/Done";
 import CloseIcon from "@material-ui/icons/Close";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import AddIcon from "@material-ui/icons/Add";
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import PersonIcon from '@material-ui/icons/Person';
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import PersonIcon from "@material-ui/icons/Person";
+import CreateIcon from "@material-ui/icons/Create";
 
 import TextField from "@material-ui/core/TextField";
 
@@ -108,7 +109,14 @@ export default function NewItemDialog() {
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { erroritem, getItems, addItem, validateItem } = itemlistContext;
+	const {
+		erroritem,
+		getItems,
+		addItem,
+		validateItem,
+		getProjects,
+		itemBelongsProject,
+	} = itemlistContext;
 
 	//get currentCategory State
 	const categoryContext = useContext(sidebarContext);
@@ -135,6 +143,7 @@ export default function NewItemDialog() {
 			note: "",
 			category: "inbox",
 			tags: [],
+			parent: "standalone",
 		});
 	};
 
@@ -145,6 +154,7 @@ export default function NewItemDialog() {
 		note: "",
 		category: "inbox",
 		tags: [],
+		parent: "standalone",
 	});
 
 	//function to read form values
@@ -157,14 +167,13 @@ export default function NewItemDialog() {
 
 	//tags functions
 	const tagIcon = (tag) => {
-		if(tag.type === "label"){
-			return <LocalOfferIcon />
+		if (tag.type === "label") {
+			return <LocalOfferIcon />;
+		} else if (tag.type === "area") {
+			return <LocationOnIcon />;
 		}
-		else if (tag.type === "area"){
-			return <LocationOnIcon />
-		} 
-		return <PersonIcon />
-	}
+		return <PersonIcon />;
+	};
 
 	const handleSubmit = () => {
 		//e.preventDefault();
@@ -185,10 +194,14 @@ export default function NewItemDialog() {
             //actualizar tarea existente
             actualizarTarea(tarea);
 		}*/
-		
 
 		//new item
 		addItem(item);
+
+		//if it has a parent, attach to it
+		if (item.parent !== "standalone") {
+			itemBelongsProject(item);
+		}
 
 		//get and display the new item if it belongs to the current category
 		if (category === item.category) {
@@ -310,7 +323,7 @@ export default function NewItemDialog() {
 								</MenuItem>
 								<MenuItem value="projects">
 									<ListItemIcon>
-										<StarIcon />
+										<ListIcon />
 									</ListItemIcon>
 									Projects
 								</MenuItem>
@@ -322,46 +335,89 @@ export default function NewItemDialog() {
 								</MenuItem>
 							</Select>
 						</FormControl>
+
+						{item.category !== "projects" &&
+						item.category !== "notebooks" ? (
+							<FormControl className={classes.formControl}>
+								<InputLabel htmlFor="parent">Parent</InputLabel>
+								<Select
+									name="parent"
+									value={item.parent}
+									onChange={handleFormChange}
+									/*inputProps={{
+									name: "max-width",
+									id: "max-width",
+								}}*/
+								>
+									<MenuItem
+										key="standalone"
+										value="standalone"
+									>
+										<ListItemIcon>
+											<CreateIcon />
+										</ListItemIcon>
+										Standalone
+									</MenuItem>
+									{getProjects().map((project) => (
+										//
+
+										<MenuItem
+											key={project.id}
+											value={project.id}
+											//style={getStyles(name, personName, theme)}
+										>
+											<ListItemIcon>
+												<ListIcon />
+											</ListItemIcon>
+											{project.name}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						) : null}
+
 						<FormControl className={classes.formControl}>
-						<InputLabel id="tags-multiple-select">
-							Tags
-						</InputLabel>
-						<Select
-							labelId="tags-multiple-select"
-							id="tags-multiple-select"
-							name="tags"
-							multiple
-							value={item.tags}
-							onChange={handleFormChange}
-							input={<Input id="select-multiple-chip" />}
-							renderValue={(selected) => (
-								<div className={classes.chips}>
-									{selected.map((tag) => {
-										return(
-										<Chip
-											key={tag.id}
-											label={tag.name}
-											className={classes.chip}
-										/>)
-							})}
-								</div>
-							)}
-							MenuProps={{variant: 'menu'}}
-						>
-							{tags.map(tag => (
-								//
-								<MenuItem
-									key={tag.id}
-									value={tag}
-									//style={getStyles(name, personName, theme)}
-								><ListItemIcon>
-								{tagIcon(tag)}
-							  </ListItemIcon>
-									{tag.name}
-								</MenuItem>
-							))}
-						</Select>
-					</FormControl>
+							<InputLabel id="tags-multiple-select">
+								Tags
+							</InputLabel>
+							<Select
+								labelId="tags-multiple-select"
+								id="tags-multiple-select"
+								name="tags"
+								multiple
+								value={item.tags}
+								onChange={handleFormChange}
+								input={<Input id="select-multiple-chip" />}
+								renderValue={(selected) => (
+									<div className={classes.chips}>
+										{selected.map((tag) => {
+											return (
+												<Chip
+													key={tag.id}
+													label={tag.name}
+													className={classes.chip}
+												/>
+											);
+										})}
+									</div>
+								)}
+								MenuProps={{ variant: "menu" }}
+							>
+								{tags.map((tag) => (
+									//
+									<MenuItem
+										key={tag.id}
+										value={tag}
+										//style={getStyles(name, personName, theme)}
+									>
+										<ListItemIcon>
+											{tagIcon(tag)}
+										</ListItemIcon>
+										{tag.name}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
 					</form>
 				</DialogContent>
 				<DialogActions>

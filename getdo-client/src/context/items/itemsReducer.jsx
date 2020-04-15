@@ -5,7 +5,8 @@ import {
 	DELETE_ITEM,
 	FOCUS_ITEM,
     UPDATE_ITEMSTAG,
-    UPDATE_ITEMSDELETEDTAG
+	UPDATE_ITEMSDELETEDTAG,
+	ITEM_BELONGSPROJECT,
 	/*ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -79,7 +80,13 @@ export default (state, action) => {
             })
             return {
                 ...state,
-            }
+			}
+			
+		case ITEM_BELONGSPROJECT:
+			return {
+				...state,
+
+			}
 		/*case UPDATE_ITEM:
         case ITEM_STATE:
             return {

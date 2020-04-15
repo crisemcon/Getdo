@@ -42,6 +42,7 @@ const ItemsState = (props) => {
 				note: lorem,
 				focus: false,
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
+				parent: 3,
 			},
 			{
 				id: 3,
@@ -85,6 +86,7 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: 3,
 			},
 			{
 				id: 7,
@@ -104,6 +106,7 @@ const ItemsState = (props) => {
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
 				],
+				parent: 3,
 			},
 			{
 				id: 9,
@@ -186,6 +189,7 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: 19,
 			},
 			{
 				id: 17,
@@ -198,6 +202,7 @@ const ItemsState = (props) => {
 
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: 19,
 			},
 			{
 				id: 18,
@@ -210,11 +215,12 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: 19,
 			},
 			{
 				id: 19,
 				category: "projects",
-				name: "test project",
+				name: "test project 2",
 				note: lorem,
 				focus: false,
 				tags: [
@@ -301,6 +307,7 @@ const ItemsState = (props) => {
 		});
 	};
 
+
 	//get items by id for projects, so trash items are not called
 	const getItemsById = itemsid => {
 		const itemArray = state.items.filter(function(item){
@@ -309,6 +316,15 @@ const ItemsState = (props) => {
 		return itemArray;
 	};
 
+	//get projects
+	const getProjects = () => {
+		return state.items.filter(item => item.category === "projects")
+	}
+
+	//attach item to project
+	const itemBelongsProject = (item) => {
+		state.items.filter(project => project.id === item.parent)[0].items.push(item.id);
+	}
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -348,6 +364,8 @@ const ItemsState = (props) => {
 				updateItemsTag,
 				updateItemsDeletedTag,
 				getItemsById,
+				getProjects,
+				itemBelongsProject,
 			}}
 		>
 			{props.children}
