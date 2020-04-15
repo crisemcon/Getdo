@@ -325,6 +325,11 @@ const ItemsState = (props) => {
 	const itemBelongsProject = (item) => {
 		state.items.filter(project => project.id === item.parent)[0].items.push(item.id);
 	}
+
+	//get project by id
+	const getProjectById = (projectId) => {
+		return state.items.filter(item => item.id === projectId)
+	}
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -366,6 +371,7 @@ const ItemsState = (props) => {
 				getItemsById,
 				getProjects,
 				itemBelongsProject,
+				getProjectById,
 			}}
 		>
 			{props.children}

@@ -55,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: red[500],
 	},
 	cardHeader: {
-		padding: 4,
+		paddingLeft: 4,
+		paddingTop: 8,
 		paddingRight: 12,
 		paddingBottom: 0,
 		display: "flex",
@@ -94,11 +95,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemCard = ({ item, handleItemDelete }) => {
 	const classes = useStyles();
-	const { name, note, tags } = item;
+	const { name, note, tags, parent } = item;
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { getItems, focusItem } = itemlistContext;
+	const { getItems, focusItem, getProjectById } = itemlistContext;
 
 	//get sidebarState
 	const categoriesContext = useContext(sidebarContext);
@@ -210,7 +211,7 @@ const ItemCard = ({ item, handleItemDelete }) => {
 					</>
 				}
 				title={name}
-				/*subheader=here goes an button directing to a project*/
+				subheader={parent !== undefined ? getProjectById(item.parent)[0].name : null}
 			/>
 			<CardActions disableSpacing classes={{ root: classes.cardActions }}>
 				<Grid className={classes.tagContainer} container>
