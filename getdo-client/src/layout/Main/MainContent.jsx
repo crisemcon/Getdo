@@ -16,7 +16,6 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TagCard from "../../components/TagCard";
-import Button from "@material-ui/core/Button";
 
 import AddIcon from "@material-ui/icons/Add";
 import NewTagDialog from "../../components/NewTagDialog";
@@ -35,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
 	item: {
 		marginBottom: 6,
 	},
-	button: {
-		marginTop: 6,
-	},
+	
 }));
 
 const MainContent = () => {

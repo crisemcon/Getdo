@@ -34,6 +34,8 @@ import itemsContext from "../context/items/itemsContext";
 import ItemCard from "../components/ItemCard";
 import Divider from "@material-ui/core/Divider";
 
+import NewProjectItem from "../components/NewProjectItem";
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: 345,
@@ -269,7 +271,7 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 				)}
 			</CardActions>
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
-				<CardContent classes={{ root: classes.cardContent }}>
+				<CardContent classes={{ root: classes.cardContent}}>
 					<div className={classes.note}>
 						<Typography variant="body2">{note}</Typography>
 					</div>
@@ -282,6 +284,7 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 								</Fragment>
 						  ))
 						: null}
+					<NewProjectItem projectId={item.id}/>
 				</CardContent>
 			</Collapse>
 		</Card>
