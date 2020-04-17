@@ -26,9 +26,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import PersonIcon from '@material-ui/icons/Person';
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import LocalOfferIcon from "@material-ui/icons/LocalOffer";
+import PersonIcon from "@material-ui/icons/Person";
+import EventIcon from "@material-ui/icons/Event";
 
 import itemsContext from "../context/items/itemsContext";
 import sidebarContext from "../context/sidebar/sidebarContext";
@@ -95,7 +96,35 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemCard = ({ item, handleItemDelete }) => {
 	const classes = useStyles();
-	const { name, note, tags, parent } = item;
+	const { name, note, tags, parent, dueDate } = item;
+
+	//calculate dueDate
+	const calcDueDate = (dueDate) => {
+		const now = new Date();
+		const elapsed = dueDate.getTime() - now.getTime();
+		return timeConversion(elapsed);
+	};
+
+	function timeConversion(millisec) {
+		const hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+		const days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0);
+		const weeks = (days / 7).toFixed(0)
+		
+
+		if (hours < -24) {
+			return `${days} days late`;
+		} else if (hours < 0 && hours >= -24) {
+			return `Yesterday`;
+		} else if (hours >= 0 && hours < 24) {
+			return `Today`;
+		} else if (hours >= 24 && hours < 48) {
+			return `Tomorrow`;
+		} else if (days >= 2 && days < 14) {
+			return days + " Days";
+		} else {
+			return `${weeks} weeks`
+		} 
+	}
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
@@ -111,16 +140,13 @@ const ItemCard = ({ item, handleItemDelete }) => {
 	const tagsArray = getTags(item.tags);*/
 
 	const tagIcon = (tag) => {
-		if(tag.type === "label"){
-			return <LocalOfferIcon />
+		if (tag.type === "label") {
+			return <LocalOfferIcon />;
+		} else if (tag.type === "area") {
+			return <LocationOnIcon />;
 		}
-		else if (tag.type === "area"){
-			return <LocationOnIcon />
-		} 
-		return <PersonIcon />
-	}
-
-	
+		return <PersonIcon />;
+	};
 
 	//collapse and expand state
 	const [expanded, setExpanded] = useState(false);
@@ -211,7 +237,11 @@ const ItemCard = ({ item, handleItemDelete }) => {
 					</>
 				}
 				title={name}
-				subheader={parent !== "standalone" ? getProjectById(item.parent)[0].name : null}
+				subheader={
+					parent !== "standalone"
+						? getProjectById(item.parent)[0].name
+						: null
+				}
 			/>
 			<CardActions disableSpacing classes={{ root: classes.cardActions }}>
 				<Grid className={classes.tagContainer} container>
@@ -226,7 +256,7 @@ const ItemCard = ({ item, handleItemDelete }) => {
 									size="small"
 									label={tag.name}
 								/>
-						))}
+						  ))}
 					<Grid className={classes.marginAuto} item></Grid>
 					<Chip
 						classes={{ root: classes.tag }}
@@ -244,6 +274,16 @@ const ItemCard = ({ item, handleItemDelete }) => {
 						icon={<Battery20Icon />}
 						label="Easy"
 					/>
+					{dueDate ? (
+						<Chip
+							classes={{ root: classes.tag }}
+							disabled
+							variant="outlined"
+							size="small"
+							icon={<EventIcon />}
+							label={calcDueDate(dueDate)}
+						/>
+					) : null}
 				</Grid>
 				{note.length === 0 ? null : (
 					<IconButton

@@ -39,6 +39,11 @@ import PersonIcon from "@material-ui/icons/Person";
 import CreateIcon from "@material-ui/icons/Create";
 
 import TextField from "@material-ui/core/TextField";
+import {
+	DatePicker,
+	MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
 	form: {
@@ -76,9 +81,12 @@ const useStyles = makeStyles((theme) => ({
 	noLabel: {
 		marginTop: theme.spacing(3),
 	},
+	pointer: {
+		cursor: "pointer",
+	}
 }));
 
-export default function NewItemDialog({open, setOpen, projectId}) {
+export default function NewItemDialog({ open, setOpen, projectId }) {
 	const classes = useStyles();
 
 	//get itemsState
@@ -116,6 +124,7 @@ export default function NewItemDialog({open, setOpen, projectId}) {
 			parent: "standalone",
 			focus: false,
 			items: [],
+			dueDate: null,
 		});
 	};
 
@@ -129,19 +138,20 @@ export default function NewItemDialog({open, setOpen, projectId}) {
 		parent: "standalone",
 		focus: false,
 		items: [],
+		dueDate: null,
 	});
 
 	//when component mounts check if it is beign called from project button
-	useEffect( () => {
-		if(projectId !== undefined) {
+	useEffect(() => {
+		if (projectId !== undefined) {
 			updateItem({
 				...item,
 				category: "next",
-				parent: projectId
-			})
+				parent: projectId,
+			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, []);
 
 	//function to read form values
 	const handleFormChange = (e) => {
@@ -181,7 +191,6 @@ export default function NewItemDialog({open, setOpen, projectId}) {
             actualizarTarea(tarea);
 		}*/
 
-		
 		//new item
 		addItem(item);
 
@@ -213,205 +222,217 @@ export default function NewItemDialog({open, setOpen, projectId}) {
 	//category select
 
 	return (
-			<Dialog
-				fullScreen={fullScreen}
-				fullWidth={true}
-				maxWidth="sm"
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="max-width-dialog-title"
-			>
-				<DialogTitle disableTypography id="max-width-dialog-title">
-					<>
-						<Typography variant="h6">New Action</Typography>
-						<IconButton
-							aria-label="close"
-							className={classes.closeButton}
-							onClick={handleClose}
+		<Dialog
+			fullScreen={fullScreen}
+			fullWidth={true}
+			maxWidth="sm"
+			open={open}
+			onClose={handleClose}
+			aria-labelledby="max-width-dialog-title"
+		>
+			<DialogTitle disableTypography id="max-width-dialog-title">
+				<>
+					<Typography variant="h6">New Action</Typography>
+					<IconButton
+						aria-label="close"
+						className={classes.closeButton}
+						onClick={handleClose}
+					>
+						<CloseIcon />
+					</IconButton>
+				</>
+			</DialogTitle>
+			<DialogContent dividers>
+				<form className={classes.form} noValidate>
+					<FormControl className={classes.formControl}>
+						<TextField
+							autoFocus
+							id="itemname"
+							name="name"
+							label="Action Name"
+							multiline
+							rowsMax="2"
+							value={item.name}
+							onChange={handleFormChange}
+						/>
+					</FormControl>
+					<FormControl className={classes.formControl}>
+						<TextField
+							id="itemnote"
+							name="note"
+							label="Note or Description"
+							multiline
+							rowsMax="5"
+							value={item.note}
+							onChange={handleFormChange}
+						/>
+					</FormControl>
+					<FormControl className={classes.formControl}>
+						<InputLabel htmlFor="category">Category</InputLabel>
+						<Select
+							name="category"
+							value={item.category}
+							onChange={handleFormChange}
+							/*inputProps={{
+									name: "max-width",
+									id: "max-width",
+								}}*/
 						>
-							<CloseIcon />
-						</IconButton>
-					</>
-				</DialogTitle>
-				<DialogContent dividers>
-					<form className={classes.form} noValidate>
+							<MenuItem value="inbox">
+								<ListItemIcon>
+									<InboxIcon />
+								</ListItemIcon>
+								Inbox
+							</MenuItem>
+							<MenuItem value="next">
+								<ListItemIcon>
+									<DoubleArrowSharpIcon />
+								</ListItemIcon>
+								Next
+							</MenuItem>
+							<MenuItem value="waiting">
+								<ListItemIcon>
+									<HourglassEmptyIcon />
+								</ListItemIcon>
+								Waiting
+							</MenuItem>
+							<MenuItem value="scheduled">
+								<ListItemIcon>
+									<ScheduleIcon />
+								</ListItemIcon>
+								Scheduled
+							</MenuItem>
+							<MenuItem value="someday">
+								<ListItemIcon>
+									<CakeIcon />
+								</ListItemIcon>
+								Someday
+							</MenuItem>
+							{item.parent === "standalone" ? (
+								<MenuItem value="projects">
+									<ListItemIcon>
+										<ListIcon />
+									</ListItemIcon>
+									Projects
+								</MenuItem>
+							) : null}
+							{item.parent === "standalone" ? (
+								<MenuItem value="notebooks">
+									<ListItemIcon>
+										<LabelIcon />
+									</ListItemIcon>
+									Notebooks
+								</MenuItem>
+							) : null}
+						</Select>
+					</FormControl>
+
+					{item.category !== "projects" &&
+					item.category !== "notebooks" ? (
 						<FormControl className={classes.formControl}>
-							<TextField
-								autoFocus
-								id="itemname"
-								name="name"
-								label="Action Name"
-								multiline
-								rowsMax="2"
-								value={item.name}
-								onChange={handleFormChange}
-							/>
-						</FormControl>
-						<FormControl className={classes.formControl}>
-							<TextField
-								id="itemnote"
-								name="note"
-								label="Note or Description"
-								multiline
-								rowsMax="5"
-								value={item.note}
-								onChange={handleFormChange}
-							/>
-						</FormControl>
-						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="category">Category</InputLabel>
+							<InputLabel htmlFor="parent">Parent</InputLabel>
 							<Select
-								name="category"
-								value={item.category}
+								name="parent"
+								value={item.parent}
 								onChange={handleFormChange}
 								/*inputProps={{
 									name: "max-width",
 									id: "max-width",
 								}}*/
 							>
-								<MenuItem value="inbox">
+								<MenuItem key="standalone" value="standalone">
 									<ListItemIcon>
-										<InboxIcon />
+										<CreateIcon />
 									</ListItemIcon>
-									Inbox
+									Standalone
 								</MenuItem>
-								<MenuItem value="next">
-									<ListItemIcon>
-										<DoubleArrowSharpIcon />
-									</ListItemIcon>
-									Next
-								</MenuItem>
-								<MenuItem value="waiting">
-									<ListItemIcon>
-										<HourglassEmptyIcon />
-									</ListItemIcon>
-									Waiting
-								</MenuItem>
-								<MenuItem value="scheduled">
-									<ListItemIcon>
-										<ScheduleIcon />
-									</ListItemIcon>
-									Scheduled
-								</MenuItem>
-								<MenuItem value="someday">
-									<ListItemIcon>
-										<CakeIcon />
-									</ListItemIcon>
-									Someday
-								</MenuItem>
-								{item.parent === "standalone" ?<MenuItem value="projects">
-									<ListItemIcon>
-										<ListIcon />
-									</ListItemIcon>
-									Projects
-								</MenuItem> : null}
-								{item.parent === "standalone" ?<MenuItem value="notebooks">
-									<ListItemIcon>
-										<LabelIcon />
-									</ListItemIcon>
-									Notebooks
-								</MenuItem> : null}
-							</Select>
-						</FormControl>
-
-						{item.category !== "projects" &&
-						item.category !== "notebooks" ? (
-							<FormControl className={classes.formControl}>
-								<InputLabel htmlFor="parent">Parent</InputLabel>
-								<Select
-									name="parent"
-									value={item.parent}
-									onChange={handleFormChange}
-									/*inputProps={{
-									name: "max-width",
-									id: "max-width",
-								}}*/
-								>
-									<MenuItem
-										key="standalone"
-										value="standalone"
-									>
-										<ListItemIcon>
-											<CreateIcon />
-										</ListItemIcon>
-										Standalone
-									</MenuItem>
-									{getProjects().map((project) => (
-										//
-
-										<MenuItem
-											key={project.id}
-											value={project.id}
-											//style={getStyles(name, personName, theme)}
-										>
-											<ListItemIcon>
-												<ListIcon />
-											</ListItemIcon>
-											{project.name}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						) : null}
-
-						<FormControl className={classes.formControl}>
-							<InputLabel id="tags-multiple-select">
-								Tags
-							</InputLabel>
-							<Select
-								labelId="tags-multiple-select"
-								id="tags-multiple-select"
-								name="tags"
-								multiple
-								value={item.tags}
-								onChange={handleFormChange}
-								input={<Input id="select-multiple-chip" />}
-								renderValue={(selected) => (
-									<div className={classes.chips}>
-										{selected.map((tag) => {
-											return (
-												<Chip
-													key={tag.id}
-													label={tag.name}
-													className={classes.chip}
-												/>
-											);
-										})}
-									</div>
-								)}
-								MenuProps={{ variant: "menu" }}
-							>
-								{tags.map((tag) => (
+								{getProjects().map((project) => (
 									//
+
 									<MenuItem
-										key={tag.id}
-										value={tag}
+										key={project.id}
+										value={project.id}
 										//style={getStyles(name, personName, theme)}
 									>
 										<ListItemIcon>
-											{tagIcon(tag)}
+											<ListIcon />
 										</ListItemIcon>
-										{tag.name}
+										{project.name}
 									</MenuItem>
 								))}
 							</Select>
 						</FormControl>
-					</form>
-				</DialogContent>
-				<DialogActions>
-					{erroritem ? (
-						<Alert
-							classes={{ root: classes.alert }}
-							variant="outlined"
-							severity="error"
-						>
-							Action name is required
-						</Alert>
 					) : null}
-					<IconButton aria-label="submit" onClick={handleSubmit}>
-						<DoneIcon classes={{ root: classes.doneButton }} />
-					</IconButton>
-				</DialogActions>
-			</Dialog>
+
+					<FormControl className={classes.formControl}>
+						<InputLabel id="tags-multiple-select">Tags</InputLabel>
+						<Select
+							labelId="tags-multiple-select"
+							id="tags-multiple-select"
+							name="tags"
+							multiple
+							value={item.tags}
+							onChange={handleFormChange}
+							input={<Input id="select-multiple-chip" />}
+							renderValue={(selected) => (
+								<div className={classes.chips}>
+									{selected.map((tag) => {
+										return (
+											<Chip
+												key={tag.id}
+												label={tag.name}
+												className={classes.chip}
+											/>
+										);
+									})}
+								</div>
+							)}
+							MenuProps={{ variant: "menu" }}
+						>
+							{tags.map((tag) => (
+								//
+								<MenuItem
+									key={tag.id}
+									value={tag}
+									//style={getStyles(name, personName, theme)}
+								>
+									<ListItemIcon>{tagIcon(tag)}</ListItemIcon>
+									{tag.name}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+					<FormControl className={classes.pointer}>
+						<MuiPickersUtilsProvider utils={DateFnsUtils}>
+							<DatePicker
+								label="Due Date"
+								value={item.dueDate}
+								format="dd MMM yyyy"
+								onChange={(date) => updateItem({
+									...item,
+									dueDate: new Date(date)
+								})}
+								animateYearScrolling
+								autoOk
+							/>
+						</MuiPickersUtilsProvider>
+					</FormControl>
+				</form>
+			</DialogContent>
+			<DialogActions>
+				{erroritem ? (
+					<Alert
+						classes={{ root: classes.alert }}
+						variant="outlined"
+						severity="error"
+					>
+						Action name is required
+					</Alert>
+				) : null}
+				<IconButton aria-label="submit" onClick={handleSubmit}>
+					<DoneIcon classes={{ root: classes.doneButton }} />
+				</IconButton>
+			</DialogActions>
+		</Dialog>
 	);
 }
