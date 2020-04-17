@@ -211,7 +211,7 @@ const ItemCard = ({ item, handleItemDelete }) => {
 					</>
 				}
 				title={name}
-				subheader={parent !== undefined ? getProjectById(item.parent)[0].name : null}
+				subheader={parent !== "standalone" ? getProjectById(item.parent)[0].name : null}
 			/>
 			<CardActions disableSpacing classes={{ root: classes.cardActions }}>
 				<Grid className={classes.tagContainer} container>

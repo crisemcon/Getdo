@@ -57,7 +57,7 @@ i'm not that familiarized with array functions in javascript (ES6). After all, I
 delete tags on cascade. I felt like when I was solving programming problems in C/C++ at college in it second year. Also I'm thinking about how the hell I'm going to
 implement the projects that have multiple children listed. Well, I think I just will figure it out
 
-DAY 7 (15/04/2020) 4hr 06min:
+DAY 7 (14/04/2020) 4hr 06min:
 
 So today I figured out how to do the projects section! First of all, I started my code journey looking for bugs or errors and I found that in mobile, when a category
 is selected from sidebar it will not remain visually selected, so I fixed it quickly. Then I moved to the projects part. First I started to code the project context
@@ -66,3 +66,8 @@ had to make another card component named ProjectCard, that can render items insi
 it was creating items randomly. Quick fix and then moved to handle the delete button in the items inside projects. Also I added the restriction that prevents trash items
 to be displayed inside a project. Finally, newItemDialog has a select, where u can set the item's parent among the projects or just make it standalone. Thats all the
 coding for today, 7 days after I started this project. It has been an exciting challenge so far, so I'm prepared to work on it this incoming week.
+
+DAY 8 (15/04/2020) 1hr 20min:
+
+Today I didn't have much time to work on this project. I hope this does'nt take away my motivation.  First I maked a button inside the projects to directly make an item
+that belongs to that project. Then I did a little change in the item cards to display a subtitle that shows the parent project if they have one. So thats it for today.

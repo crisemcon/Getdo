@@ -34,7 +34,7 @@ import itemsContext from "../context/items/itemsContext";
 import ItemCard from "../components/ItemCard";
 import Divider from "@material-ui/core/Divider";
 
-import NewProjectItem from "../components/NewProjectItem";
+import NewProjectItemButton from "../components/NewProjectItemButton";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -284,7 +284,8 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 								</Fragment>
 						  ))
 						: null}
-					<NewProjectItem projectId={item.id}/>
+					
+					<NewProjectItemButton projectId={item.id}/>
 				</CardContent>
 			</Collapse>
 		</Card>

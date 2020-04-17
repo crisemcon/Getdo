@@ -34,6 +34,8 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 2,
@@ -43,6 +45,7 @@ const ItemsState = (props) => {
 				focus: false,
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
 				parent: 3,
+				items: [],
 			},
 			{
 				id: 3,
@@ -52,6 +55,7 @@ const ItemsState = (props) => {
 				focus: false,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				items: [2, 6, 8],
+				parent: "standalone",
 			},
 			{
 				id: 4,
@@ -63,6 +67,8 @@ const ItemsState = (props) => {
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
 				],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 5,
@@ -74,6 +80,8 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 6,
@@ -87,6 +95,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: 3,
+				items: [],
 			},
 			{
 				id: 7,
@@ -95,6 +104,8 @@ const ItemsState = (props) => {
 				note: lorem,
 				focus: false,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 8,
@@ -107,6 +118,7 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 				],
 				parent: 3,
+				items: [],
 			},
 			{
 				id: 9,
@@ -119,6 +131,8 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 10,
@@ -131,6 +145,8 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 11,
@@ -142,6 +158,8 @@ const ItemsState = (props) => {
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
 				],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 12,
@@ -154,6 +172,8 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
 				],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 13,
@@ -162,6 +182,8 @@ const ItemsState = (props) => {
 				note: lorem,
 				focus: false,
 				tags: [{ id: 2, name: "Mariella", type: "contact" }],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 14,
@@ -170,6 +192,8 @@ const ItemsState = (props) => {
 				note: lorem,
 				focus: true,
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 15,
@@ -178,6 +202,8 @@ const ItemsState = (props) => {
 				note: lorem,
 				focus: true,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
+				parent: "standalone",
+				items: [],
 			},
 			{
 				id: 16,
@@ -190,6 +216,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: 19,
+				items: [],
 			},
 			{
 				id: 17,
@@ -203,6 +230,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: 19,
+				items: [],
 			},
 			{
 				id: 18,
@@ -216,6 +244,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: 19,
+				items: [],
 			},
 			{
 				id: 19,
@@ -229,6 +258,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				items: [16, 17, 18],
+				parent: "standalone",
 			},
 			{
 				id: 20,
@@ -240,6 +270,8 @@ const ItemsState = (props) => {
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
 				],
+				parent: "standalone",
+				items: [],
 			},
 		],
 		categoryitems: [],
@@ -276,10 +308,10 @@ const ItemsState = (props) => {
 	};
 
 	//permanently deletes an item by its id
-	const deleteItem = (id) => {
+	const deleteItem = (item) => {
 		dispatch({
 			type: DELETE_ITEM,
-			payload: id,
+			payload: item,
 		});
 	};
 

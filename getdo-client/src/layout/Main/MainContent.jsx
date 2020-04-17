@@ -17,7 +17,6 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TagCard from "../../components/TagCard";
 
-import AddIcon from "@material-ui/icons/Add";
 import NewTagDialog from "../../components/NewTagDialog";
 
 const useStyles = makeStyles((theme) => ({
@@ -64,7 +63,7 @@ const MainContent = () => {
 	const handleItemDelete = (item) => {
 		const currentcategory = item.category;
 		if (item.category === "trash") {
-			deleteItem(item.id);
+			deleteItem(item);
 		} else {
 			item.category = "trash";
 		}

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -8,7 +8,6 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import Fab from "@material-ui/core/Fab";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -34,7 +33,6 @@ import LabelIcon from "@material-ui/icons/Label";
 import DoneIcon from "@material-ui/icons/Done";
 import CloseIcon from "@material-ui/icons/Close";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import AddIcon from "@material-ui/icons/Add";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PersonIcon from "@material-ui/icons/Person";
@@ -54,30 +52,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	formControlLabel: {
 		marginTop: theme.spacing(1),
-	},
-	fab: {
-		position: "fixed",
-		bottom: 20,
-		right: 20,
-		zIndex: 10,
-		[theme.breakpoints.up("sm")]: {
-			bottom: 40,
-			right: 40,
-			height: 70,
-			width: 70,
-		},
-		[theme.breakpoints.up("md")]: {
-			bottom: 60,
-			right: 60,
-			height: 80,
-			width: 80,
-		},
-	},
-	fabIcon: {
-		fontSize: "default",
-		[theme.breakpoints.up("md")]: {
-			fontSize: 32,
-		},
 	},
 	closeButton: {
 		position: "absolute",
@@ -104,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function NewItemDialog() {
+export default function NewItemDialog({open, setOpen, projectId}) {
 	const classes = useStyles();
 
 	//get itemsState
@@ -126,12 +100,8 @@ export default function NewItemDialog() {
 	const tagContext = useContext(tagsContext);
 	const { tags } = tagContext;
 
-	const [open, setOpen] = React.useState(false);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
 	const handleClose = () => {
 		setOpen(false);
 		resetState();
@@ -144,6 +114,8 @@ export default function NewItemDialog() {
 			category: "inbox",
 			tags: [],
 			parent: "standalone",
+			focus: false,
+			items: [],
 		});
 	};
 
@@ -155,7 +127,21 @@ export default function NewItemDialog() {
 		category: "inbox",
 		tags: [],
 		parent: "standalone",
+		focus: false,
+		items: [],
 	});
+
+	//when component mounts check if it is beign called from project button
+	useEffect( () => {
+		if(projectId !== undefined) {
+			updateItem({
+				...item,
+				category: "next",
+				parent: projectId
+			})
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	//function to read form values
 	const handleFormChange = (e) => {
@@ -195,6 +181,7 @@ export default function NewItemDialog() {
             actualizarTarea(tarea);
 		}*/
 
+		
 		//new item
 		addItem(item);
 
@@ -226,15 +213,6 @@ export default function NewItemDialog() {
 	//category select
 
 	return (
-		<>
-			<Fab
-				classes={{ root: classes.fab }}
-				color="default"
-				aria-label="add"
-				onClick={handleClickOpen}
-			>
-				<AddIcon classes={{ root: classes.fabIcon }} />
-			</Fab>
 			<Dialog
 				fullScreen={fullScreen}
 				fullWidth={true}
@@ -321,18 +299,18 @@ export default function NewItemDialog() {
 									</ListItemIcon>
 									Someday
 								</MenuItem>
-								<MenuItem value="projects">
+								{item.parent === "standalone" ?<MenuItem value="projects">
 									<ListItemIcon>
 										<ListIcon />
 									</ListItemIcon>
 									Projects
-								</MenuItem>
-								<MenuItem value="notebooks">
+								</MenuItem> : null}
+								{item.parent === "standalone" ?<MenuItem value="notebooks">
 									<ListItemIcon>
 										<LabelIcon />
 									</ListItemIcon>
 									Notebooks
-								</MenuItem>
+								</MenuItem> : null}
 							</Select>
 						</FormControl>
 
@@ -435,6 +413,5 @@ export default function NewItemDialog() {
 					</IconButton>
 				</DialogActions>
 			</Dialog>
-		</>
 	);
 }

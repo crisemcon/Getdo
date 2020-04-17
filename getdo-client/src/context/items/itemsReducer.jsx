@@ -51,7 +51,7 @@ export default (state, action) => {
 		case DELETE_ITEM:
 			return {
 				...state,
-				items: state.items.filter((item) => item.id !== action.payload),
+				items: state.items.filter((item) => item.id !== action.payload.id && action.payload.items.indexOf(item.id) === -1),
 			};
 		case FOCUS_ITEM:
 			(state.items.filter(
