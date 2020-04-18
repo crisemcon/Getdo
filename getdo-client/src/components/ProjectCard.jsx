@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useContext, Fragment} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -132,6 +132,22 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 		} else {
 			return `${weeks} weeks`
 		} 
+	}
+
+	//calculate project time required
+	const calcProjectTimeRequired = () => {
+			let sumTime = 0;
+			let flag = '';
+			getItemsById(item.items).forEach(item => {item.time ? sumTime += item.time : flag = '>'});
+			if(sumTime === 0){
+				return `Not set`
+			}
+			else if(sumTime === 60){
+				return `${flag}1 hour`
+			} else if( sumTime > 60) {
+				return `${flag}${(sumTime/60).toFixed(0)} hours`
+			}
+			return `${flag}${sumTime} minutes`;
 	}
 
 	//get itemsState
@@ -296,6 +312,16 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 							label={calcDueDate(dueDate)}
 						/>
 					) : null}
+					{item.items.length !== 0 ? (
+						<Chip
+							classes={{ root: classes.tag }}
+							disabled
+							variant="outlined"
+							size="small"
+							icon={<TimerIcon />}
+							label={calcProjectTimeRequired()}
+						/>
+					) : null}
 				</Grid>
 				{note.length === 0 ? null : (
 					<IconButton
@@ -316,7 +342,7 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 						<Typography variant="body2">{note}</Typography>
 					</div>
 					<Divider light />
-					{item.items !== undefined
+					{item.items.length !== 0  //!== undefined ,if this get errors
 						? getItemsById(item.items).map((item) => (
 								<Fragment key={item.id}>
 									<ItemCard item={item} handleItemDelete={handleChildItemDelete} />

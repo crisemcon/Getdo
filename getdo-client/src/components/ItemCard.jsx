@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemCard = ({ item, handleItemDelete }) => {
 	const classes = useStyles();
-	const { name, note, tags, parent, dueDate } = item;
+	const { name, note, tags, parent, dueDate, time } = item;
 
 	//calculate dueDate
 	const calcDueDate = (dueDate) => {
@@ -125,6 +125,18 @@ const ItemCard = ({ item, handleItemDelete }) => {
 			return `${weeks} weeks`
 		} 
 	}
+	const calcTimeRequired = (time) => {
+		if(time === 60){
+			return `1 hour`
+		} else if( time > 60) {
+			return `${time/60} hours`
+		}
+		return `${time} minutes`;
+	};
+
+
+	//calculate time required for the action
+	
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
@@ -282,6 +294,16 @@ const ItemCard = ({ item, handleItemDelete }) => {
 							size="small"
 							icon={<EventIcon />}
 							label={calcDueDate(dueDate)}
+						/>
+					) : null}
+					{time ? (
+						<Chip
+							classes={{ root: classes.tag }}
+							disabled
+							variant="outlined"
+							size="small"
+							icon={<TimerIcon />}
+							label={calcTimeRequired(time)}
 						/>
 					) : null}
 				</Grid>

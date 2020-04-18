@@ -81,9 +81,6 @@ const useStyles = makeStyles((theme) => ({
 	noLabel: {
 		marginTop: theme.spacing(3),
 	},
-	pointer: {
-		cursor: "pointer",
-	}
 }));
 
 export default function NewItemDialog({ open, setOpen, projectId }) {
@@ -139,6 +136,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		focus: false,
 		items: [],
 		dueDate: null,
+		time: null,
 	});
 
 	//when component mounts check if it is beign called from project button
@@ -328,7 +326,8 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 					</FormControl>
 
 					{item.category !== "projects" &&
-					item.category !== "notebooks" ? (
+					item.category !== "notebooks" &&
+					item.category !== "inbox" ? (
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="parent">Parent</InputLabel>
 							<Select
@@ -402,7 +401,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 							))}
 						</Select>
 					</FormControl>
-					<FormControl className={classes.pointer}>
+					{item.category !== "inbox" ?<FormControl className={classes.formControl}>
 						<MuiPickersUtilsProvider utils={DateFnsUtils}>
 							<DatePicker
 								label="Due Date"
@@ -416,7 +415,63 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 								autoOk
 							/>
 						</MuiPickersUtilsProvider>
-					</FormControl>
+					</FormControl> : null}
+					{item.category !== "projects" &&
+					item.category !== "notebooks" &&
+					item.category !== "inbox" ? (
+					<FormControl className={classes.formControl}>
+						<InputLabel htmlFor="time">Time required</InputLabel>
+						<Select
+							name="time"
+							value={item.time}
+							onChange={handleFormChange}
+							/*inputProps={{
+									name: "max-width",
+									id: "max-width",
+								}}*/
+						>
+							<MenuItem value={null}>
+								Not set
+							</MenuItem>
+							<MenuItem value={5}>
+								5 minutes
+							</MenuItem>
+							<MenuItem value={10}>
+								10 minutes
+							</MenuItem>
+							<MenuItem value={15}>
+								15 minutes
+							</MenuItem>
+							<MenuItem value={30}>
+								30 minutes
+							</MenuItem>
+							<MenuItem value={45}>
+								45 minutes
+							</MenuItem>
+							<MenuItem value={60}>
+								1 hour
+							</MenuItem>
+							<MenuItem value={120}>
+								2 hours
+							</MenuItem>
+							<MenuItem value={180}>
+								3 hours
+							</MenuItem>
+							<MenuItem value={240}>
+								4 hours
+							</MenuItem>
+							<MenuItem value={360}>
+								6 hours
+							</MenuItem>
+							<MenuItem value={480}>
+								8 hours
+							</MenuItem>
+							<MenuItem value={600}>
+								10 hours
+							</MenuItem>
+							
+						</Select>
+					</FormControl>) : null}
 				</form>
 			</DialogContent>
 			<DialogActions>
