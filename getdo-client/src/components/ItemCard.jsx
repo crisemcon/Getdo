@@ -18,8 +18,8 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Chip from "@material-ui/core/Chip";
 import Battery20Icon from "@material-ui/icons/Battery20";
-/*import Battery50Icon from "@material-ui/icons/Battery50";
-import Battery80Icon from "@material-ui/icons/Battery80";*/
+import Battery50Icon from "@material-ui/icons/Battery50";
+import Battery80Icon from "@material-ui/icons/Battery80";
 import TimerIcon from "@material-ui/icons/Timer";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemCard = ({ item, handleItemDelete }) => {
 	const classes = useStyles();
-	const { name, note, tags, parent, dueDate, time } = item;
+	const { name, note, tags, parent, dueDate, time, energy } = item;
 
 	//calculate dueDate
 	const calcDueDate = (dueDate) => {
@@ -108,8 +108,7 @@ const ItemCard = ({ item, handleItemDelete }) => {
 	function timeConversion(millisec) {
 		const hours = (millisec / (1000 * 60 * 60)).toFixed(1);
 		const days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0);
-		const weeks = (days / 7).toFixed(0)
-		
+		const weeks = (days / 7).toFixed(0);
 
 		if (hours < -24) {
 			return `${days} days late`;
@@ -122,21 +121,17 @@ const ItemCard = ({ item, handleItemDelete }) => {
 		} else if (days >= 2 && days < 14) {
 			return days + " Days";
 		} else {
-			return `${weeks} weeks`
-		} 
+			return `${weeks} weeks`;
+		}
 	}
 	const calcTimeRequired = (time) => {
-		if(time === 60){
-			return `1 hour`
-		} else if( time > 60) {
-			return `${time/60} hours`
+		if (time === 60) {
+			return `1 hour`;
+		} else if (time > 60) {
+			return `${time / 60} hours`;
 		}
 		return `${time} minutes`;
 	};
-
-
-	//calculate time required for the action
-	
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
@@ -158,6 +153,14 @@ const ItemCard = ({ item, handleItemDelete }) => {
 			return <LocationOnIcon />;
 		}
 		return <PersonIcon />;
+	};
+
+	const energyIcon = () => {
+		if (energy === "Low") {
+			return <Battery20Icon />;
+		} else if (energy === "Medium") {
+			return <Battery50Icon />;
+		} else return <Battery80Icon />;
 	};
 
 	//collapse and expand state
@@ -270,22 +273,6 @@ const ItemCard = ({ item, handleItemDelete }) => {
 								/>
 						  ))}
 					<Grid className={classes.marginAuto} item></Grid>
-					<Chip
-						classes={{ root: classes.tag }}
-						disabled
-						variant="outlined"
-						size="small"
-						icon={<TimerIcon />}
-						label="15min"
-					/>
-					<Chip
-						classes={{ root: classes.tag }}
-						disabled
-						variant="outlined"
-						size="small"
-						icon={<Battery20Icon />}
-						label="Easy"
-					/>
 					{dueDate ? (
 						<Chip
 							classes={{ root: classes.tag }}
@@ -304,6 +291,16 @@ const ItemCard = ({ item, handleItemDelete }) => {
 							size="small"
 							icon={<TimerIcon />}
 							label={calcTimeRequired(time)}
+						/>
+					) : null}
+					{energy ? (
+						<Chip
+							classes={{ root: classes.tag }}
+							disabled
+							variant="outlined"
+							size="small"
+							icon={energyIcon()}
+							label={energy}
 						/>
 					) : null}
 				</Grid>

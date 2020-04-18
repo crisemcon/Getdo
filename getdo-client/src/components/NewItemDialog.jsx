@@ -39,10 +39,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import CreateIcon from "@material-ui/icons/Create";
 
 import TextField from "@material-ui/core/TextField";
-import {
-	DatePicker,
-	MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
@@ -122,6 +119,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 			focus: false,
 			items: [],
 			dueDate: null,
+			energy: null,
 		});
 	};
 
@@ -137,6 +135,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		items: [],
 		dueDate: null,
 		time: null,
+		energy: null,
 	});
 
 	//when component mounts check if it is beign called from project button
@@ -324,7 +323,6 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 							) : null}
 						</Select>
 					</FormControl>
-
 					{item.category !== "projects" &&
 					item.category !== "notebooks" &&
 					item.category !== "inbox" ? (
@@ -362,7 +360,6 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 							</Select>
 						</FormControl>
 					) : null}
-
 					<FormControl className={classes.formControl}>
 						<InputLabel id="tags-multiple-select">Tags</InputLabel>
 						<Select
@@ -401,77 +398,75 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 							))}
 						</Select>
 					</FormControl>
-					{item.category !== "inbox" ?<FormControl className={classes.formControl}>
-						<MuiPickersUtilsProvider utils={DateFnsUtils}>
-							<DatePicker
-								label="Due Date"
-								value={item.dueDate}
-								format="dd MMM yyyy"
-								onChange={(date) => updateItem({
-									...item,
-									dueDate: new Date(date)
-								})}
-								animateYearScrolling
-								autoOk
-							/>
-						</MuiPickersUtilsProvider>
-					</FormControl> : null}
+					{item.category !== "inbox" ? (
+						<FormControl className={classes.formControl}>
+							<MuiPickersUtilsProvider utils={DateFnsUtils}>
+								<DatePicker
+									label="Due Date"
+									value={item.dueDate}
+									format="dd MMM yyyy"
+									onChange={(date) =>
+										updateItem({
+											...item,
+											dueDate: new Date(date),
+										})
+									}
+									animateYearScrolling
+									autoOk
+								/>
+							</MuiPickersUtilsProvider>
+						</FormControl>
+					) : null}
 					{item.category !== "projects" &&
 					item.category !== "notebooks" &&
 					item.category !== "inbox" ? (
-					<FormControl className={classes.formControl}>
-						<InputLabel htmlFor="time">Time required</InputLabel>
+						<FormControl className={classes.formControl}>
+							<InputLabel htmlFor="time">Time Required</InputLabel>
+							<Select
+								name="time"
+								value={item.time}
+								onChange={handleFormChange}
+								/*inputProps={{
+									name: "max-width",
+									id: "max-width",
+								}}*/
+							>
+								<MenuItem value={null}>Not set</MenuItem>
+								<MenuItem value={5}>5 minutes</MenuItem>
+								<MenuItem value={10}>10 minutes</MenuItem>
+								<MenuItem value={15}>15 minutes</MenuItem>
+								<MenuItem value={30}>30 minutes</MenuItem>
+								<MenuItem value={45}>45 minutes</MenuItem>
+								<MenuItem value={60}>1 hour</MenuItem>
+								<MenuItem value={120}>2 hours</MenuItem>
+								<MenuItem value={180}>3 hours</MenuItem>
+								<MenuItem value={240}>4 hours</MenuItem>
+								<MenuItem value={360}>6 hours</MenuItem>
+								<MenuItem value={480}>8 hours</MenuItem>
+								<MenuItem value={600}>10 hours</MenuItem>
+							</Select>
+						</FormControl>
+					) : null}
+					{item.category !== "projects" &&
+					item.category !== "notebooks" &&
+					item.category !== "inbox" ?(<FormControl className={classes.formControl}>
+						<InputLabel htmlFor="energy">Energy</InputLabel>
 						<Select
-							name="time"
-							value={item.time}
+							name="energy"
+							value={item.energy}
 							onChange={handleFormChange}
 							/*inputProps={{
 									name: "max-width",
 									id: "max-width",
 								}}*/
 						>
-							<MenuItem value={null}>
-								Not set
-							</MenuItem>
-							<MenuItem value={5}>
-								5 minutes
-							</MenuItem>
-							<MenuItem value={10}>
-								10 minutes
-							</MenuItem>
-							<MenuItem value={15}>
-								15 minutes
-							</MenuItem>
-							<MenuItem value={30}>
-								30 minutes
-							</MenuItem>
-							<MenuItem value={45}>
-								45 minutes
-							</MenuItem>
-							<MenuItem value={60}>
-								1 hour
-							</MenuItem>
-							<MenuItem value={120}>
-								2 hours
-							</MenuItem>
-							<MenuItem value={180}>
-								3 hours
-							</MenuItem>
-							<MenuItem value={240}>
-								4 hours
-							</MenuItem>
-							<MenuItem value={360}>
-								6 hours
-							</MenuItem>
-							<MenuItem value={480}>
-								8 hours
-							</MenuItem>
-							<MenuItem value={600}>
-								10 hours
-							</MenuItem>
-							
+							<MenuItem value={null}>Not set</MenuItem>
+							<MenuItem value="Low">Low</MenuItem>
+							<MenuItem value="Medium">Medium</MenuItem>
+							<MenuItem value="High">High</MenuItem>
 						</Select>
-					</FormControl>) : null}
+					</FormControl>
+					) : null}
 				</form>
 			</DialogContent>
 			<DialogActions>

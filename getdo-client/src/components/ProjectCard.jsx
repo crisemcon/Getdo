@@ -17,9 +17,6 @@ import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Chip from "@material-ui/core/Chip";
-import Battery20Icon from "@material-ui/icons/Battery20";
-/*import Battery50Icon from "@material-ui/icons/Battery50";
-import Battery80Icon from "@material-ui/icons/Battery80";*/
 import TimerIcon from "@material-ui/icons/Timer";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -293,14 +290,6 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 						size="small"
 						icon={<TimerIcon />}
 						label="15min"
-					/>
-					<Chip
-						classes={{ root: classes.tag }}
-						disabled
-						variant="outlined"
-						size="small"
-						icon={<Battery20Icon />}
-						label="Easy"
 					/>
 					{dueDate ? (
 						<Chip
