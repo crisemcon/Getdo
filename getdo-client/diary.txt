@@ -71,3 +71,16 @@ DAY 8 (15/04/2020) 1hr 20min:
 
 Today I didn't have much time to work on this project. I hope this does'nt take away my motivation.  First I maked a button inside the projects to directly make an item
 that belongs to that project. Then I did a little change in the item cards to display a subtitle that shows the parent project if they have one. So thats it for today.
+
+DAY 9 (16/04/2020) 2hr 25min:
+
+So today I did a huge refactor that merges newItemDialog with newProjectDialog, because they were almost the same. So to improve this, there are new components called
+newProjectItemButton and NewItemFab, that are the buttons and when they are clicked, they open the NewItemDialog, for both the projects and items. Also I discovered
+that how to just render the component when the button is clicked and to completely remove it from the tree when it is closed.
+
+DAY 10 (17/04/2020) 3hr 22min:
+
+Lots of chips today! I started to develop the due date feature of the items, so u can set it with a date picker and then in the cards is displayed the days/weeks remaining
+(or late if u missed it). Then I maked the time required for an action. This is selected from the newItemDialog and it is displayed in the items. Projects collect the sum
+of their children items and displays it as the time required. Then I added the functionality to add how hard/how much energy consumes an action and it is displayed in
+the item Card. Finally some minimal mediaqueries and padding changes to the projectCard to make it look good in web and in mobile.
