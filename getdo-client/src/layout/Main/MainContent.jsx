@@ -9,7 +9,7 @@ import tagsContext from "../../context/tags/tagsContext";
 
 import ItemCard from "../../components/ItemCard";
 import ProjectCard from "../../components/ProjectCard";
-import { Typography } from "@material-ui/core";
+import { Typography, Divider } from "@material-ui/core";
 
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -30,10 +30,13 @@ const useStyles = makeStyles((theme) => ({
 	maxWidth: {
 		width: "100%",
 	},
+	done: {
+		width: "100%",
+		marginTop: 16,
+	},
 	item: {
 		marginBottom: 6,
 	},
-	
 }));
 
 const MainContent = () => {
@@ -179,22 +182,108 @@ const MainContent = () => {
 					<Typography>No hay tareas</Typography>
 				)
 			) : category !== "projects" ? (
-				categoryitems.map((item) => (
-					<Grid key={item.id} item xs={12} className={classes.item}>
-						<ItemCard
-							item={item}
-							handleItemDelete={handleItemDelete}
-						/>
-					</Grid>
-				))
-			) : categoryitems.map((item) => (
-				<Grid key={item.id} item xs={12} className={classes.item}>
-					<ProjectCard
-						item={item}
-						handleItemDelete={handleItemDelete}
-					/>
-				</Grid>
-			))}
+				<>
+					{categoryitems.map((item) =>
+						item.done ? null : (
+							<Grid
+								key={item.id}
+								item
+								xs={12}
+								className={classes.item}
+							>
+								<ItemCard
+									item={item}
+									handleItemDelete={handleItemDelete}
+								/>
+							</Grid>
+						)
+					)}
+					<Divider />
+					<div className={classes.done}>
+						<ExpansionPanel>
+							<ExpansionPanelSummary
+								expandIcon={<ExpandMoreIcon />}
+								aria-controls="panel1a-content"
+								id="panel1a-header"
+							>
+								<Typography>Done</Typography>
+							</ExpansionPanelSummary>
+							<ExpansionPanelDetails>
+								<Grid container>
+									{categoryitems.map((item) =>
+										item.done ? (
+											<Grid
+												key={item.id}
+												item
+												xs={12}
+												className={classes.item}
+											>
+												<ItemCard
+													item={item}
+													handleItemDelete={
+														handleItemDelete
+													}
+												/>
+											</Grid>
+										) : null
+									)}
+								</Grid>
+							</ExpansionPanelDetails>
+						</ExpansionPanel>
+					</div>
+				</>
+			) : (
+				<>
+					{categoryitems.map((item) =>
+						item.done ? null : (
+							<Grid
+								key={item.id}
+								item
+								xs={12}
+								className={classes.item}
+							>
+								<ProjectCard
+									item={item}
+									handleItemDelete={handleItemDelete}
+								/>
+							</Grid>
+						)
+					)}
+					<Divider />
+					<div className={classes.done}>
+						<ExpansionPanel>
+							<ExpansionPanelSummary
+								expandIcon={<ExpandMoreIcon />}
+								aria-controls="panel1a-content"
+								id="panel1a-header"
+							>
+								<Typography>Done</Typography>
+							</ExpansionPanelSummary>
+							<ExpansionPanelDetails>
+								<Grid container>
+									{categoryitems.map((item) =>
+										item.done ? (
+											<Grid
+												key={item.id}
+												item
+												xs={12}
+												className={classes.item}
+											>
+												<ProjectCard
+													item={item}
+													handleItemDelete={
+														handleItemDelete
+													}
+												/>
+											</Grid>
+										) : null
+									)}
+								</Grid>
+							</ExpansionPanelDetails>
+						</ExpansionPanel>
+					</div>
+				</>
+			)}
 		</Grid>
 	);
 };

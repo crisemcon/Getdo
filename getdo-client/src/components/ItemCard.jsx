@@ -111,7 +111,7 @@ const ItemCard = ({ item, handleItemDelete }) => {
 		const weeks = (days / 7).toFixed(0);
 
 		if (hours < -24) {
-			return `${days} days late`;
+			return `${days*-1} days late`;
 		} else if (hours < 0 && hours >= -24) {
 			return `Yesterday`;
 		} else if (hours >= 0 && hours < 24) {
@@ -135,7 +135,7 @@ const ItemCard = ({ item, handleItemDelete }) => {
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { getItems, focusItem, getProjectById } = itemlistContext;
+	const { getItems, focusItem, doneItem, getProjectById } = itemlistContext;
 
 	//get sidebarState
 	const categoriesContext = useContext(sidebarContext);
@@ -169,12 +169,6 @@ const ItemCard = ({ item, handleItemDelete }) => {
 		setExpanded(!expanded);
 	};
 
-	//check button state
-	const [checked, setChecked] = useState(false);
-	const handleChange = (event) => {
-		setChecked(event.target.checked);
-	};
-
 	//options menu state
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = (event) => {
@@ -195,6 +189,10 @@ const ItemCard = ({ item, handleItemDelete }) => {
 		}
 	};
 
+	const handleItemDone = () => {
+		doneItem(item);
+	}
+
 	return (
 		<Card>
 			<CardHeader
@@ -204,8 +202,8 @@ const ItemCard = ({ item, handleItemDelete }) => {
 				}} //this is the way to customize children
 				avatar={
 					<Checkbox
-						checked={checked}
-						onChange={handleChange}
+						checked={item.done}
+						onChange={handleItemDone}
 						inputProps={{ "aria-label": "primary checkbox" }}
 					/>
 				}

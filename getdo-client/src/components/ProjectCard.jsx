@@ -162,6 +162,7 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 	const itemlistContext = useContext(itemsContext);
 	const {
 		focusItem,
+		doneItem,
 		getItemsById,
 		getItems,
 		deleteItem,
@@ -197,12 +198,6 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 		setExpanded(!expanded);
 	};
 
-	//check button state
-	const [checked, setChecked] = useState(false);
-	const handleChange = (event) => {
-		setChecked(event.target.checked);
-	};
-
 	//options menu state
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = (event) => {
@@ -220,6 +215,10 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 		focusItem(item);
 	};
 
+	const handleItemDone = () => {
+		doneItem(item);
+	}
+
 	return (
 		<Card classes={{root: classes.marginBottom}}>
 			<CardHeader
@@ -229,8 +228,8 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 				}} //this is the way to customize children
 				avatar={
 					<Checkbox
-						checked={checked}
-						onChange={handleChange}
+						checked={item.done}
+						onChange={handleItemDone}
 						inputProps={{ "aria-label": "primary checkbox" }}
 					/>
 				}

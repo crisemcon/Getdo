@@ -5,6 +5,7 @@ export const ADD_ITEM = 'ADD_ITEM';
 export const VALIDATE_ITEM = 'VALIDATE_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const FOCUS_ITEM = 'FOCUS_ITEM';
+export const DONE_ITEM = 'DONE_ITEM';
 export const UPDATE_ITEMSTAG = ' UPDATE_ITEMSTAG';
 export const UPDATE_ITEMSDELETEDTAG = 'UPDATE_ITEMSDELETEDTAG';
 export const UPDATE_ITEM = 'UPDATE_ITEM';

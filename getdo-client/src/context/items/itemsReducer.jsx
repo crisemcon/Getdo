@@ -7,6 +7,7 @@ import {
     UPDATE_ITEMSTAG,
 	UPDATE_ITEMSDELETEDTAG,
 	ITEM_BELONGSPROJECT,
+	DONE_ITEM,
 	/*ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -61,6 +62,14 @@ export default (state, action) => {
 				...state,
             };
 
+		case DONE_ITEM:
+			(state.items.filter(
+				(item) => item.id === action.payload.id
+			)[0].done = !action.payload.done)
+			return {
+				...state,
+			}
+			
 		case UPDATE_ITEMSTAG:
 			state.items.forEach((item) => {
 				item.tags.forEach((tag) =>

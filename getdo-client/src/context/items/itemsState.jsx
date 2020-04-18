@@ -12,6 +12,7 @@ import {
 	FOCUS_ITEM,
 	UPDATE_ITEMSTAG,
 	UPDATE_ITEMSDELETEDTAG,
+	DONE_ITEM,
 	/*
 	UPDATE_ITEM,
 	ITEM_STATE,
@@ -29,6 +30,7 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: "",
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -43,6 +45,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
 				parent: 3,
 				items: [],
@@ -53,6 +56,7 @@ const ItemsState = (props) => {
 				name: "test project",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				items: [2, 6, 8],
 				parent: "standalone",
@@ -63,6 +67,7 @@ const ItemsState = (props) => {
 				name: "test name",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -76,6 +81,7 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
@@ -89,6 +95,7 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: true,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -103,6 +110,7 @@ const ItemsState = (props) => {
 				name: "test waiting",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				parent: "standalone",
 				items: [],
@@ -113,6 +121,7 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: true,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -126,6 +135,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -140,6 +150,7 @@ const ItemsState = (props) => {
 				name: "test trash",
 				note: lorem,
 				focus: true,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -154,6 +165,7 @@ const ItemsState = (props) => {
 				name: "test trash",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -167,6 +179,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: true,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -181,6 +194,7 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [{ id: 2, name: "Mariella", type: "contact" }],
 				parent: "standalone",
 				items: [],
@@ -191,6 +205,7 @@ const ItemsState = (props) => {
 				name: "test name",
 				note: lorem,
 				focus: true,
+				done: false,
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
 				parent: "standalone",
 				items: [],
@@ -211,6 +226,7 @@ const ItemsState = (props) => {
 				name: "test inbox",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 2, name: "Mariella", type: "contact" },
 					{ id: 3, name: "Computador", type: "label" },
@@ -224,6 +240,7 @@ const ItemsState = (props) => {
 				name: "test someday",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 
@@ -238,6 +255,7 @@ const ItemsState = (props) => {
 				name: "test waiting",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -252,6 +270,7 @@ const ItemsState = (props) => {
 				name: "test project 2",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -266,6 +285,7 @@ const ItemsState = (props) => {
 				name: "test next",
 				note: lorem,
 				focus: false,
+				done: false,
 				tags: [
 					{ id: 1, name: "Universidad", type: "area" },
 					{ id: 2, name: "Mariella", type: "contact" },
@@ -322,6 +342,14 @@ const ItemsState = (props) => {
 			payload: item,
 		});
 	};
+
+	//done or undone an item
+	const doneItem = (item) => {
+		dispatch({
+			type: DONE_ITEM,
+			payload: item,
+		})
+	}
 
 	//update item when tagState is modified
 	const updateItemsTag = (tag) => {
@@ -404,6 +432,7 @@ const ItemsState = (props) => {
 				getProjects,
 				itemBelongsProject,
 				getProjectById,
+				doneItem,
 			}}
 		>
 			{props.children}
