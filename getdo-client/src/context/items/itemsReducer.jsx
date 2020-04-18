@@ -4,7 +4,7 @@ import {
 	VALIDATE_ITEM,
 	DELETE_ITEM,
 	FOCUS_ITEM,
-    UPDATE_ITEMSTAG,
+	UPDATE_ITEMSTAG,
 	UPDATE_ITEMSDELETEDTAG,
 	ITEM_BELONGSPROJECT,
 	DONE_ITEM,
@@ -52,24 +52,28 @@ export default (state, action) => {
 		case DELETE_ITEM:
 			return {
 				...state,
-				items: state.items.filter((item) => item.id !== action.payload.id && action.payload.items.indexOf(item.id) === -1),
+				items: state.items.filter(
+					(item) =>
+						item.id !== action.payload.id &&
+						action.payload.items.indexOf(item.id) === -1
+				),
 			};
 		case FOCUS_ITEM:
-			(state.items.filter(
+			state.items.filter(
 				(item) => item.id === action.payload.id
-			)[0].focus = !action.payload.focus);
+			)[0].focus = !action.payload.focus;
 			return {
 				...state,
-            };
+			};
 
 		case DONE_ITEM:
-			(state.items.filter(
+			state.items.filter(
 				(item) => item.id === action.payload.id
-			)[0].done = !action.payload.done)
+			)[0].done = !action.payload.done;
 			return {
 				...state,
-			}
-			
+			};
+
 		case UPDATE_ITEMSTAG:
 			state.items.forEach((item) => {
 				item.tags.forEach((tag) =>
@@ -77,25 +81,36 @@ export default (state, action) => {
 						? (tag.name = action.payload.name)
 						: null
 				);
+				if (item.waiting) {
+					if (item.waiting.id === action.payload.id) {
+						item.waiting.name = action.payload.name;
+					}
+				}
 			});
 			return {
 				...state,
-            };
-            
-        case UPDATE_ITEMSDELETEDTAG:
-            state.items.forEach(item => {
-                const newTags = item.tags.filter(tag => tag.id !== action.payload)
-                item.tags = newTags;
-            })
-            return {
-                ...state,
-			}
-			
+			};
+
+		case UPDATE_ITEMSDELETEDTAG:
+			state.items.forEach((item) => {
+				const newTags = item.tags.filter(
+					(tag) => tag.id !== action.payload
+				);
+				item.tags = newTags;
+				if (item.waiting) {
+					if (item.waiting.id === action.payload) {
+						item.waiting = null;
+					}
+				}
+			});
+			return {
+				...state,
+			};
+
 		case ITEM_BELONGSPROJECT:
 			return {
 				...state,
-
-			}
+			};
 		/*case UPDATE_ITEM:
         case ITEM_STATE:
             return {

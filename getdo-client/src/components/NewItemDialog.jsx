@@ -121,6 +121,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 			items: [],
 			dueDate: null,
 			energy: null,
+			waiting: null,
 		});
 	};
 
@@ -138,6 +139,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		dueDate: null,
 		time: null,
 		energy: null,
+		waiting: null,
 	});
 
 	//when component mounts check if it is beign called from project button
@@ -325,6 +327,34 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 							) : null}
 						</Select>
 					</FormControl>
+					{
+						item.category === "waiting" ? 
+						<FormControl className={classes.formControl}>
+						<InputLabel id="waiting-select">Waiting for</InputLabel>
+						<Select
+							labelId="waiting-select"
+							id="waiting-select"
+							name="waiting"
+							value={item.waiting}
+							onChange={handleFormChange}
+							input={<Input />}
+							MenuProps={{ variant: "menu" }}
+						>
+							{tags.filter(tag => tag.type === "contact").map((tag) => (
+								//
+								<MenuItem
+									key={tag.id}
+									value={tag}
+									//style={getStyles(name, personName, theme)}
+								>
+									<ListItemIcon>{tagIcon(tag)}</ListItemIcon>
+									{tag.name}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+						:null
+					}
 					{item.category !== "projects" &&
 					item.category !== "notebooks" &&
 					item.category !== "inbox" ? (

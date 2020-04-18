@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemCard = ({ item, handleItemDelete }) => {
 	const classes = useStyles();
-	const { name, note, tags, parent, dueDate, time, energy } = item;
+	const { name, note, tags, parent, dueDate, time, energy, waiting } = item;
 
 	//calculate dueDate
 	const calcDueDate = (dueDate) => {
@@ -271,6 +271,16 @@ const ItemCard = ({ item, handleItemDelete }) => {
 								/>
 						  ))}
 					<Grid className={classes.marginAuto} item></Grid>
+					{waiting ? (
+						<Chip
+							classes={{ root: classes.tag }}
+							disabled
+							variant="outlined"
+							size="small"
+							icon={<PersonIcon />}
+							label={waiting.name}
+						/>
+					) : null}
 					{dueDate ? (
 						<Chip
 							classes={{ root: classes.tag }}

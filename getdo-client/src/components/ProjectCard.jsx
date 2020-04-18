@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment} from "react";
+import React, { useState, useContext, Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -27,7 +27,6 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PersonIcon from "@material-ui/icons/Person";
 import EventIcon from "@material-ui/icons/Event";
-
 
 import itemsContext from "../context/items/itemsContext";
 import ItemCard from "../components/ItemCard";
@@ -106,7 +105,6 @@ const useStyles = makeStyles((theme) => ({
 		paddingRight: 4,
 		paddingTop: 2,
 		paddingBottom: 12,
-		
 	},
 }));
 
@@ -124,8 +122,7 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 	function timeConversion(millisec) {
 		const hours = (millisec / (1000 * 60 * 60)).toFixed(1);
 		const days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0);
-		const weeks = (days / 7).toFixed(0)
-		
+		const weeks = (days / 7).toFixed(0);
 
 		if (hours < -24) {
 			return `${days} days late`;
@@ -138,25 +135,26 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 		} else if (days >= 2 && days < 14) {
 			return days + " Days";
 		} else {
-			return `${weeks} weeks`
-		} 
+			return `${weeks} weeks`;
+		}
 	}
 
 	//calculate project time required
 	const calcProjectTimeRequired = () => {
-			let sumTime = 0;
-			let flag = '';
-			getItemsById(item.items).forEach(item => {item.time ? sumTime += item.time : flag = '>'});
-			if(sumTime === 0){
-				return `Not set`
-			}
-			else if(sumTime === 60){
-				return `${flag}1 hour`
-			} else if( sumTime > 60) {
-				return `${flag}${(sumTime/60).toFixed(0)} hours`
-			}
-			return `${flag}${sumTime} minutes`;
-	}
+		let sumTime = 0;
+		let flag = "";
+		getItemsById(item.items).forEach((item) => {
+			item.time ? (sumTime += item.time) : (flag = ">");
+		});
+		if (sumTime === 0) {
+			return `Not set`;
+		} else if (sumTime === 60) {
+			return `${flag}1 hour`;
+		} else if (sumTime > 60) {
+			return `${flag}${(sumTime / 60).toFixed(0)} hours`;
+		}
+		return `${flag}${sumTime} minutes`;
+	};
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
@@ -217,10 +215,10 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 
 	const handleItemDone = () => {
 		doneItem(item);
-	}
+	};
 
 	return (
-		<Card classes={{root: classes.marginBottom}}>
+		<Card classes={{ root: classes.marginBottom }}>
 			<CardHeader
 				classes={{
 					root: classes.cardHeader,
@@ -322,35 +320,36 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 						/>
 					) : null}
 				</Grid>
-				{note.length === 0 ? null : (
-					<IconButton
-						className={clsx(classes.expand, {
-							[classes.expandOpen]: expanded,
-						})}
-						onClick={handleExpandClick}
-						aria-expanded={expanded}
-						aria-label="show more"
-					>
-						<ExpandMoreIcon />
-					</IconButton>
-				)}
+				<IconButton
+					className={clsx(classes.expand, {
+						[classes.expandOpen]: expanded,
+					})}
+					onClick={handleExpandClick}
+					aria-expanded={expanded}
+					aria-label="show more"
+				>
+					<ExpandMoreIcon />
+				</IconButton>
 			</CardActions>
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
-				<CardContent classes={{ root: classes.cardContent}}>
+				<CardContent classes={{ root: classes.cardContent }}>
 					<div className={classes.note}>
 						<Typography variant="body2">{note}</Typography>
 					</div>
 					<Divider light />
-					{item.items.length !== 0  //!== undefined ,if this get errors
+					{item.items.length !== 0 //!== undefined ,if this get errors
 						? getItemsById(item.items).map((item) => (
 								<Fragment key={item.id}>
-									<ItemCard item={item} handleItemDelete={handleChildItemDelete} />
+									<ItemCard
+										item={item}
+										handleItemDelete={handleChildItemDelete}
+									/>
 									<Divider light />
 								</Fragment>
 						  ))
 						: null}
-					
-					<NewProjectItemButton projectId={item.id}/>
+
+					<NewProjectItemButton projectId={item.id} />
 				</CardContent>
 			</Collapse>
 		</Card>
