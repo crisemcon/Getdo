@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
 		height: 0,
 		paddingTop: "56.25%", // 16:9
 	},
+	marginBottom: {
+		marginBottom: 10,
+	},
 	expand: {
 		transform: "rotate(0deg)",
 		marginLeft: "auto",
@@ -72,9 +75,14 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 	},
 	tagContainer: {
-		padding: 4,
+		paddingTop: 4,
+		paddingBottom: 4,
 		paddingRight: 8,
 		paddingLeft: 8,
+		[theme.breakpoints.up("sm")]: {
+			paddingRight: 6,
+			paddingLeft: 6,
+		},
 	},
 	tag: {
 		marginTop: 4,
@@ -83,8 +91,8 @@ const useStyles = makeStyles((theme) => ({
 		padding: 2,
 	},
 	cardContent: {
-		paddingLeft: 8,
-		paddingRight: 8,
+		paddingLeft: 12,
+		paddingRight: 12,
 		paddingTop: 4,
 	},
 	marginAuto: {
@@ -94,8 +102,11 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: 4,
 	},
 	note: {
-		padding: 10,
+		paddingLeft: 4,
+		paddingRight: 4,
 		paddingTop: 2,
+		paddingBottom: 12,
+		
 	},
 }));
 
@@ -210,7 +221,7 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 	};
 
 	return (
-		<Card>
+		<Card classes={{root: classes.marginBottom}}>
 			<CardHeader
 				classes={{
 					root: classes.cardHeader,
