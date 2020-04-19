@@ -12,6 +12,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
+import { InputAdornment } from "@material-ui/core";
 
 import Alert from "@material-ui/lab/Alert";
 
@@ -37,9 +38,14 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PersonIcon from "@material-ui/icons/Person";
 import CreateIcon from "@material-ui/icons/Create";
+import EventIcon from "@material-ui/icons/Event";
 
 import TextField from "@material-ui/core/TextField";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {
+	DatePicker,
+	MuiPickersUtilsProvider,
+	DateTimePicker,
+} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
@@ -122,6 +128,8 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 			dueDate: null,
 			energy: null,
 			waiting: null,
+			schedule: null,
+			repeat: null,
 		});
 	};
 
@@ -140,6 +148,8 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		time: null,
 		energy: null,
 		waiting: null,
+		schedule: null,
+		repeat: null,
 	});
 
 	//when component mounts check if it is beign called from project button
@@ -327,34 +337,66 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 							) : null}
 						</Select>
 					</FormControl>
-					{
-						item.category === "waiting" ? 
+					{item.category === "scheduled" ? (
 						<FormControl className={classes.formControl}>
-						<InputLabel id="waiting-select">Waiting for</InputLabel>
-						<Select
-							labelId="waiting-select"
-							id="waiting-select"
-							name="waiting"
-							value={item.waiting}
-							onChange={handleFormChange}
-							input={<Input />}
-							MenuProps={{ variant: "menu" }}
-						>
-							{tags.filter(tag => tag.type === "contact").map((tag) => (
-								//
-								<MenuItem
-									key={tag.id}
-									value={tag}
-									//style={getStyles(name, personName, theme)}
-								>
-									<ListItemIcon>{tagIcon(tag)}</ListItemIcon>
-									{tag.name}
-								</MenuItem>
-							))}
-						</Select>
-					</FormControl>
-						:null
-					}
+							<MuiPickersUtilsProvider utils={DateFnsUtils}>
+								<DateTimePicker
+									label="Schedule for"
+									inputVariant="standard"
+									value={item.schedule}
+									onChange={(date) =>
+										updateItem({
+											...item,
+											schedule: new Date(date),
+										})
+									}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">
+												<IconButton>
+													<EventIcon />
+												</IconButton>
+											</InputAdornment>
+										),
+									}}
+									animateYearScrolling
+									autoOk
+								/>
+							</MuiPickersUtilsProvider>
+						</FormControl>
+					) : null}
+					{item.category === "waiting" ? (
+						<FormControl className={classes.formControl}>
+							<InputLabel id="waiting-select">
+								Waiting for
+							</InputLabel>
+							<Select
+								labelId="waiting-select"
+								id="waiting-select"
+								name="waiting"
+								value={item.waiting}
+								onChange={handleFormChange}
+								input={<Input />}
+								MenuProps={{ variant: "menu" }}
+							>
+								{tags
+									.filter((tag) => tag.type === "contact")
+									.map((tag) => (
+										//
+										<MenuItem
+											key={tag.id}
+											value={tag}
+											//style={getStyles(name, personName, theme)}
+										>
+											<ListItemIcon>
+												{tagIcon(tag)}
+											</ListItemIcon>
+											{tag.name}
+										</MenuItem>
+									))}
+							</Select>
+						</FormControl>
+					) : null}
 					{item.category !== "projects" &&
 					item.category !== "notebooks" &&
 					item.category !== "inbox" ? (
@@ -430,7 +472,8 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 							))}
 						</Select>
 					</FormControl>
-					{item.category !== "inbox" ? (
+					{item.category !== "inbox" &&
+					item.category !== "notebooks" ? (
 						<FormControl className={classes.formControl}>
 							<MuiPickersUtilsProvider utils={DateFnsUtils}>
 								<DatePicker
@@ -443,6 +486,15 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 											dueDate: new Date(date),
 										})
 									}
+									InputProps={{
+										endAdornment: (
+											<InputAdornment position="end">
+												<IconButton>
+													<EventIcon />
+												</IconButton>
+											</InputAdornment>
+										),
+									}}
 									animateYearScrolling
 									autoOk
 								/>
@@ -453,7 +505,9 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 					item.category !== "notebooks" &&
 					item.category !== "inbox" ? (
 						<FormControl className={classes.formControl}>
-							<InputLabel htmlFor="time">Time Required</InputLabel>
+							<InputLabel htmlFor="time">
+								Time Required
+							</InputLabel>
 							<Select
 								name="time"
 								value={item.time}
@@ -481,23 +535,24 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 					) : null}
 					{item.category !== "projects" &&
 					item.category !== "notebooks" &&
-					item.category !== "inbox" ?(<FormControl className={classes.formControl}>
-						<InputLabel htmlFor="energy">Energy</InputLabel>
-						<Select
-							name="energy"
-							value={item.energy}
-							onChange={handleFormChange}
-							/*inputProps={{
+					item.category !== "inbox" ? (
+						<FormControl className={classes.formControl}>
+							<InputLabel htmlFor="energy">Energy</InputLabel>
+							<Select
+								name="energy"
+								value={item.energy}
+								onChange={handleFormChange}
+								/*inputProps={{
 									name: "max-width",
 									id: "max-width",
 								}}*/
-						>
-							<MenuItem value={null}>Not set</MenuItem>
-							<MenuItem value="Low">Low</MenuItem>
-							<MenuItem value="Medium">Medium</MenuItem>
-							<MenuItem value="High">High</MenuItem>
-						</Select>
-					</FormControl>
+							>
+								<MenuItem value={null}>Not set</MenuItem>
+								<MenuItem value="Low">Low</MenuItem>
+								<MenuItem value="Medium">Medium</MenuItem>
+								<MenuItem value="High">High</MenuItem>
+							</Select>
+						</FormControl>
 					) : null}
 				</form>
 			</DialogContent>

@@ -199,6 +199,7 @@ const MainContent = () => {
 						)
 					)}
 					<Divider />
+					{category !== "notebooks" ?
 					<div className={classes.done}>
 						<ExpansionPanel>
 							<ExpansionPanelSummary
@@ -231,6 +232,7 @@ const MainContent = () => {
 							</ExpansionPanelDetails>
 						</ExpansionPanel>
 					</div>
+					: null}
 				</>
 			) : (
 				<>
@@ -250,6 +252,7 @@ const MainContent = () => {
 						)
 					)}
 					<Divider />
+
 					<div className={classes.done}>
 						<ExpansionPanel>
 							<ExpansionPanelSummary

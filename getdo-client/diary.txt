@@ -84,3 +84,10 @@ Lots of chips today! I started to develop the due date feature of the items, so 
 (or late if u missed it). Then I maked the time required for an action. This is selected from the newItemDialog and it is displayed in the items. Projects collect the sum
 of their children items and displays it as the time required. Then I added the functionality to add how hard/how much energy consumes an action and it is displayed in
 the item Card. Finally some minimal mediaqueries and padding changes to the projectCard to make it look good in web and in mobile.
+
+DAY 11 (18/04/2020) 1hr 22min:
+
+Today I focused on doing the done items section, under the items in every category. So you can set an item as done/undone checking the checkbox that is included in every item.
+Then I have made the selection of a contact in newItemDialog for the waiting category. It is displayed as a chip in this type of items and if a contact tag is updated/removed,
+it also affects the waiting items that includes this contact.
+

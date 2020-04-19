@@ -30,6 +30,8 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PersonIcon from "@material-ui/icons/Person";
 import EventIcon from "@material-ui/icons/Event";
+import NoteIcon from '@material-ui/icons/Note';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 import itemsContext from "../context/items/itemsContext";
 import sidebarContext from "../context/sidebar/sidebarContext";
@@ -92,11 +94,14 @@ const useStyles = makeStyles((theme) => ({
 	cardHeaderAction: {
 		paddingTop: 4,
 	},
+	itemIcon: {
+		justifyContent: "center",
+	}
 }));
 
 const ItemCard = ({ item, handleItemDelete }) => {
 	const classes = useStyles();
-	const { name, note, tags, parent, dueDate, time, energy, waiting } = item;
+	const { name, note, tags, parent, dueDate, time, energy, waiting, schedule } = item;
 
 	//calculate dueDate
 	const calcDueDate = (dueDate) => {
@@ -124,6 +129,7 @@ const ItemCard = ({ item, handleItemDelete }) => {
 			return `${weeks} weeks`;
 		}
 	}
+
 	const calcTimeRequired = (time) => {
 		if (time === 60) {
 			return `1 hour`;
@@ -201,11 +207,13 @@ const ItemCard = ({ item, handleItemDelete }) => {
 					action: classes.cardHeaderAction,
 				}} //this is the way to customize children
 				avatar={
+					item.category !== "notebooks" ?
 					<Checkbox
 						checked={item.done}
 						onChange={handleItemDone}
 						inputProps={{ "aria-label": "primary checkbox" }}
 					/>
+					: <ListItemIcon classes={{root: classes.itemIcon}}><NoteIcon /></ListItemIcon>
 				}
 				action={
 					<>
@@ -271,6 +279,16 @@ const ItemCard = ({ item, handleItemDelete }) => {
 								/>
 						  ))}
 					<Grid className={classes.marginAuto} item></Grid>
+					{schedule ? (
+						<Chip
+							classes={{ root: classes.tag }}
+							disabled
+							variant="outlined"
+							size="small"
+							icon={<ScheduleIcon />}
+							label={schedule.toLocaleString()}
+						/>
+					) : null}
 					{waiting ? (
 						<Chip
 							classes={{ root: classes.tag }}
