@@ -13,6 +13,9 @@ import {
 	UPDATE_ITEMSTAG,
 	UPDATE_ITEMSDELETEDTAG,
 	DONE_ITEM,
+	CURRENT_ITEM,
+	EDIT_ITEM,
+	UNSELECT_ITEM,
 	/*
 	UPDATE_ITEM,
 	ITEM_STATE,
@@ -296,7 +299,7 @@ const ItemsState = (props) => {
 		],
 		categoryitems: [],
 		erroritem: false,
-		selecteditem: null,
+		currentitem: null,
 	};
 
 	//create dispatch and state
@@ -390,6 +393,29 @@ const ItemsState = (props) => {
 	const getProjectById = (projectId) => {
 		return state.items.filter(item => item.id === projectId)
 	}
+
+	//extracts an item to edit
+	const saveCurrentItem = item => {
+		dispatch({
+			type: CURRENT_ITEM,
+			payload: item,
+		})
+	}
+
+	//edits an item
+	const editItem = item => {
+		dispatch({
+			type: EDIT_ITEM,
+			payload: item,
+		})
+	}
+
+	//unselect current item
+	const unselectCurrentItem = () => {
+		dispatch({
+			type: UNSELECT_ITEM,
+		})
+	}
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -420,7 +446,7 @@ const ItemsState = (props) => {
 				items: state.items,
 				categoryitems: state.categoryitems,
 				erroritem: state.erroritem,
-				selecteditem: state.selecteditem,
+				currentitem: state.currentitem,
 				getItems,
 				addItem,
 				validateItem,
@@ -433,6 +459,9 @@ const ItemsState = (props) => {
 				itemBelongsProject,
 				getProjectById,
 				doneItem,
+				saveCurrentItem,
+				editItem,
+				unselectCurrentItem,
 			}}
 		>
 			{props.children}

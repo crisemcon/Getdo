@@ -8,6 +8,9 @@ import {
 	UPDATE_ITEMSDELETEDTAG,
 	ITEM_BELONGSPROJECT,
 	DONE_ITEM,
+	CURRENT_ITEM,
+	EDIT_ITEM,
+	UNSELECT_ITEM,
 	/*ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -111,6 +114,25 @@ export default (state, action) => {
 			return {
 				...state,
 			};
+
+		case CURRENT_ITEM:
+			return {
+				...state,
+				currentitem: action.payload,
+			}
+
+		case EDIT_ITEM:
+			return {
+				...state,
+				items: state.items.map(item => item.id === action.payload.id ? action.payload : item),
+				currentitem: null,
+			}
+
+		case UNSELECT_ITEM:
+			return {
+				...state,
+				currentitem: null,
+			}
 		/*case UPDATE_ITEM:
         case ITEM_STATE:
             return {

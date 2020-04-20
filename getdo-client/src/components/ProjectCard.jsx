@@ -33,6 +33,7 @@ import ItemCard from "../components/ItemCard";
 import Divider from "@material-ui/core/Divider";
 
 import NewProjectItemButton from "../components/NewProjectItemButton";
+import NewItemDialog from "../components/NewItemDialog";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -108,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const ProjectCard = ({ item, handleItemDelete }) => {
+const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 	const classes = useStyles();
 	const { name, note, tags, dueDate } = item;
 
@@ -166,6 +167,9 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 		deleteItem,
 	} = itemlistContext;
 
+	//edit item dialog
+	const [open, setOpen] = useState(false);
+
 	//get tagsState
 	/*const tagContext = useContext(tagsContext);
 	const { getTags } = tagContext;
@@ -204,6 +208,12 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const handleEditClick = () => {
+		saveCurrentItem(item);
+		handleClose();
+		setOpen(true);
+	}
 
 	const handleDeleteClick = () => {
 		handleItemDelete(item);
@@ -258,12 +268,13 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 							open={Boolean(anchorEl)}
 							onClose={handleClose}
 						>
-							<MenuItem onClick={handleClose}>
+							<MenuItem onClick={handleEditClick}>
 								<ListItemIcon>
 									<EditIcon fontSize="small" />
 								</ListItemIcon>
 								Edit
 							</MenuItem>
+							{open ? <NewItemDialog open={open} setOpen={setOpen} /> : null}
 							<MenuItem onClick={handleDeleteClick}>
 								<ListItemIcon>
 									<DeleteIcon fontSize="small" />
@@ -343,6 +354,7 @@ const ProjectCard = ({ item, handleItemDelete }) => {
 									<ItemCard
 										item={item}
 										handleItemDelete={handleChildItemDelete}
+										saveCurrentItem={saveCurrentItem}
 									/>
 									<Divider light />
 								</Fragment>

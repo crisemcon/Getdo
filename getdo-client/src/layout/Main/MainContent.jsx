@@ -49,6 +49,8 @@ const MainContent = () => {
 		getItems,
 		deleteItem,
 		updateItemsDeletedTag,
+		saveCurrentItem,
+		editItem,
 	} = itemlistContext;
 
 	//get sidebarState
@@ -194,6 +196,7 @@ const MainContent = () => {
 								<ItemCard
 									item={item}
 									handleItemDelete={handleItemDelete}
+									saveCurrentItem={saveCurrentItem}
 								/>
 							</Grid>
 						)
@@ -224,6 +227,7 @@ const MainContent = () => {
 													handleItemDelete={
 														handleItemDelete
 													}
+													saveCurrentItem={saveCurrentItem}
 												/>
 											</Grid>
 										) : null
@@ -247,6 +251,7 @@ const MainContent = () => {
 								<ProjectCard
 									item={item}
 									handleItemDelete={handleItemDelete}
+									saveCurrentItem={saveCurrentItem}
 								/>
 							</Grid>
 						)
@@ -277,6 +282,7 @@ const MainContent = () => {
 													handleItemDelete={
 														handleItemDelete
 													}
+													saveCurrentItem={saveCurrentItem}
 												/>
 											</Grid>
 										) : null

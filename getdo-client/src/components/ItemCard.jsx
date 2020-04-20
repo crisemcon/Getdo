@@ -30,11 +30,13 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PersonIcon from "@material-ui/icons/Person";
 import EventIcon from "@material-ui/icons/Event";
-import NoteIcon from '@material-ui/icons/Note';
-import ScheduleIcon from '@material-ui/icons/Schedule';
+import NoteIcon from "@material-ui/icons/Note";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 
 import itemsContext from "../context/items/itemsContext";
 import sidebarContext from "../context/sidebar/sidebarContext";
+
+import NewItemDialog from "../components/NewItemDialog";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -96,12 +98,22 @@ const useStyles = makeStyles((theme) => ({
 	},
 	itemIcon: {
 		justifyContent: "center",
-	}
+	},
 }));
 
-const ItemCard = ({ item, handleItemDelete }) => {
+const ItemCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 	const classes = useStyles();
-	const { name, note, tags, parent, dueDate, time, energy, waiting, schedule } = item;
+	const {
+		name,
+		note,
+		tags,
+		parent,
+		dueDate,
+		time,
+		energy,
+		waiting,
+		schedule,
+	} = item;
 
 	//calculate dueDate
 	const calcDueDate = (dueDate) => {
@@ -116,7 +128,7 @@ const ItemCard = ({ item, handleItemDelete }) => {
 		const weeks = (days / 7).toFixed(0);
 
 		if (hours < -24) {
-			return `${days*-1} days late`;
+			return `${days * -1} days late`;
 		} else if (hours < 0 && hours >= -24) {
 			return `Yesterday`;
 		} else if (hours >= 0 && hours < 24) {
@@ -141,11 +153,20 @@ const ItemCard = ({ item, handleItemDelete }) => {
 
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { getItems, focusItem, doneItem, getProjectById } = itemlistContext;
+	const {
+		getItems,
+		focusItem,
+		doneItem,
+		getProjectById,
+		editItem,
+	} = itemlistContext;
 
 	//get sidebarState
 	const categoriesContext = useContext(sidebarContext);
 	const { category } = categoriesContext;
+
+	//edit item dialog
+	const [open, setOpen] = useState(false);
 
 	//get tagsState
 	/*const tagContext = useContext(tagsContext);
@@ -184,6 +205,12 @@ const ItemCard = ({ item, handleItemDelete }) => {
 		setAnchorEl(null);
 	};
 
+	const handleEditClick = () => {
+		saveCurrentItem(item);
+		handleClose();
+		setOpen(true);
+	};
+
 	const handleDeleteClick = () => {
 		handleItemDelete(item);
 	};
@@ -197,7 +224,20 @@ const ItemCard = ({ item, handleItemDelete }) => {
 
 	const handleItemDone = () => {
 		doneItem(item);
-	}
+	};
+
+	const handleNoteCheck = (line) => {
+		const index = note.indexOf(line);
+		let firstPart = note.substr(0, index);
+		let lastPart = note.substr(index + 1);
+
+		saveCurrentItem(item);
+
+		if (line[0] === "x") item.note = firstPart + "-" + lastPart;
+		if (line[0] === "-") item.note = firstPart + "x" + lastPart;
+
+		editItem(item);
+	};
 
 	return (
 		<Card>
@@ -207,13 +247,17 @@ const ItemCard = ({ item, handleItemDelete }) => {
 					action: classes.cardHeaderAction,
 				}} //this is the way to customize children
 				avatar={
-					item.category !== "notebooks" ?
-					<Checkbox
-						checked={item.done}
-						onChange={handleItemDone}
-						inputProps={{ "aria-label": "primary checkbox" }}
-					/>
-					: <ListItemIcon classes={{root: classes.itemIcon}}><NoteIcon /></ListItemIcon>
+					item.category !== "notebooks" ? (
+						<Checkbox
+							checked={item.done}
+							onChange={handleItemDone}
+							inputProps={{ "aria-label": "primary checkbox" }}
+						/>
+					) : (
+						<ListItemIcon classes={{ root: classes.itemIcon }}>
+							<NoteIcon />
+						</ListItemIcon>
+					)
 				}
 				action={
 					<>
@@ -242,12 +286,15 @@ const ItemCard = ({ item, handleItemDelete }) => {
 							open={Boolean(anchorEl)}
 							onClose={handleClose}
 						>
-							<MenuItem onClick={handleClose}>
+							<MenuItem onClick={handleEditClick}>
 								<ListItemIcon>
 									<EditIcon fontSize="small" />
 								</ListItemIcon>
 								Edit
 							</MenuItem>
+							{open ? (
+								<NewItemDialog open={open} setOpen={setOpen} />
+							) : null}
 							<MenuItem onClick={handleDeleteClick}>
 								<ListItemIcon>
 									<DeleteIcon fontSize="small" />
@@ -343,9 +390,40 @@ const ItemCard = ({ item, handleItemDelete }) => {
 					</IconButton>
 				)}
 			</CardActions>
+
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent classes={{ root: classes.cardContent }}>
-					<Typography variant="body2">{note}</Typography>
+					{item.note.split(/\n/).map((line) => {
+						if (line[0] === "-")
+							return (
+								<Grid key={line}>
+									<Checkbox
+										checked={false}
+										onClick={() => handleNoteCheck(line)}
+										inputProps={{
+											"aria-label": "primary checkbox",
+										}}
+									/>
+
+									{line.slice(1)}
+								</Grid>
+							);
+						if (line[0] === "x")
+							return (
+								<Grid key={line}>
+									<Checkbox
+										checked={true}
+										onChange={() => handleNoteCheck(line)}
+										inputProps={{
+											"aria-label": "primary checkbox",
+										}}
+									/>
+
+									{line.slice(1)}
+								</Grid>
+							);
+						return <Typography variant="body2">{line}</Typography>;
+					})}
 				</CardContent>
 			</Collapse>
 		</Card>

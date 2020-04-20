@@ -93,11 +93,14 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 	const itemlistContext = useContext(itemsContext);
 	const {
 		erroritem,
+		currentitem,
 		getItems,
 		addItem,
 		validateItem,
 		getProjects,
 		itemBelongsProject,
+		editItem,
+		unselectCurrentItem,
 	} = itemlistContext;
 
 	//get currentCategory State
@@ -112,6 +115,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 	const handleClose = () => {
 		setOpen(false);
+		unselectCurrentItem();
 		resetState();
 	};
 
@@ -126,10 +130,10 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 			done: false,
 			items: [],
 			dueDate: null,
-			energy: null,
-			waiting: null,
+			time: undefined,
+			energy: undefined,
+			waiting: undefined,
 			schedule: null,
-			repeat: null,
 		});
 	};
 
@@ -145,11 +149,10 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		done: false,
 		items: [],
 		dueDate: null,
-		time: null,
-		energy: null,
-		waiting: null,
+		time: undefined,
+		energy: undefined,
+		waiting: undefined,
 		schedule: null,
-		repeat: null,
 	});
 
 	//when component mounts check if it is beign called from project button
@@ -160,6 +163,9 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 				category: "next",
 				parent: projectId,
 			});
+		}
+		if(currentitem !== null) {
+			updateItem(currentitem)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -202,12 +208,16 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
             actualizarTarea(tarea);
 		}*/
 
-		//new item
-		addItem(item);
-
-		//if it has a parent, attach to it
-		if (item.parent !== "standalone") {
-			itemBelongsProject(item);
+		//checks if it is edition or new item
+		if(currentitem === null){
+			//new item
+			addItem(item);
+			//if it has a parent, attach to it
+			if (item.parent !== "standalone") {
+				itemBelongsProject(item);
+			}
+		} else {
+			editItem(item);
 		}
 
 		//get and display the new item if it belongs to the current category
@@ -361,6 +371,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 									}}
 									animateYearScrolling
 									autoOk
+									ampm={false}
 								/>
 							</MuiPickersUtilsProvider>
 						</FormControl>
@@ -376,9 +387,14 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 								name="waiting"
 								value={item.waiting}
 								onChange={handleFormChange}
-								input={<Input />}
 								MenuProps={{ variant: "menu" }}
 							>
+								<MenuItem key="notset" value={undefined}>
+									<ListItemIcon>
+										<CreateIcon />
+									</ListItemIcon>
+									Not set
+								</MenuItem>
 								{tags
 									.filter((tag) => tag.type === "contact")
 									.map((tag) => (
@@ -517,7 +533,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 									id: "max-width",
 								}}*/
 							>
-								<MenuItem value={null}>Not set</MenuItem>
+								<MenuItem value={undefined}>Not set</MenuItem>
 								<MenuItem value={5}>5 minutes</MenuItem>
 								<MenuItem value={10}>10 minutes</MenuItem>
 								<MenuItem value={15}>15 minutes</MenuItem>
@@ -547,7 +563,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 									id: "max-width",
 								}}*/
 							>
-								<MenuItem value={null}>Not set</MenuItem>
+								<MenuItem value={undefined}>Not set</MenuItem>
 								<MenuItem value="Low">Low</MenuItem>
 								<MenuItem value="Medium">Medium</MenuItem>
 								<MenuItem value="High">High</MenuItem>
