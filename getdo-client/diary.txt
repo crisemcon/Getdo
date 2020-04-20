@@ -91,3 +91,9 @@ Today I focused on doing the done items section, under the items in every catego
 Then I have made the selection of a contact in newItemDialog for the waiting category. It is displayed as a chip in this type of items and if a contact tag is updated/removed,
 it also affects the waiting items that includes this contact.
 
+DAY 12 (19/04/2020) 5hr 30min:
+
+Great journey today! I started to develop the dateTime pick to schedule a item. The date and time is displayed in itemCards as a chip. Then I moved into editing item functionality.
+I reused the newItemDialog, so u can edit an item without changing its id. Finally I added the functionality to add mini checkboxes inside the note of a item, for quick actions
+inside an item. An unchecked box is added if in the item note there is a \n followed by an - , and an checked box if there is an \n followed by an x. When they are clicked,
+they change the item note exactly in the position of the box.

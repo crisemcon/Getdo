@@ -165,6 +165,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 		getItemsById,
 		getItems,
 		deleteItem,
+		editItem,
 	} = itemlistContext;
 
 	//edit item dialog
@@ -225,6 +226,19 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 
 	const handleItemDone = () => {
 		doneItem(item);
+	};
+
+	const handleNoteCheck = (line) => {
+		const index = note.indexOf(line);
+		let firstPart = note.substr(0, index);
+		let lastPart = note.substr(index + 1);
+
+		saveCurrentItem(item);
+
+		if (line[0] === "x") item.note = firstPart + "-" + lastPart;
+		if (line[0] === "-") item.note = firstPart + "x" + lastPart;
+
+		editItem(item);
 	};
 
 	return (
@@ -345,7 +359,37 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent classes={{ root: classes.cardContent }}>
 					<div className={classes.note}>
-						<Typography variant="body2">{note}</Typography>
+					{item.note.split(/\n/).map((line) => {
+						if (line[0] === "-")
+							return (
+								<Grid key={line}>
+									<Checkbox
+										checked={false}
+										onClick={() => handleNoteCheck(line)}
+										inputProps={{
+											"aria-label": "primary checkbox",
+										}}
+									/>
+
+									{line.slice(1)}
+								</Grid>
+							);
+						if (line[0] === "x")
+							return (
+								<Grid key={line}>
+									<Checkbox
+										checked={true}
+										onChange={() => handleNoteCheck(line)}
+										inputProps={{
+											"aria-label": "primary checkbox",
+										}}
+									/>
+
+									{line.slice(1)}
+								</Grid>
+							);
+						return <Typography variant="body2">{line}</Typography>;
+					})}
 					</div>
 					<Divider light />
 					{item.items.length !== 0 //!== undefined ,if this get errors
