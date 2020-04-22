@@ -11,6 +11,8 @@ import {
 	CURRENT_ITEM,
 	EDIT_ITEM,
 	UNSELECT_ITEM,
+	SEARCH_ITEMS,
+	SEARCH_FIELD,
 	/*ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -132,6 +134,18 @@ export default (state, action) => {
 			return {
 				...state,
 				currentitem: null,
+			}
+
+		case SEARCH_ITEMS:
+			return {
+				...state,
+				searchitems: state.search === "" ? state.categoryitems : state.categoryitems.filter(item => item.name.toLowerCase().includes(state.search)),
+			}
+
+		case SEARCH_FIELD:
+			return {
+				...state,
+				search: action.payload
 			}
 		/*case UPDATE_ITEM:
         case ITEM_STATE:
