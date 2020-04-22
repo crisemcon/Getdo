@@ -90,8 +90,8 @@ const useStyles = makeStyles((theme) => ({
 		padding: 16,
 		paddingTop: 4,
 	},
-	marginAuto: {
-		margin: "auto",
+	flexGrow: {
+		flexGrow: 1,
 	},
 	cardHeaderAction: {
 		paddingTop: 4,
@@ -313,69 +313,72 @@ const ItemCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 			/>
 			<CardActions disableSpacing classes={{ root: classes.cardActions }}>
 				<Grid className={classes.tagContainer} container>
-					{tags.length === 0
-						? null
-						: tags.map((tag) => (
-								<Chip
-									icon={tagIcon(tag)}
-									key={tag.id}
-									classes={{ root: classes.tag }}
-									variant="outlined"
-									size="small"
-									label={tag.name}
-								/>
-						  ))}
-					<Grid className={classes.marginAuto} item></Grid>
-					{schedule ? (
-						<Chip
-							classes={{ root: classes.tag }}
-							disabled
-							variant="outlined"
-							size="small"
-							icon={<ScheduleIcon />}
-							label={schedule.toLocaleString()}
-						/>
-					) : null}
-					{waiting ? (
-						<Chip
-							classes={{ root: classes.tag }}
-							disabled
-							variant="outlined"
-							size="small"
-							icon={<PersonIcon />}
-							label={waiting.name}
-						/>
-					) : null}
-					{dueDate ? (
-						<Chip
-							classes={{ root: classes.tag }}
-							disabled
-							variant="outlined"
-							size="small"
-							icon={<EventIcon />}
-							label={calcDueDate(dueDate)}
-						/>
-					) : null}
-					{time ? (
-						<Chip
-							classes={{ root: classes.tag }}
-							disabled
-							variant="outlined"
-							size="small"
-							icon={<TimerIcon />}
-							label={calcTimeRequired(time)}
-						/>
-					) : null}
-					{energy ? (
-						<Chip
-							classes={{ root: classes.tag }}
-							disabled
-							variant="outlined"
-							size="small"
-							icon={energyIcon()}
-							label={energy}
-						/>
-					) : null}
+					<Grid className={classes.flexGrow} item>
+						{tags.length === 0
+							? null
+							: tags.map((tag) => (
+									<Chip
+										icon={tagIcon(tag)}
+										key={tag.id}
+										classes={{ root: classes.tag }}
+										variant="outlined"
+										size="small"
+										label={tag.name}
+									/>
+							  ))}
+					</Grid>
+					<Grid item>
+						{schedule ? (
+							<Chip
+								classes={{ root: classes.tag }}
+								disabled
+								variant="outlined"
+								size="small"
+								icon={<ScheduleIcon />}
+								label={schedule.toLocaleString()}
+							/>
+						) : null}
+						{waiting ? (
+							<Chip
+								classes={{ root: classes.tag }}
+								disabled
+								variant="outlined"
+								size="small"
+								icon={<PersonIcon />}
+								label={waiting.name}
+							/>
+						) : null}
+						{dueDate ? (
+							<Chip
+								classes={{ root: classes.tag }}
+								disabled
+								variant="outlined"
+								size="small"
+								icon={<EventIcon />}
+								label={calcDueDate(dueDate)}
+							/>
+						) : null}
+						{time ? (
+							<Chip
+								classes={{ root: classes.tag }}
+								disabled
+								variant="outlined"
+								size="small"
+								icon={<TimerIcon />}
+								label={calcTimeRequired(time)}
+							/>
+						) : null}
+						{energy ? (
+							<Chip
+								classes={{ root: classes.tag }}
+								disabled
+								variant="outlined"
+								size="small"
+								icon={energyIcon()}
+								label={energy}
+							/>
+						) : null}
+					</Grid>
 				</Grid>
 				{note.length === 0 ? null : (
 					<IconButton

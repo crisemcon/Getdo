@@ -95,8 +95,8 @@ const useStyles = makeStyles((theme) => ({
 		paddingRight: 12,
 		paddingTop: 4,
 	},
-	marginAuto: {
-		margin: "auto",
+	flexGrow: {
+		flexGrow: 1,
 	},
 	cardHeaderAction: {
 		paddingTop: 4,
@@ -214,7 +214,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 		saveCurrentItem(item);
 		handleClose();
 		setOpen(true);
-	}
+	};
 
 	const handleDeleteClick = () => {
 		handleItemDelete(item);
@@ -288,7 +288,9 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 								</ListItemIcon>
 								Edit
 							</MenuItem>
-							{open ? <NewItemDialog open={open} setOpen={setOpen} /> : null}
+							{open ? (
+								<NewItemDialog open={open} setOpen={setOpen} />
+							) : null}
 							<MenuItem onClick={handleDeleteClick}>
 								<ListItemIcon>
 									<DeleteIcon fontSize="small" />
@@ -303,47 +305,50 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 			/>
 			<CardActions disableSpacing classes={{ root: classes.cardActions }}>
 				<Grid className={classes.tagContainer} container>
-					{tags.length === 0
-						? null
-						: tags.map((tag) => (
-								<Chip
-									icon={tagIcon(tag)}
-									key={tag.id}
-									classes={{ root: classes.tag }}
-									variant="outlined"
-									size="small"
-									label={tag.name}
-								/>
-						  ))}
-					<Grid className={classes.marginAuto} item></Grid>
-					<Chip
-						classes={{ root: classes.tag }}
-						disabled
-						variant="outlined"
-						size="small"
-						icon={<TimerIcon />}
-						label="15min"
-					/>
-					{dueDate ? (
-						<Chip
-							classes={{ root: classes.tag }}
-							disabled
-							variant="outlined"
-							size="small"
-							icon={<EventIcon />}
-							label={calcDueDate(dueDate)}
-						/>
-					) : null}
-					{item.items.length !== 0 ? (
+					<Grid className={classes.flexGrow} item>
+						{tags.length === 0
+							? null
+							: tags.map((tag) => (
+									<Chip
+										icon={tagIcon(tag)}
+										key={tag.id}
+										classes={{ root: classes.tag }}
+										variant="outlined"
+										size="small"
+										label={tag.name}
+									/>
+							  ))}
+					</Grid>
+					<Grid item>
 						<Chip
 							classes={{ root: classes.tag }}
 							disabled
 							variant="outlined"
 							size="small"
 							icon={<TimerIcon />}
-							label={calcProjectTimeRequired()}
+							label="15min"
 						/>
-					) : null}
+						{dueDate ? (
+							<Chip
+								classes={{ root: classes.tag }}
+								disabled
+								variant="outlined"
+								size="small"
+								icon={<EventIcon />}
+								label={calcDueDate(dueDate)}
+							/>
+						) : null}
+						{item.items.length !== 0 ? (
+							<Chip
+								classes={{ root: classes.tag }}
+								disabled
+								variant="outlined"
+								size="small"
+								icon={<TimerIcon />}
+								label={calcProjectTimeRequired()}
+							/>
+						) : null}
+					</Grid>
 				</Grid>
 				<IconButton
 					className={clsx(classes.expand, {
@@ -359,37 +364,45 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent classes={{ root: classes.cardContent }}>
 					<div className={classes.note}>
-					{item.note.split(/\n/).map((line) => {
-						if (line[0] === "-")
-							return (
-								<Grid key={line}>
-									<Checkbox
-										checked={false}
-										onClick={() => handleNoteCheck(line)}
-										inputProps={{
-											"aria-label": "primary checkbox",
-										}}
-									/>
+						{item.note.split(/\n/).map((line) => {
+							if (line[0] === "-")
+								return (
+									<Grid key={line}>
+										<Checkbox
+											checked={false}
+											onClick={() =>
+												handleNoteCheck(line)
+											}
+											inputProps={{
+												"aria-label":
+													"primary checkbox",
+											}}
+										/>
 
-									{line.slice(1)}
-								</Grid>
-							);
-						if (line[0] === "x")
-							return (
-								<Grid key={line}>
-									<Checkbox
-										checked={true}
-										onChange={() => handleNoteCheck(line)}
-										inputProps={{
-											"aria-label": "primary checkbox",
-										}}
-									/>
+										{line.slice(1)}
+									</Grid>
+								);
+							if (line[0] === "x")
+								return (
+									<Grid key={line}>
+										<Checkbox
+											checked={true}
+											onChange={() =>
+												handleNoteCheck(line)
+											}
+											inputProps={{
+												"aria-label":
+													"primary checkbox",
+											}}
+										/>
 
-									{line.slice(1)}
-								</Grid>
+										{line.slice(1)}
+									</Grid>
+								);
+							return (
+								<Typography variant="body2">{line}</Typography>
 							);
-						return <Typography variant="body2">{line}</Typography>;
-					})}
+						})}
 					</div>
 					<Divider light />
 					{item.items.length !== 0 //!== undefined ,if this get errors
