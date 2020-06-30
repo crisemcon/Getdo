@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer } from "react";
 import itemsContext from "./itemsContext";
 import itemsReducer from "./itemsReducer";
 
@@ -16,8 +16,6 @@ import {
 	CURRENT_ITEM,
 	EDIT_ITEM,
 	UNSELECT_ITEM,
-	SEARCH_ITEMS,
-	SEARCH_FIELD,
 	/*
 	UPDATE_ITEM,
 	ITEM_STATE,
@@ -300,19 +298,12 @@ const ItemsState = (props) => {
 			},
 		],
 		categoryitems: [],
-		search: '',
-		searchitems: [],
 		erroritem: false,
 		currentitem: null,
 	};
 
-	
 	//create dispatch and state
 	const [state, dispatch] = useReducer(itemsReducer, initialState);
-	
-	useEffect(() => {
-		searchItems();
-	}, [state.search, state.categoryitems])
 
 	//FUNCTIONS
 	//get items from selected category
@@ -425,21 +416,6 @@ const ItemsState = (props) => {
 			type: UNSELECT_ITEM,
 		})
 	}
-
-	//update search with searchfield
-	const searchField = (text) => {
-		dispatch({
-			type: SEARCH_FIELD,
-			payload: text,
-		})
-	}
-	//filter categoryitems with the info provided by searchbar
-	const searchItems = () => {
-		dispatch({
-			type: SEARCH_ITEMS,
-		})
-	}
-
 	/*
     //cambia el estado de cada tarea
     const cambiarEstadoTarea = tarea => {
@@ -471,7 +447,6 @@ const ItemsState = (props) => {
 				categoryitems: state.categoryitems,
 				erroritem: state.erroritem,
 				currentitem: state.currentitem,
-				searchitems: state.searchitems,
 				getItems,
 				addItem,
 				validateItem,
@@ -487,8 +462,6 @@ const ItemsState = (props) => {
 				saveCurrentItem,
 				editItem,
 				unselectCurrentItem,
-				searchItems,
-				searchField,
 			}}
 		>
 			{props.children}

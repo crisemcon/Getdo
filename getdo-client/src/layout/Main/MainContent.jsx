@@ -50,7 +50,7 @@ const MainContent = () => {
 		deleteItem,
 		updateItemsDeletedTag,
 		saveCurrentItem,
-		searchitems,
+		editItem,
 	} = itemlistContext;
 
 	//get sidebarState
@@ -89,7 +89,7 @@ const MainContent = () => {
 			justify="flex-start"
 			alignItems="flex-start"
 		>
-			{searchitems.length === 0 ? (
+			{categoryitems.length === 0 ? (
 				category === "tags" ? (
 					<div className={classes.maxWidth}>
 						<ExpansionPanel>
@@ -185,7 +185,7 @@ const MainContent = () => {
 				)
 			) : category !== "projects" ? (
 				<>
-					{searchitems.map((item) =>
+					{categoryitems.map((item) =>
 						item.done ? null : (
 							<Grid
 								key={item.id}
@@ -214,7 +214,7 @@ const MainContent = () => {
 							</ExpansionPanelSummary>
 							<ExpansionPanelDetails>
 								<Grid container>
-									{searchitems.map((item) =>
+									{categoryitems.map((item) =>
 										item.done ? (
 											<Grid
 												key={item.id}
@@ -240,7 +240,7 @@ const MainContent = () => {
 				</>
 			) : (
 				<>
-					{searchitems.map((item) =>
+					{categoryitems.map((item) =>
 						item.done ? null : (
 							<Grid
 								key={item.id}
@@ -269,7 +269,7 @@ const MainContent = () => {
 							</ExpansionPanelSummary>
 							<ExpansionPanelDetails>
 								<Grid container>
-									{searchitems.map((item) =>
+									{categoryitems.map((item) =>
 										item.done ? (
 											<Grid
 												key={item.id}

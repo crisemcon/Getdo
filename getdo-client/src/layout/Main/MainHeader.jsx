@@ -1,9 +1,7 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment } from "react";
 import InputBase from "@material-ui/core/InputBase";
 import Typography from "@material-ui/core/Typography";
 import Search from "@material-ui/icons/Search";
-
-import itemsContext from "../../context/items/itemsContext";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -65,20 +63,6 @@ const useStyles = makeStyles((theme) => ({
 const MainHeader = () => {
 	const classes = useStyles();
 
-	//get itemsState
-	const itemlistContext = useContext(itemsContext);
-	const {
-		searchField
-	} = itemlistContext;
-
-	//const [search, updateSearch] = useState('');
-
-	const handleSearch = e => {
-		//updateSearch(e.target.value);
-		//if (search !== '') searchField(search);
-		searchField(e.target.value.toLowerCase());
-	}
-
 	return (
 		<Fragment>
 			<Typography noWrap color="textSecondary" className={classes.header}>
@@ -95,8 +79,6 @@ const MainHeader = () => {
 						root: classes.inputRoot,
 						input: classes.inputInput,
 					}}
-					onChange={e => handleSearch(e)}
-					//value={search}
 				/>
 			</div>
 		</Fragment>
