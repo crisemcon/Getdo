@@ -218,6 +218,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 			}
 		} else {
 			editItem(item);
+			getItems(category);
 		}
 
 		//get and display the new item if it belongs to the current category

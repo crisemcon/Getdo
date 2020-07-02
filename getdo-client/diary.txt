@@ -97,3 +97,21 @@ Great journey today! I started to develop the dateTime pick to schedule a item. 
 I reused the newItemDialog, so u can edit an item without changing its id. Finally I added the functionality to add mini checkboxes inside the note of a item, for quick actions
 inside an item. An unchecked box is added if in the item note there is a \n followed by an - , and an checked box if there is an \n followed by an x. When they are clicked,
 they change the item note exactly in the position of the box.
+
+DAY 13 (22/04/2020) 1hr 21min:
+
+I'm back with this project. Today I made the search bar functional. It filters the items that are beign displayed in maincontent, comparing the search text with the titles of
+the items in the current category. It slowed the whole app a bit, so I'm not sure the implementation is optimal. Anyway, it is working. I'm close to finish the front end part
+of this project.
+
+DAY 14 (29/06/2020) 1hr 1min:
+
+After two months i'm returning to this project. I just finished a course where I learned how to use the MERN stack, and I think it will be good to implement this webapp with that
+stack. So first of all I reverted the last feature (search bar), because it was really slow and it was implemented by force in the maincontent, so to keep things clear i just 
+reverted it.
+
+DAY 15 (02/07/2020) 1hr 14min:
+
+It's been really strange to come back and understand my own code from 2 months ago. But I managed to introduce some corrections: Trash is not an item category, so items has
+a boolean trash that indicates if they are in the trashcan or not. This way, we can restore items from trash to their respective category. Also did a little fix to the edit
+feature when we are in the focus category. Before we could'nt see the changes after the edit if you were in the focus category.

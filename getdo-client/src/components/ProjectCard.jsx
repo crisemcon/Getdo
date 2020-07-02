@@ -27,6 +27,7 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PersonIcon from "@material-ui/icons/Person";
 import EventIcon from "@material-ui/icons/Event";
+import RestoreIcon from '@material-ui/icons/Restore';
 
 import itemsContext from "../context/items/itemsContext";
 import ItemCard from "../components/ItemCard";
@@ -220,6 +221,12 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 		handleItemDelete(item);
 	};
 
+	const handleRestoreClick = () => {
+		item.trash = false;
+		getItems("trash");
+	}
+
+
 	const handleItemFocus = () => {
 		focusItem(item);
 	};
@@ -282,15 +289,27 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 							open={Boolean(anchorEl)}
 							onClose={handleClose}
 						>
-							<MenuItem onClick={handleEditClick}>
-								<ListItemIcon>
-									<EditIcon fontSize="small" />
-								</ListItemIcon>
-								Edit
-							</MenuItem>
-							{open ? (
-								<NewItemDialog open={open} setOpen={setOpen} />
-							) : null}
+							{item.trash ? (
+								<MenuItem onClick={handleRestoreClick}>
+									<ListItemIcon>
+										<RestoreIcon fontSize="small" />
+									</ListItemIcon>
+									Restore
+								</MenuItem>
+							) : (
+								<>
+								<MenuItem onClick={handleEditClick}>
+									<ListItemIcon>
+										<EditIcon fontSize="small" />
+									</ListItemIcon>
+									Edit
+								</MenuItem>
+								{open ? (
+									<NewItemDialog open={open} setOpen={setOpen} />
+								) : null}
+								
+								</>)
+							}
 							<MenuItem onClick={handleDeleteClick}>
 								<ListItemIcon>
 									<DeleteIcon fontSize="small" />

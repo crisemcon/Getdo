@@ -23,7 +23,7 @@ export default (state, action) => {
 				return {
 					...state,
 					categoryitems: state.items.filter(
-						(item) => item.focus === true
+						(item) => item.focus === true && item.trash === false
 					),
 				};
 			} else if (action.payload === "tags") {
@@ -31,11 +31,18 @@ export default (state, action) => {
 					...state,
 					categoryitems: [],
 				};
+			} else if(action.payload === "trash"){
+				return {
+					...state,
+					categoryitems: state.items.filter(
+						(item) => item.trash === true
+					)
+				}
 			}
 			return {
 				...state,
 				categoryitems: state.items.filter(
-					(item) => item.category === action.payload
+					(item) => item.category === action.payload && item.trash === false
 				),
 			};
 

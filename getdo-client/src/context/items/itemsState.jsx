@@ -40,6 +40,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
@@ -51,6 +52,7 @@ const ItemsState = (props) => {
 				done: false,
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
 				parent: 3,
+				trash: false,
 				items: [],
 			},
 			{
@@ -62,6 +64,7 @@ const ItemsState = (props) => {
 				done: false,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				items: [2, 6, 8],
+				trash: false,
 				parent: "standalone",
 			},
 			{
@@ -76,6 +79,7 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 				],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
@@ -90,6 +94,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
@@ -105,6 +110,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: 3,
+				trash: false,
 				items: [],
 			},
 			{
@@ -116,6 +122,7 @@ const ItemsState = (props) => {
 				done: false,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
@@ -130,6 +137,7 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 				],
 				parent: 3,
+				trash: false,
 				items: [],
 			},
 			{
@@ -145,11 +153,12 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
 				id: 10,
-				category: "trash",
+				category: "inbox",
 				name: "test trash",
 				note: lorem,
 				focus: true,
@@ -160,12 +169,13 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: "standalone",
+				trash: true,
 				items: [],
 			},
 			{
 				id: 11,
-				category: "trash",
-				name: "test trash",
+				category: "next",
+				name: "test trash 2",
 				note: lorem,
 				focus: false,
 				done: false,
@@ -174,6 +184,7 @@ const ItemsState = (props) => {
 					{ id: 2, name: "Mariella", type: "contact" },
 				],
 				parent: "standalone",
+				trash: true,
 				items: [],
 			},
 			{
@@ -189,6 +200,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
@@ -200,6 +212,7 @@ const ItemsState = (props) => {
 				done: false,
 				tags: [{ id: 2, name: "Mariella", type: "contact" }],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
@@ -211,6 +224,7 @@ const ItemsState = (props) => {
 				done: false,
 				tags: [{ id: 1, name: "Universidad", type: "area" }],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
@@ -221,6 +235,7 @@ const ItemsState = (props) => {
 				focus: true,
 				tags: [{ id: 3, name: "Computador", type: "label" }],
 				parent: "standalone",
+				trash: false,
 				items: [],
 			},
 			{
@@ -235,6 +250,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: 19,
+				trash: false,
 				items: [],
 			},
 			{
@@ -250,6 +266,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: 19,
+				trash: false,
 				items: [],
 			},
 			{
@@ -265,6 +282,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				parent: 19,
+				trash: false,
 				items: [],
 			},
 			{
@@ -280,6 +298,7 @@ const ItemsState = (props) => {
 					{ id: 3, name: "Computador", type: "label" },
 				],
 				items: [16, 17, 18],
+				trash: false,
 				parent: "standalone",
 			},
 			{
@@ -374,7 +393,7 @@ const ItemsState = (props) => {
 	//get items by id for projects, so trash items are not called
 	const getItemsById = itemsid => {
 		const itemArray = state.items.filter(function(item){
-			return itemsid.indexOf(item.id) !== -1 && item.category !== "trash";
+			return itemsid.indexOf(item.id) !== -1 && !item.trash;
 		})
 		return itemArray;
 	};

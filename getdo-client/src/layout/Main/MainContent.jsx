@@ -66,13 +66,13 @@ const MainContent = () => {
 
 	//delete item
 	const handleItemDelete = (item) => {
-		const currentcategory = item.category;
-		if (item.category === "trash") {
+		if (item.trash) {
 			deleteItem(item);
+			getItems("trash");
 		} else {
-			item.category = "trash";
+			item.trash = true;
+			getItems(category);
 		}
-		getItems(currentcategory);
 	};
 
 	//delete tag
