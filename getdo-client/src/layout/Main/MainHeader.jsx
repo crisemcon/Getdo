@@ -66,7 +66,7 @@ const MainHeader = () => {
 	return (
 		<Fragment>
 			<Typography noWrap color="textSecondary" className={classes.header}>
-				Getdo
+				GETDO
 			</Typography>
 			<div className={classes.grow}></div>
 			<div className={classes.search}>

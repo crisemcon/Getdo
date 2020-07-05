@@ -115,3 +115,7 @@ DAY 15 (02/07/2020) 1hr 14min:
 It's been really strange to come back and understand my own code from 2 months ago. But I managed to introduce some corrections: Trash is not an item category, so items has
 a boolean trash that indicates if they are in the trashcan or not. This way, we can restore items from trash to their respective category. Also did a little fix to the edit
 feature when we are in the focus category. Before we could'nt see the changes after the edit if you were in the focus category.
+
+DAY 16 (04/07/2020) 1hr 14min:
+
+Started creating the register, login and app routes and making a simple layout for them.
