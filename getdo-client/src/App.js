@@ -4,19 +4,21 @@ import Main from "./layout/Main/Main";
 import SidebarState from "./context/sidebar/sidebarState";
 import ItemsState from "./context/items/itemsState";
 import TagsState from "./context/tags/tagsState";
+import AuthState from "./context/auth/authState";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./layout/Auth/Login";
 import Register from "./layout/Auth/Register";
 import PrivateRoute from "./routes/PrivateRoute";
 
-import tokenAuth from './config/token';
+import tokenAuth from "./config/token";
 
 function App() {
 	return (
 		<SidebarState>
-				<ItemsState>
-					<TagsState>
+			<ItemsState>
+				<TagsState>
+					<AuthState>
 						<Router>
 							<Switch>
 								<Route exact path="/" component={Login} />
@@ -32,8 +34,9 @@ function App() {
 								/>
 							</Switch>
 						</Router>
-					</TagsState>
-				</ItemsState>
+					</AuthState>
+				</TagsState>
+			</ItemsState>
 		</SidebarState>
 	);
 }

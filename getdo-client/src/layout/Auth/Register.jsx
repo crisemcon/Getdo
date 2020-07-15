@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-
+import AuthContext from "../../context/auth/authContext";
 
 function Copyright() {
 	return (
@@ -52,8 +52,73 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignUp() {
+const SignUp = (props) => {
 	const classes = useStyles();
+
+	//extract values from context
+    const authContext = useContext(AuthContext);
+	const {message, authenticated, registrarUsuario} = authContext;
+	
+	//en caso de que el user se haya authenticated o registrado o sea un registro duplicado
+	//in case that the user is authenticated
+    useEffect(() => {
+        if(authenticated){
+            props.history.push('/proyectos');
+        }
+
+        if(message){
+            //mostrarAlerta(message.msg, message.categoria);
+        }
+        //eslint-disable-next-line
+	}, [message, authenticated, props.history]);
+	
+	//state signup
+    const [user, saveUser] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirm: ''
+	})
+	
+	//extract from user
+	const {name, email, password, confirm} = user;
+	
+	//when the user is typing
+    const onChange = e => {
+        saveUser({
+            ...user,
+            [e.target.name]: e.target.value
+        })
+	}
+	
+	//when the user submit the register
+    const onSubmit = e => {
+        e.preventDefault();
+
+        //validar que no haya campos vacios
+        if(name.trim() ==='' || email.trim() ==='' || password.trim() ==='' || confirm.trim() ==='') {
+            //mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
+            return;
+        }
+        //password minimo de 6 caracteres
+        if(password.length < 6){
+            //mostrarAlerta('El password debe ser de al menos 6 caracteres', 'alerta-error')
+            return;
+        }
+
+        //pasword coincidan
+        if(password !== confirm){
+            //mostrarAlerta('Los passwords no son iguales', 'alerta-error')
+            return;
+        }
+
+        //pasarlo al action (useReducer)
+        registrarUsuario({
+            name,
+            email,
+            password
+        })
+    }
 
 	return (
 		<Container component="main" maxWidth="xs">
@@ -72,18 +137,20 @@ export default function SignUp() {
 				<Typography component="h1" variant="h5">
 					Sign up
 				</Typography>
-				<form className={classes.form} noValidate>
+				<form className={classes.form} on onSubmit={onSubmit}>
 					<Grid container spacing={2}>
 						<Grid item xs={12}>
 							<TextField
 								autoComplete="fname"
-								name="firstName"
+								name="name"
 								variant="outlined"
 								required
 								fullWidth
 								id="firstName"
 								label="Name"
 								autoFocus
+								onChange={onChange}
+								value={name}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -95,6 +162,8 @@ export default function SignUp() {
 								label="Email Address"
 								name="email"
 								autoComplete="email"
+								onChange={onChange}
+								value={email}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -107,6 +176,22 @@ export default function SignUp() {
 								type="password"
 								id="password"
 								autoComplete="current-password"
+								onChange={onChange}
+								value={password}
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								variant="outlined"
+								required
+								fullWidth
+								name="confirm"
+								label="Repeat Password"
+								type="password"
+								id="confirm"
+								autoComplete="current-password"
+								onChange={onChange}
+								value={confirm}
 							/>
 						</Grid>
 					</Grid>
@@ -121,7 +206,7 @@ export default function SignUp() {
 					</Button>
 					<Grid container justify="flex-end">
 						<Grid item>
-							<Link href="#" variant="body2">
+							<Link href="/" variant="body2">
 								Already have an account? Sign in
 							</Link>
 						</Grid>
@@ -134,3 +219,5 @@ export default function SignUp() {
 		</Container>
 	);
 }
+
+export default SignUp;
