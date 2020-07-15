@@ -119,3 +119,10 @@ feature when we are in the focus category. Before we could'nt see the changes af
 DAY 16 (04/07/2020) 1hr 14min:
 
 Started creating the register, login and app routes and making a simple layout for them.
+
+DAY 17 (13/07/2020) 47 mins:
+
+Today I setted up the backend side of the app. I installed MongoDB as a service in my computer, so the database is runing in my local machine. The I made the express server
+and connected to the database succesfully.
+
+Day 18 (14/07/2020) 

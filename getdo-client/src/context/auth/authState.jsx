@@ -3,7 +3,7 @@ import AuthContext from './authContext';
 import AuthReducer from './authReducer';
 import clienteAxios from '../config/axios';
 import tokenAuth from '../config/token';
-import {REGISTRO_EXITOSO, REGISTRO_ERROR, OBTENER_USUARIO, LOGIN_EXITOSO, LOGIN_ERROR, CERRAR_SESION} from '../../types';
+import {REGISTER_SUCCESS, REGISTER_ERROR, GET_USER, LOGIN_SUCCESS, LOGIN_ERROR, SIGN_OUT} from '../../types';
 
 const AuthState = props => {
 
@@ -22,7 +22,7 @@ const AuthState = props => {
 			const respuesta = await clienteAxios.post('/api/usuarios', datos);
 
 			dispatch({
-				type:REGISTRO_EXITOSO,
+				type:REGISTER_SUCCESS,
 				payload: respuesta.data
 			})
 
@@ -35,7 +35,7 @@ const AuthState = props => {
 			}
 
 			dispatch({
-				type:REGISTRO_ERROR,
+				type:REGISTER_ERROR,
 				payload: alerta
 			})
 		}
@@ -51,7 +51,7 @@ const AuthState = props => {
 			const respuesta = await clienteAxios.get('/api/auth');
 			//console.log(respuesta);
 			dispatch({
-				type:OBTENER_USUARIO,
+				type:GET_USER,
 				payload: respuesta.data.usuario
 			})
 		} catch (error) {
@@ -68,7 +68,7 @@ const AuthState = props => {
 			const respuesta = await clienteAxios.post('/api/auth', datos);
 			
 			dispatch({
-				type:LOGIN_EXITOSO,
+				type:LOGIN_SUCCESS,
 				payload: respuesta.data
 			});
 
@@ -92,7 +92,7 @@ const AuthState = props => {
 	//cierra la sesion del usuario
 	const cerrarSesion = () => {
 		dispatch({
-			type: CERRAR_SESION
+			type: SIGN_OUT
 		})
 	}
 
