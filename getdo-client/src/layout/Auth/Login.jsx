@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,6 +10,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+import AuthContext from '../../context/auth/authContext';
 
 function Copyright() {
 	return (
@@ -50,8 +52,60 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignIn() {
+const SignIn = (props) => {
 	const classes = useStyles();
+
+	//extract values from context
+    const authContext = useContext(AuthContext);
+	const {message, authenticated, signIn} = authContext;
+	
+	//in case that the user is authenticated
+    useEffect(() => {
+        if(authenticated){
+            props.history.push('/app');
+        }
+
+        if(message){
+            //mostrarAlerta(message.msg, message.categoria);
+        }
+        //eslint-disable-next-line
+	}, [message, authenticated, props.history]);
+
+	//state signin
+    const [user, saveUser] = useState({
+        email: '',
+        password: '',
+	})
+
+	//extract from user
+	const {email, password} = user;
+
+	//when the user is typing
+    const onChange = e => {
+        saveUser({
+            ...user,
+            [e.target.name]: e.target.value
+        })
+	}
+
+	//when the user submit the register
+    const onSubmit = e => {
+        e.preventDefault();
+
+        //validar que no haya campos vacios
+        if(email.trim() ==='' || password.trim() ==='') {
+			//mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
+			console.log("Todos los campos son obligatorios");
+            return;
+        }
+
+        //pasarlo al action (useReducer)
+        signIn({
+            email,
+            password
+        })
+    }
+
 
 	return (
 		<Container component="main" maxWidth="xs">
@@ -70,7 +124,7 @@ export default function SignIn() {
 				<Typography component="h1" variant="h5">
 					Sign in
 				</Typography>
-				<form className={classes.form} noValidate>
+				<form className={classes.form} onSubmit={onSubmit}>
 					<TextField
 						variant="outlined"
 						margin="normal"
@@ -81,6 +135,8 @@ export default function SignIn() {
 						name="email"
 						autoComplete="email"
 						autoFocus
+						onChange={onChange}
+						value={email}
 					/>
 					<TextField
 						variant="outlined"
@@ -92,6 +148,8 @@ export default function SignIn() {
 						type="password"
 						id="password"
 						autoComplete="current-password"
+						onChange={onChange}
+						value={password}
 					/>
 					{/*<FormControlLabel
 						control={<Checkbox value="remember" color="primary" />}
@@ -128,3 +186,5 @@ export default function SignIn() {
 		</Container>
 	);
 }
+
+export default SignIn;

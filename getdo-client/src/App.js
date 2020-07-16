@@ -13,6 +13,12 @@ import PrivateRoute from "./routes/PrivateRoute";
 
 import tokenAuth from "./config/token";
 
+//revisar si tenemos un token
+const token = localStorage.getItem('token');
+if(token){
+	tokenAuth(token);
+}
+
 function App() {
 	return (
 		<SidebarState>

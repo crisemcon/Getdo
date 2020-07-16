@@ -57,13 +57,12 @@ const SignUp = (props) => {
 
 	//extract values from context
     const authContext = useContext(AuthContext);
-	const {message, authenticated, registrarUsuario} = authContext;
+	const {message, authenticated, registerUser} = authContext;
 	
-	//en caso de que el user se haya authenticated o registrado o sea un registro duplicado
 	//in case that the user is authenticated
     useEffect(() => {
         if(authenticated){
-            props.history.push('/proyectos');
+            props.history.push('/app');
         }
 
         if(message){
@@ -97,29 +96,32 @@ const SignUp = (props) => {
 
         //validar que no haya campos vacios
         if(name.trim() ==='' || email.trim() ==='' || password.trim() ==='' || confirm.trim() ==='') {
-            //mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
+			//mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
+			console.log("Todos los campos son obligatorios");
             return;
         }
         //password minimo de 6 caracteres
         if(password.length < 6){
-            //mostrarAlerta('El password debe ser de al menos 6 caracteres', 'alerta-error')
+			//mostrarAlerta('El password debe ser de al menos 6 caracteres', 'alerta-error')
+			console.log('El password debe ser de al menos 6 caracteres');
             return;
         }
 
         //pasword coincidan
         if(password !== confirm){
-            //mostrarAlerta('Los passwords no son iguales', 'alerta-error')
+			//mostrarAlerta('Los passwords no son iguales', 'alerta-error')
+			console.log("Los passwords no son iguales");
             return;
         }
 
         //pasarlo al action (useReducer)
-        registrarUsuario({
+        registerUser({
             name,
             email,
             password
         })
-    }
-
+	}
+	
 	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
@@ -137,7 +139,7 @@ const SignUp = (props) => {
 				<Typography component="h1" variant="h5">
 					Sign up
 				</Typography>
-				<form className={classes.form} on onSubmit={onSubmit}>
+				<form className={classes.form} onSubmit={onSubmit}>
 					<Grid container spacing={2}>
 						<Grid item xs={12}>
 							<TextField

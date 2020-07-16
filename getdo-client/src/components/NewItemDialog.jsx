@@ -134,6 +134,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 			energy: undefined,
 			waiting: undefined,
 			schedule: null,
+			trash: false,
 		});
 	};
 
@@ -153,6 +154,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		energy: undefined,
 		waiting: undefined,
 		schedule: null,
+		trash: false,
 	});
 
 	//when component mounts check if it is beign called from project button

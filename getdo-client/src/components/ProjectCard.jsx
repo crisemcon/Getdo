@@ -297,7 +297,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 									Restore
 								</MenuItem>
 							) : (
-								<>
+								<div>
 								<MenuItem onClick={handleEditClick}>
 									<ListItemIcon>
 										<EditIcon fontSize="small" />
@@ -308,7 +308,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 									<NewItemDialog open={open} setOpen={setOpen} />
 								) : null}
 								
-								</>)
+								</div>)
 							}
 							<MenuItem onClick={handleDeleteClick}>
 								<ListItemIcon>

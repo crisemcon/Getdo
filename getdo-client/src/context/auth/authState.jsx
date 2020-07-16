@@ -17,43 +17,43 @@ const AuthState = props => {
 
 	const [state, dispatch] = useReducer(AuthReducer, initialState);
 
-	const registrarUsuario = async datos => {
+	const registerUser = async data => {
 		try {
-			const respuesta = await axiosClient.post('/api/users', datos);
+			const response = await axiosClient.post('/api/users', data);
 
 			dispatch({
 				type:REGISTER_SUCCESS,
-				payload: respuesta.data
+				payload: response.data
 			})
 
-			//obtener el user
-			usuarioAutenticado();
+			//get the user
+			userAuthenticated();
 		} catch (error) {
 			console.log(error);
-			const alerta = {
-				msg: error.response.data.msg,
-				categoria: 'alerta-error'
+			const alert = {
+				message: error.response.data.message,
+				category: 'alert-error'
 			}
 
 			dispatch({
 				type:REGISTER_ERROR,
-				payload: alerta
+				payload: alert
 			})
 		}
 	}
 
-	//retorna el user authenticated
-	const usuarioAutenticado = async () => {
+	//returns authenticated user
+	const userAuthenticated = async () => {
 		const token = localStorage.getItem('token');
 		if(token) {
 			tokenAuth(token);
 		}
 		try {
-			const respuesta = await axiosClient.get('/api/auth');
-			//console.log(respuesta);
+			const response = await axiosClient.get('/api/auth');
+			//console.log(response);
 			dispatch({
 				type:GET_USER,
-				payload: respuesta.data.user
+				payload: response.data.user
 			})
 		} catch (error) {
 			console.log(error);
@@ -63,35 +63,35 @@ const AuthState = props => {
 		}
 	}
 
-	//cuando el user inicia sesion
-	const iniciarSesion = async datos => {
+	//when user signs in
+	const signIn = async data => {
 		try {
-			const respuesta = await axiosClient.post('/api/auth', datos);
+			const response = await axiosClient.post('/api/auth', data);
 			
 			dispatch({
 				type:LOGIN_SUCCESS,
-				payload: respuesta.data
+				payload: response.data
 			});
 
 			//obtener el user
-			usuarioAutenticado();
+			userAuthenticated();
 
 		} catch (error) {
-			console.log(error.response.data.msg);
-			const alerta = {
-				msg: error.response.data.msg,
-				categoria: 'alerta-error'
+			console.log(error.response.data.message);
+			const alert = {
+				message: error.response.data.message,
+				category: 'alert-error'
 			}
 
 			dispatch({
 				type:LOGIN_ERROR,
-				payload: alerta
+				payload: alert
 			})
 		}
 	}
 
-	//cierra la sesion del user
-	const cerrarSesion = () => {
+	//log out user
+	const signOut = () => {
 		dispatch({
 			type: SIGN_OUT
 		})
@@ -105,10 +105,10 @@ const AuthState = props => {
 				user: state.user,
 				message: state.message,
 				loading: state.loading,
-				registrarUsuario,
-				iniciarSesion,
-				usuarioAutenticado,
-				cerrarSesion
+				registerUser,
+				signIn,
+				userAuthenticated,
+				signOut
 			}}
 		>
 		{props.children}
