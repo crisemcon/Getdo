@@ -29,10 +29,9 @@ const AuthState = props => {
 			//get the user
 			userAuthenticated();
 		} catch (error) {
-			console.log(error);
 			const alert = {
-				message: error.response.data.message,
-				category: 'alert-error'
+				msg: error.response.data.msg,
+				category: 'error'
 			}
 
 			dispatch({
@@ -56,9 +55,14 @@ const AuthState = props => {
 				payload: response.data.user
 			})
 		} catch (error) {
-			console.log(error);
+			//console.log(error);
+			const alert = {
+				msg: error.response.data.msg,
+				category: 'error'
+			}
 			dispatch({
-				type: LOGIN_ERROR
+				type: LOGIN_ERROR,
+				payload: alert
 			})
 		}
 	}
@@ -77,10 +81,10 @@ const AuthState = props => {
 			userAuthenticated();
 
 		} catch (error) {
-			console.log(error.response.data.message);
+			//console.log(error.response.data.message);
 			const alert = {
-				message: error.response.data.message,
-				category: 'alert-error'
+				msg: error.response.data.msg,
+				category: 'error'
 			}
 
 			dispatch({

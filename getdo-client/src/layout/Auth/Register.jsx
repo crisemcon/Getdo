@@ -12,6 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import AuthContext from "../../context/auth/authContext";
+import AlertContext from '../../context/alerts/alertsContext';
+import AlertNotification from "../../components/AlertNotification";
 
 function Copyright() {
 	return (
@@ -58,6 +60,8 @@ const SignUp = (props) => {
 	//extract values from context
     const authContext = useContext(AuthContext);
 	const {message, authenticated, registerUser} = authContext;
+	const alertContext = useContext(AlertContext);
+    const {alert, showAlert} = alertContext;
 	
 	//in case that the user is authenticated
     useEffect(() => {
@@ -66,7 +70,8 @@ const SignUp = (props) => {
         }
 
         if(message){
-            //mostrarAlerta(message.msg, message.categoria);
+			//console.log(message)
+            showAlert(message.msg, message.category);
         }
         //eslint-disable-next-line
 	}, [message, authenticated, props.history]);
@@ -94,27 +99,24 @@ const SignUp = (props) => {
     const onSubmit = e => {
         e.preventDefault();
 
-        //validar que no haya campos vacios
+        //validate that there is no empty fields
         if(name.trim() ==='' || email.trim() ==='' || password.trim() ==='' || confirm.trim() ==='') {
-			//mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
-			console.log("Todos los campos son obligatorios");
+			showAlert('All fields are required', 'warning');
             return;
         }
-        //password minimo de 6 caracteres
+        //password min length=6
         if(password.length < 6){
-			//mostrarAlerta('El password debe ser de al menos 6 caracteres', 'alerta-error')
-			console.log('El password debe ser de al menos 6 caracteres');
+			showAlert('The password must be at least 6 characters', 'warning');
             return;
         }
 
-        //pasword coincidan
+        //password match?
         if(password !== confirm){
-			//mostrarAlerta('Los passwords no son iguales', 'alerta-error')
-			console.log("Los passwords no son iguales");
+			showAlert('Passwords do not match', 'warning')
             return;
         }
 
-        //pasarlo al action (useReducer)
+        //pass it to action (useReducer)
         registerUser({
             name,
             email,
@@ -124,6 +126,7 @@ const SignUp = (props) => {
 	
 	return (
 		<Container component="main" maxWidth="xs">
+			{alert ? (<AlertNotification alert={alert}/>) : null}
 			<CssBaseline />
 			<div className={classes.paper}>
 				<Typography

@@ -12,6 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import AuthContext from '../../context/auth/authContext';
+import AlertContext from '../../context/alerts/alertsContext';
+import AlertNotification from "../../components/AlertNotification";
 
 function Copyright() {
 	return (
@@ -58,6 +60,8 @@ const SignIn = (props) => {
 	//extract values from context
     const authContext = useContext(AuthContext);
 	const {message, authenticated, signIn} = authContext;
+	const alertContext = useContext(AlertContext);
+    const {alert, showAlert} = alertContext;
 	
 	//in case that the user is authenticated
     useEffect(() => {
@@ -66,7 +70,7 @@ const SignIn = (props) => {
         }
 
         if(message){
-            //mostrarAlerta(message.msg, message.categoria);
+            showAlert(message.msg, message.category);
         }
         //eslint-disable-next-line
 	}, [message, authenticated, props.history]);
@@ -92,14 +96,13 @@ const SignIn = (props) => {
     const onSubmit = e => {
         e.preventDefault();
 
-        //validar que no haya campos vacios
+        //validate that there is no empty fields
         if(email.trim() ==='' || password.trim() ==='') {
-			//mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
-			console.log("Todos los campos son obligatorios");
+			showAlert('All fields are required', 'error');
             return;
         }
 
-        //pasarlo al action (useReducer)
+        //pass it to action (useReducer)
         signIn({
             email,
             password
@@ -109,6 +112,7 @@ const SignIn = (props) => {
 
 	return (
 		<Container component="main" maxWidth="xs">
+			{alert ? (<AlertNotification alert={alert}/>) : null}
 			<CssBaseline />
 			<div className={classes.paper}>
 				<Typography

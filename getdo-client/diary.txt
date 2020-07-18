@@ -129,3 +129,12 @@ DAY 18 (14/07/2020) 1hr 42min:
 
 Now the register form is working, it connects to the api route for register an user, and then if it is successful, it will insert that user into the db.
 
+DAY 19 (15/07/2020) 1hr 34min:
+
+Now the login form is working, it connects to the api route to log in an user. Also there was a bug in the app from a previous change where I implemented a
+boolean for items that are in the trash can. When a new item was created, it didn't have that property, so they were'nt show in the main content. Fixed.
+
+DAY 20 (17/07/2020) 1hr 13min:
+
+Today I focused on doing the alerts context and the alert component, which is a snackbar that contains an alert, so it gives the impression of beign a notification which
+warns when there is an error. Login and register errors/warnings are functional.
