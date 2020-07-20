@@ -18,6 +18,7 @@ import MainContent from "./MainContent";
 import NewItemFab from "../../components/NewItemFab";
 
 import itemsContext from "../../context/items/itemsContext";
+import AuthContext from '../../context/auth/authContext';
 
 
 const config = {
@@ -99,12 +100,15 @@ const config = {
 const Main = () => {
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
-	const { getItems } = itemlistContext;
-	//showing inbox items at start
+	const { fetchItems } = itemlistContext;
+	const authContext = useContext(AuthContext);
+	const {userAuthenticated} = authContext;
+
 	useEffect(() => {
-		getItems("inbox");
+		userAuthenticated();
+		
 		//eslint-disable-next-line
-	}, []);
+	}, [])
 
 	return (
 		<Root config={config}>

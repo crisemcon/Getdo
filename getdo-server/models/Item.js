@@ -16,9 +16,10 @@ const ItemSchema = mongoose.Schema({
 	category: {
 		type: String,
 	},
-	/*tags: {
-		type: 
-	},*/
+	tags: {
+		type: Array,
+		default: [],
+	},
 	parent: {
 		type: String,
 		required: true,
@@ -50,11 +51,11 @@ const ItemSchema = mongoose.Schema({
 	},
 	trash: {
 		type: Boolean,
-	},/*
+	},
 	created:{
 		type: Date,
 		default: Date.now()
-	}*/
+	}
 });
 
 module.exports = mongoose.model('Item', ItemSchema);

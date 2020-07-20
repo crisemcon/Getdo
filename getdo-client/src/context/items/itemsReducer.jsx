@@ -11,6 +11,8 @@ import {
 	CURRENT_ITEM,
 	EDIT_ITEM,
 	UNSELECT_ITEM,
+	FETCH_ITEMS,
+	ITEM_ERROR,
 	/*ITEM_STATE,
 	CURRENT_ITEM,
 	UPDATE_ITEM,*/
@@ -139,6 +141,12 @@ export default (state, action) => {
 			return {
 				...state,
 				currentitem: null,
+			}
+
+		case FETCH_ITEMS:
+			return {
+				...state,
+				items: action.payload
 			}
 		/*case UPDATE_ITEM:
         case ITEM_STATE:

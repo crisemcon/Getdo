@@ -35,7 +35,7 @@ function App() {
 										path="/register"
 										component={Register}
 									/>
-									<Route //should be privateRoute
+									<PrivateRoute
 										exact
 										path="/app"
 										component={Main}

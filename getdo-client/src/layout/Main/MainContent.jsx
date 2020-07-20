@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -42,6 +42,13 @@ const useStyles = makeStyles((theme) => ({
 const MainContent = () => {
 	const classes = useStyles();
 
+	//showing inbox items at start
+	useEffect(async () => {
+		await fetchItems();
+		getItems("inbox");
+		//eslint-disable-next-line
+	}, []);
+
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
 	const {
@@ -50,6 +57,7 @@ const MainContent = () => {
 		deleteItem,
 		updateItemsDeletedTag,
 		saveCurrentItem,
+		fetchItems,
 		editItem,
 	} = itemlistContext;
 
