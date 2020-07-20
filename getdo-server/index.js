@@ -20,6 +20,7 @@ const PORT = process.env.PORT || 4000;
 // import routes
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/items", require("./routes/items"));
 /*
 app.use("/api/usuarios", require("./routes/usuarios"));
 app.use("/api/auth", require("./routes/auth"));
