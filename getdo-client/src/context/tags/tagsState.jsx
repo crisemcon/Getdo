@@ -9,12 +9,12 @@ import {ADD_TAG, VALIDATE_TAG, DELETE_TAG, UPDATE_TAG } from "../../types";
 const TagsState = (props) => {
 	const initialState = {
 		tags: [
-			{ id: 1, name: "Universidad", type: "area" },
-			{ id: 2, name: "Mariella", type: "contact" },
-			{ id: 3, name: "Computador", type: "label" },
-			{ id: 4, name: "Casa", type: "area" },
-			{ id: 5, name: "Bastianex", type: "contact" },
-			{ id: 6, name: "Celular", type: "label" },
+			{ _id: 1, name: "Universidad", type: "area" },
+			{ _id: 2, name: "Mariella", type: "contact" },
+			{ _id: 3, name: "Computador", type: "label" },
+			{ _id: 4, name: "Casa", type: "area" },
+			{ _id: 5, name: "Bastianex", type: "contact" },
+			{ _id: 6, name: "Celular", type: "label" },
 		],
 		errortag: false,
 	};
@@ -26,14 +26,14 @@ const TagsState = (props) => {
 	//get tags by ids (array)
 	const getTags = tagsid => {
 		const tagsArray = state.tags.filter(function(tag){
-			return tagsid.indexOf(tag.id) !== -1;
+			return tagsid.indexOf(tag._id) !== -1;
 		})
 		return tagsArray;
 	};
 
 	//add new item
 	const addTag = tag => {
-		tag.id = uuid();
+		tag._id = uuid();
 		dispatch({
 			type: ADD_TAG,
 			payload: tag,

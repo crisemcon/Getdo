@@ -219,6 +219,9 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 				itemBelongsProject(item);
 			}
 		} else {
+			if(item.category === "notebooks"){
+				item.done = false;
+			}
 			editItem(item);
 			getItems(category);
 		}
@@ -403,7 +406,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 									.map((tag) => (
 										//
 										<MenuItem
-											key={tag.id}
+											key={tag._id}
 											value={tag}
 											//style={getStyles(name, personName, theme)}
 										>
@@ -440,8 +443,8 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 									//
 
 									<MenuItem
-										key={project.id}
-										value={project.id}
+										key={project._id}
+										value={project._id}
 										//style={getStyles(name, personName, theme)}
 									>
 										<ListItemIcon>
@@ -468,7 +471,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 									{selected.map((tag) => {
 										return (
 											<Chip
-												key={tag.id}
+												key={tag._id}
 												label={tag.name}
 												className={classes.chip}
 											/>
@@ -481,7 +484,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 							{tags.map((tag) => (
 								//
 								<MenuItem
-									key={tag.id}
+									key={tag._id}
 									value={tag}
 									//style={getStyles(name, personName, theme)}
 								>

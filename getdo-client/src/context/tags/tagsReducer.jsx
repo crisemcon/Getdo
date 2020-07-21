@@ -3,10 +3,6 @@ import {
 	VALIDATE_TAG,
 	DELETE_TAG,
 	UPDATE_TAG,
-	/*FOCUS_ITEM,
-	ITEM_STATE,
-	CURRENT_ITEM,
-	UPDATE_ITEM,*/
 } from "../../types";
 
 export default (state, action) => {
@@ -25,12 +21,12 @@ export default (state, action) => {
 		case DELETE_TAG:
 			return {
 				...state,
-				tags: state.tags.filter((tag) => tag.id !== action.payload),
+				tags: state.tags.filter((tag) => tag._id !== action.payload),
 			};
 		case UPDATE_TAG:
 			return {
 				...state,
-				tags: state.tags.map(tag => tag.id === action.payload.id ? action.payload : tag),
+				tags: state.tags.map(tag => tag._id === action.payload._id ? action.payload : tag),
 				errortag: false,
 			}
 		default:

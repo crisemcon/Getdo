@@ -337,7 +337,7 @@ const ItemCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 							: tags.map((tag) => (
 									<Chip
 										icon={tagIcon(tag)}
-										key={tag.id}
+										key={tag._id}
 										classes={{ root: classes.tag }}
 										variant="outlined"
 										size="small"

@@ -85,8 +85,8 @@ const MainContent = () => {
 
 	//delete tag
 	const handleTagDelete = (tag) => {
-		deleteTag(tag.id);
-		updateItemsDeletedTag(tag.id);
+		deleteTag(tag._id);
+		updateItemsDeletedTag(tag._id);
 		getItems("tags");
 	};
 
@@ -112,7 +112,7 @@ const MainContent = () => {
 								<Grid container>
 									{areaTags.map((tag) => (
 										<Grid
-											key={tag.id}
+											key={tag._id}
 											item
 											xs={12}
 											className={classes.item}
@@ -141,7 +141,7 @@ const MainContent = () => {
 								<Grid container>
 									{labelTags.map((tag) => (
 										<Grid
-											key={tag.id}
+											key={tag._id}
 											item
 											xs={12}
 											className={classes.item}
@@ -170,7 +170,7 @@ const MainContent = () => {
 								<Grid container>
 									{contactTags.map((tag) => (
 										<Grid
-											key={tag.id}
+											key={tag._id}
 											item
 											xs={12}
 											className={classes.item}
@@ -189,14 +189,14 @@ const MainContent = () => {
 						</ExpansionPanel>
 					</div>
 				) : (
-					<Typography>No hay tareas</Typography>
+					<Typography>There are no actions to show</Typography>
 				)
 			) : category !== "projects" ? (
 				<>
 					{categoryitems.map((item) =>
 						item.done ? null : (
 							<Grid
-								key={item.id}
+								key={item._id}
 								item
 								xs={12}
 								className={classes.item}
@@ -225,7 +225,7 @@ const MainContent = () => {
 									{categoryitems.map((item) =>
 										item.done ? (
 											<Grid
-												key={item.id}
+												key={item._id}
 												item
 												xs={12}
 												className={classes.item}
@@ -251,7 +251,7 @@ const MainContent = () => {
 					{categoryitems.map((item) =>
 						item.done ? null : (
 							<Grid
-								key={item.id}
+								key={item._id}
 								item
 								xs={12}
 								className={classes.item}
@@ -280,7 +280,7 @@ const MainContent = () => {
 									{categoryitems.map((item) =>
 										item.done ? (
 											<Grid
-												key={item.id}
+												key={item._id}
 												item
 												xs={12}
 												className={classes.item}

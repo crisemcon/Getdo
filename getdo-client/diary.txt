@@ -138,3 +138,8 @@ DAY 20 (17/07/2020) 1hr 13min:
 
 Today I focused on doing the alerts context and the alert component, which is a snackbar that contains an alert, so it gives the impression of beign a notification which
 warns when there is an error. Login and register errors/warnings are functional.
+
+DAY 21 (20/07/2020) 3hr 40min:
+
+Tryhard mode today. I did the item backend, which consists in the route, the controller and the schema. Tested it with postman. The I did the privateroute, so you can
+see the maincontent only if you are logged in. For now, you can just requests the items from the db, but not add, delete or update.

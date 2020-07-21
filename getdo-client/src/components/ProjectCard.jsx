@@ -189,7 +189,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 	//delete item
 	const handleChildItemDelete = (item) => {
 		if (item.category === "trash") {
-			deleteItem(item.id);
+			deleteItem(item._id);
 		} else {
 			item.category = "trash";
 		}
@@ -330,7 +330,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 							: tags.map((tag) => (
 									<Chip
 										icon={tagIcon(tag)}
-										key={tag.id}
+										key={tag._id}
 										classes={{ root: classes.tag }}
 										variant="outlined"
 										size="small"
@@ -383,10 +383,10 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 			<Collapse in={expanded} timeout="auto" unmountOnExit>
 				<CardContent classes={{ root: classes.cardContent }}>
 					<div className={classes.note}>
-						{item.note.split(/\n/).map((line) => {
+						{item.note.split(/\n/).map((line, index) => {
 							if (line[0] === "-")
 								return (
-									<Grid key={line}>
+									<Grid key={index}>
 										<Checkbox
 											checked={false}
 											onClick={() =>
@@ -403,7 +403,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 								);
 							if (line[0] === "x")
 								return (
-									<Grid key={line}>
+									<Grid key={index}>
 										<Checkbox
 											checked={true}
 											onChange={() =>
@@ -419,14 +419,14 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 									</Grid>
 								);
 							return (
-								<Typography variant="body2">{line}</Typography>
+								<Typography key={index} variant="body2">{line}</Typography>
 							);
 						})}
 					</div>
 					<Divider light />
 					{item.items.length !== 0 //!== undefined ,if this get errors
 						? getItemsById(item.items).map((item) => (
-								<Fragment key={item.id}>
+								<Fragment key={item._id}>
 									<ItemCard
 										item={item}
 										handleItemDelete={handleChildItemDelete}
@@ -437,7 +437,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 						  ))
 						: null}
 
-					<NewProjectItemButton projectId={item.id} />
+					<NewProjectItemButton projectId={item._id} />
 				</CardContent>
 			</Collapse>
 		</Card>

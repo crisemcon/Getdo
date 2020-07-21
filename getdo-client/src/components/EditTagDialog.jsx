@@ -79,7 +79,7 @@ export default function EditTagDialog({ tag, handleMenuClose }) {
 	//form
 	//form tag state
 	const [editedtag, editTag] = useState({
-		id: tag.id,
+		_id: tag._id,
 		name: tag.name,
 		type: tag.type,
 	});

@@ -66,13 +66,13 @@ export default (state, action) => {
 				...state,
 				items: state.items.filter(
 					(item) =>
-						item.id !== action.payload.id &&
-						action.payload.items.indexOf(item.id) === -1
+						item._id !== action.payload._id &&
+						action.payload.items.indexOf(item._id) === -1
 				),
 			};
 		case FOCUS_ITEM:
 			state.items.filter(
-				(item) => item.id === action.payload.id
+				(item) => item._id === action.payload._id
 			)[0].focus = !action.payload.focus;
 			return {
 				...state,
@@ -80,7 +80,7 @@ export default (state, action) => {
 
 		case DONE_ITEM:
 			state.items.filter(
-				(item) => item.id === action.payload.id
+				(item) => item._id === action.payload._id
 			)[0].done = !action.payload.done;
 			return {
 				...state,
@@ -89,12 +89,12 @@ export default (state, action) => {
 		case UPDATE_ITEMSTAG:
 			state.items.forEach((item) => {
 				item.tags.forEach((tag) =>
-					tag.id === action.payload.id
+					tag._id === action.payload._id
 						? (tag.name = action.payload.name)
 						: null
 				);
 				if (item.waiting) {
-					if (item.waiting.id === action.payload.id) {
+					if (item.waiting._id === action.payload._id) {
 						item.waiting.name = action.payload.name;
 					}
 				}
@@ -106,11 +106,11 @@ export default (state, action) => {
 		case UPDATE_ITEMSDELETEDTAG:
 			state.items.forEach((item) => {
 				const newTags = item.tags.filter(
-					(tag) => tag.id !== action.payload
+					(tag) => tag._id !== action.payload
 				);
 				item.tags = newTags;
 				if (item.waiting) {
-					if (item.waiting.id === action.payload) {
+					if (item.waiting._id === action.payload) {
 						item.waiting = null;
 					}
 				}
@@ -133,7 +133,7 @@ export default (state, action) => {
 		case EDIT_ITEM:
 			return {
 				...state,
-				items: state.items.map(item => item.id === action.payload.id ? action.payload : item),
+				items: state.items.map(item => item._id === action.payload._id ? action.payload : item),
 				currentitem: null,
 			}
 
