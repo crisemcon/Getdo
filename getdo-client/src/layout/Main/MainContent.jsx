@@ -43,9 +43,13 @@ const MainContent = () => {
 	const classes = useStyles();
 
 	//showing inbox items at start
-	useEffect(async () => {
-		await fetchItems();
-		getItems("inbox");
+	useEffect(() => {
+		async function fetchData(){
+			await fetchItems();
+			await fetchTags();
+			await getItems("inbox");
+		}
+		fetchData();
 		//eslint-disable-next-line
 	}, []);
 
@@ -67,7 +71,7 @@ const MainContent = () => {
 
 	//get tagsState
 	const tagContext = useContext(tagsContext);
-	const { tags, deleteTag } = tagContext;
+	const { tags, deleteTag, fetchTags } = tagContext;
 	const areaTags = tags.filter((tag) => tag.type === "area");
 	const labelTags = tags.filter((tag) => tag.type === "label");
 	const contactTags = tags.filter((tag) => tag.type === "contact");

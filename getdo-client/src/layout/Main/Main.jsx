@@ -96,17 +96,16 @@ const config = {
 	},
 };
 
-
 const Main = () => {
-	//get itemsState
-	const itemlistContext = useContext(itemsContext);
-	const { fetchItems } = itemlistContext;
+
 	const authContext = useContext(AuthContext);
 	const {userAuthenticated} = authContext;
 
 	useEffect(() => {
-		userAuthenticated();
-		
+		async function fetchData(){
+			await userAuthenticated();
+		}
+		fetchData();
 		//eslint-disable-next-line
 	}, [])
 
