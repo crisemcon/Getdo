@@ -103,27 +103,6 @@ export default (state, action) => {
 				...state,
 			};
 
-		case UPDATE_ITEMSDELETEDTAG:
-			state.items.forEach((item) => {
-				const newTags = item.tags.filter(
-					(tag) => tag._id !== action.payload
-				);
-				item.tags = newTags;
-				if (item.waiting) {
-					if (item.waiting._id === action.payload) {
-						item.waiting = null;
-					}
-				}
-			});
-			return {
-				...state,
-			};
-
-		case ITEM_BELONGSPROJECT:
-			return {
-				...state,
-			};
-
 		case CURRENT_ITEM:
 			return {
 				...state,
@@ -147,6 +126,11 @@ export default (state, action) => {
 			return {
 				...state,
 				items: action.payload
+			}
+		case ITEM_ERROR:
+			return {
+				...state,
+				alert: action.payload
 			}
 		/*case UPDATE_ITEM:
         case ITEM_STATE:

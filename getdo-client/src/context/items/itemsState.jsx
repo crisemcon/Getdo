@@ -323,6 +323,7 @@ const ItemsState = (props) => {
 		categoryitems: [],
 		erroritem: false,
 		currentitem: null,
+		alert: null,
 	};
 
 	//create dispatch and state
@@ -359,12 +360,33 @@ const ItemsState = (props) => {
 	};
 
 	//add new item
-	const addItem = (item) => {
+	const addItem = async item => {
+		/*
 		item._id = uuid();
 		dispatch({
 			type: ADD_ITEM,
 			payload: item,
 		});
+		*/
+		try {
+            const result = await axiosClient.post('/api/items', item);
+            //console.log(result);
+            //insertar el proyecto en el state
+            dispatch({
+                type: ADD_ITEM,
+                payload: result.data
+			})
+			return result.data;
+        } catch (error) {
+            const alert = {
+                msg: 'There was an error',
+                categoria: 'error'
+            }
+            dispatch({
+                type: ITEM_ERROR,
+                payload: alert
+            })
+        }
 	};
 
 	//validate the itemname and display an error if it is empty
@@ -375,11 +397,29 @@ const ItemsState = (props) => {
 	};
 
 	//permanently deletes an item by its id
-	const deleteItem = (item) => {
+	const deleteItem = async item => {
+		/*
 		dispatch({
 			type: DELETE_ITEM,
 			payload: item,
 		});
+		*/
+		try {
+            await axiosClient.delete(`/api/items/${item._id}`);
+            dispatch({
+                type: DELETE_ITEM,
+                payload: item
+            })
+        } catch (error) {
+            const alert = {
+                msg: 'There was an error',
+                categoria: 'error'
+            }
+            dispatch({
+                type: ITEM_ERROR,
+                payload: alert
+            })
+        }
 	};
 
 	//focus or unfocus an item
@@ -408,9 +448,16 @@ const ItemsState = (props) => {
 
 	//update items when a tag is deleted
 	const updateItemsDeletedTag = (tagId) => {
-		dispatch({
-			type: UPDATE_ITEMSDELETEDTAG,
-			payload: tagId,
+		state.items.forEach((item) => {
+			const newTags = item.tags.filter(
+				(tag) => tag._id !== tagId
+			);
+			item.tags = newTags;
+			if (item.waiting) {
+				if (item.waiting._id === tagId) {
+					item.waiting = null;
+				}
+			}
 		});
 	};
 
@@ -430,7 +477,9 @@ const ItemsState = (props) => {
 
 	//attach item to project
 	const itemBelongsProject = (item) => {
-		state.items.filter(project => project._id === item.parent)[0].items.push(item._id);
+		const project = state.items.filter(project => project._id === item.parent)[0];
+		project.items.push(item._id);
+		editItem(project);
 	}
 
 	//get project by id
@@ -447,11 +496,30 @@ const ItemsState = (props) => {
 	}
 
 	//edits an item
-	const editItem = item => {
+	const editItem = async item => {
+		/*
 		dispatch({
 			type: EDIT_ITEM,
 			payload: item,
 		})
+		*/
+		try {
+            const result = await axiosClient.put(`/api/items/${item._id}`, item);
+            //console.log(result);
+            dispatch({
+                type: EDIT_ITEM,
+                payload: result.data.item
+            })
+        } catch (error) {
+            const alert = {
+                msg: 'There was an error',
+                categoria: 'error'
+            }
+            dispatch({
+                type: ITEM_ERROR,
+                payload: alert
+            })
+        }
 	}
 
 	//unselect current item

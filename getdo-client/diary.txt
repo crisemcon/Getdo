@@ -143,3 +143,8 @@ DAY 21 (20/07/2020) 3hr 40min:
 
 Tryhard mode today. I did the item backend, which consists in the route, the controller and the schema. Tested it with postman. The I did the privateroute, so you can
 see the maincontent only if you are logged in. For now, you can just requests the items from the db, but not add, delete or update.
+
+DAY 22 (21/07/2020) 2hr 13min:
+
+I fixed the error that appeared when you try to get into the app page without beign logged in. I had to wrap the fetch functions into an async function. Then I have
+made the backend for the tags so you can requests the tags from db, add, delete and update. Some bugs found and willing to fix them tomorrow.

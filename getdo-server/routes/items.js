@@ -17,7 +17,7 @@ router.get('/',
 
 router.put('/:id',
 	auth,
-	itemController.actualizarProyecto
+	itemController.editItem
 )
 
 router.delete('/:id',

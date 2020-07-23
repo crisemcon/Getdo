@@ -127,7 +127,14 @@ const TagsState = (props) => {
                 payload: result.data.tag
             })
         } catch (error) {
-            console.log(error)
+            const alert = {
+                msg: 'There was an error',
+                categoria: 'error'
+            }
+            dispatch({
+                type: TAG_ERROR,
+                payload: alert
+            })
         }
 	}
 

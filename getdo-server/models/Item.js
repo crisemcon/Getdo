@@ -29,11 +29,13 @@ const ItemSchema = mongoose.Schema({
 	},
 	done: {
 		type: Boolean,
-	},/*
-	items: {
+	},
+	items: {/*
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Item'
-	},*/
+		ref: 'Item'*/
+		type: Array,
+		default: [],
+	},
 	dueDate: {
 		type: Date,
 	},
@@ -42,12 +44,14 @@ const ItemSchema = mongoose.Schema({
 	},
 	energy: {
 		type: String,
-	},/*
+	},
 	waiting: {
-		tag id
-	},*/
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Tag',
+	},
 	schedule: {
 		type: Date,
+		default: null,
 	},
 	trash: {
 		type: Boolean,

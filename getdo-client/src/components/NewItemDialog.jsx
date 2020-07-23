@@ -190,7 +190,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		return <PersonIcon />;
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		//e.preventDefault();
 		//validate if itemname is empty
 		if (item.name.trim() === "") {
@@ -213,26 +213,26 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		//checks if it is edition or new item
 		if(currentitem === null){
 			//new item
-			addItem(item);
+			const storedItem = await addItem(item);
 			//if it has a parent, attach to it
 			if (item.parent !== "standalone") {
-				itemBelongsProject(item);
+				await itemBelongsProject(storedItem);
 			}
 		} else {
 			if(item.category === "notebooks"){
 				item.done = false;
 			}
-			editItem(item);
-			getItems(category);
+			await editItem(item);
+			await getItems(category);
 		}
 
 		//get and display the new item if it belongs to the current category
 		if (category === item.category) {
-			getItems(category);
+			await getItems(category);
 		}
 		//reset form and close dialog
-		setOpen(false);
-		resetState();
+		await setOpen(false);
+		await resetState();
 	};
 
 	/*//action name textfield

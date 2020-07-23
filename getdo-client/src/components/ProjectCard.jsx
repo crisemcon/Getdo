@@ -117,7 +117,8 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 	//calculate dueDate
 	const calcDueDate = (dueDate) => {
 		const now = new Date();
-		const elapsed = dueDate.getTime() - now.getTime();
+		const date = new Date(dueDate);
+		const elapsed = date.getTime() - now.getTime();
 		return timeConversion(elapsed);
 	};
 
