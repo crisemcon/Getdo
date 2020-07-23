@@ -230,10 +230,12 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 
 	const handleItemFocus = () => {
 		focusItem(item);
+		getItems("projects");
 	};
 
 	const handleItemDone = () => {
 		doneItem(item);
+		getItems("projects");
 	};
 
 	const handleNoteCheck = (line) => {
@@ -340,14 +342,6 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 							  ))}
 					</Grid>
 					<Grid item>
-						<Chip
-							classes={{ root: classes.tag }}
-							disabled
-							variant="outlined"
-							size="small"
-							icon={<TimerIcon />}
-							label="15min"
-						/>
 						{dueDate ? (
 							<Chip
 								classes={{ root: classes.tag }}

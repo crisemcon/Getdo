@@ -423,27 +423,42 @@ const ItemsState = (props) => {
 	};
 
 	//focus or unfocus an item
-	const focusItem = (item) => {
-		dispatch({
-			type: FOCUS_ITEM,
-			payload: item,
-		});
+	const focusItem = async (item) => {
+		const selectedItem = state.items.filter(
+			(currentItem) => currentItem._id === item._id
+		)[0];
+		selectedItem.focus = !item.focus;
+		await editItem(selectedItem);
 	};
 
 	//done or undone an item
-	const doneItem = (item) => {
-		dispatch({
-			type: DONE_ITEM,
-			payload: item,
-		})
+	const doneItem = async (item) => {
+		const selectedItem = state.items.filter(
+			(currentItem) => currentItem._id === item._id
+		)[0];
+		selectedItem.done = !item.done;
+		await editItem(selectedItem);
 	}
 
 	//update item when tagState is modified
 	const updateItemsTag = (tag) => {
-		dispatch({
+		state.items.forEach((currentItem) => {
+			currentItem.tags.forEach((currentTag) =>
+				currentTag._id === tag._id
+					? (currentTag.name = tag.name, editItem(currentItem))
+					: null
+			);
+			if (currentItem.waiting) {
+				if (currentItem.waiting._id === tag._id) {
+					currentItem.waiting.name = tag.name;
+					editItem(currentItem);
+				}
+			}
+		});
+		/*dispatch({
 			type: UPDATE_ITEMSTAG,
 			payload: tag,
-		});
+		});*/
 	};
 
 	//update items when a tag is deleted

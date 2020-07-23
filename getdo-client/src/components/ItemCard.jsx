@@ -224,13 +224,13 @@ const ItemCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 
 	const handleItemFocus = () => {
 		focusItem(item);
-		if (category === "focus") {
-			getItems(category);
-		}
+		getItems(category);
+		
 	};
 
 	const handleItemDone = () => {
 		doneItem(item);
+		getItems(category);
 	};
 
 	const handleNoteCheck = (line) => {
@@ -444,7 +444,7 @@ const ItemCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 									{line.slice(1)}
 								</Grid>
 							);
-						return <Typography variant="body2">{line}</Typography>;
+						return <Typography key={line} variant="body2">{line}</Typography>;
 					})}
 				</CardContent>
 			</Collapse>

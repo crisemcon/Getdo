@@ -97,11 +97,11 @@ export default function EditTagDialog({ tag, handleMenuClose }) {
 		});
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		//e.preventDefault();
 		//validate if tagname is empty
 		if (editedtag.name.trim() === "") {
-			validateTag();
+			await validateTag();
 			return;
 		}
 
@@ -118,12 +118,12 @@ export default function EditTagDialog({ tag, handleMenuClose }) {
 		}*/
 
 		//new tag
-		updateTag(editedtag);
-		updateItemsTag(editedtag);
+		await updateTag(editedtag);
+		await updateItemsTag(editedtag);
 
 		//reset form and close dialog
-		setOpen(false);
-		resetState();
+		await setOpen(false);
+		await resetState();
 	};
 
 	return (

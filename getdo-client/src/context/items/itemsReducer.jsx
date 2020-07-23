@@ -70,38 +70,6 @@ export default (state, action) => {
 						action.payload.items.indexOf(item._id) === -1
 				),
 			};
-		case FOCUS_ITEM:
-			state.items.filter(
-				(item) => item._id === action.payload._id
-			)[0].focus = !action.payload.focus;
-			return {
-				...state,
-			};
-
-		case DONE_ITEM:
-			state.items.filter(
-				(item) => item._id === action.payload._id
-			)[0].done = !action.payload.done;
-			return {
-				...state,
-			};
-
-		case UPDATE_ITEMSTAG:
-			state.items.forEach((item) => {
-				item.tags.forEach((tag) =>
-					tag._id === action.payload._id
-						? (tag.name = action.payload.name)
-						: null
-				);
-				if (item.waiting) {
-					if (item.waiting._id === action.payload._id) {
-						item.waiting.name = action.payload.name;
-					}
-				}
-			});
-			return {
-				...state,
-			};
 
 		case CURRENT_ITEM:
 			return {

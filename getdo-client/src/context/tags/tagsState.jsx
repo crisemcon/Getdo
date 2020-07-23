@@ -64,7 +64,7 @@ const TagsState = (props) => {
 		});*/
 		try {
             const result = await axiosClient.post('/api/tags', tag);
-            console.log(result);
+            //console.log(result);
             //insertar el proyecto en el state
             dispatch({
                 type: ADD_TAG,
@@ -121,7 +121,7 @@ const TagsState = (props) => {
 		})*/
 		try {
             const result = await axiosClient.put(`/api/tags/${tag._id}`, tag);
-            console.log(result);
+            //console.log(result);
             dispatch({
                 type: UPDATE_TAG,
                 payload: result.data.tag

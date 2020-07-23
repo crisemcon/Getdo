@@ -77,13 +77,13 @@ const MainContent = () => {
 	const contactTags = tags.filter((tag) => tag.type === "contact");
 
 	//delete item
-	const handleItemDelete = (item) => {
+	const handleItemDelete = async (item) => {
 		if (item.trash) {
-			deleteItem(item);
-			getItems("trash");
+			await deleteItem(item);
+			await getItems("trash");
 		} else {
 			item.trash = true;
-			getItems(category);
+			await getItems(category);
 		}
 	};
 
