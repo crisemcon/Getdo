@@ -17,7 +17,6 @@ import MainNavContent from "./MainNavContent";
 import MainContent from "./MainContent";
 import NewItemFab from "../../components/NewItemFab";
 
-import itemsContext from "../../context/items/itemsContext";
 import AuthContext from '../../context/auth/authContext';
 
 

@@ -83,6 +83,7 @@ const MainContent = () => {
 			await getItems("trash");
 		} else {
 			item.trash = true;
+			await editItem(item);
 			await getItems(category);
 		}
 	};

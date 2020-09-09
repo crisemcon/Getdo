@@ -148,3 +148,15 @@ DAY 22 (21/07/2020) 2hr 13min:
 
 I fixed the error that appeared when you try to get into the app page without beign logged in. I had to wrap the fetch functions into an async function. Then I have
 made the backend for the tags so you can requests the tags from db, add, delete and update. Some bugs found and willing to fix them tomorrow.
+
+DAY 23 (22/07/2020) 2hr 4min:
+
+Today I have completed all the functions (I think) that requires data persistence. That means, the functionality and manipulation of frontend data is updating the db.
+Looking for bugs next time, and cleanup the code.
+
+DAY 24 (09/09/2020) 56 min:
+
+I'm back. I'ts been a long time. Last month I struggled to get disciplined in any aspect of my life, so I'm trying to get things done again. Today I fixed problems with
+the persistance of deleted elements in the backend. Then I have repaired an memory leak error that was caused by an state update when the component newItemDialog was already
+closed by pressing the 'x' or by setting the item done. Also, now when you press the floating action button to add a new item, the current category of your sidebar is going
+to be the default category in the dialog.

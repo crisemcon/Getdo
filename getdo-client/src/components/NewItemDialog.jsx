@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -99,6 +99,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		validateItem,
 		getProjects,
 		itemBelongsProject,
+		itemNotBelongsProject,
 		editItem,
 		unselectCurrentItem,
 	} = itemlistContext;
@@ -116,61 +117,35 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 	const handleClose = () => {
 		setOpen(false);
 		unselectCurrentItem();
-		resetState();
-	};
-
-	const resetState = () => {
-		updateItem({
-			name: "",
-			note: "",
-			category: "inbox",
-			tags: [],
-			parent: "standalone",
-			focus: false,
-			done: false,
-			items: [],
-			dueDate: null,
-			time: undefined,
-			energy: undefined,
-			waiting: undefined,
-			schedule: null,
-			trash: false,
-		});
 	};
 
 	//form
 	//form item state
-	const [item, updateItem] = useState({
-		name: "",
-		note: "",
-		category: "inbox",
-		tags: [],
-		parent: "standalone",
-		focus: false,
-		done: false,
-		items: [],
-		dueDate: null,
-		time: undefined,
-		energy: undefined,
-		waiting: undefined,
-		schedule: null,
-		trash: false,
-	});
-
-	//when component mounts check if it is beign called from project button
-	useEffect(() => {
-		if (projectId !== undefined) {
-			updateItem({
-				...item,
-				category: "next",
-				parent: projectId,
-			});
-		}
-		if(currentitem !== null) {
-			updateItem(currentitem)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const [item, updateItem] = useState(
+		currentitem !== null
+			? currentitem
+			: {
+					name: "",
+					note: "",
+					category:
+						category !== "trash" && category !== "focus"
+							? projectId !== undefined
+								? "next"
+								: category
+							: "inbox",
+					tags: [],
+					parent: projectId !== undefined ? projectId : "standalone",
+					focus: false,
+					done: false,
+					items: [],
+					dueDate: null,
+					time: undefined,
+					energy: undefined,
+					waiting: undefined,
+					schedule: null,
+					trash: false,
+			  }
+	);
 
 	//function to read form values
 	const handleFormChange = (e) => {
@@ -198,20 +173,8 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 			return;
 		}
 
-		///////////////////////TODO revisa si es edicion o nueva tarea
-		/*if(tareaseleccionada === null){
-            //tarea nueva
-            //agregar la nueva tarea al state de tareas
-            tarea.proyectoId = proyectoActual.id;
-            tarea.estado = false;
-            agregarTarea(tarea);   
-        } else {
-            //actualizar tarea existente
-            actualizarTarea(tarea);
-		}*/
-
 		//checks if it is edition or new item
-		if(currentitem === null){
+		if (currentitem === null) {
 			//new item
 			const storedItem = await addItem(item);
 			//if it has a parent, attach to it
@@ -219,8 +182,17 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 				await itemBelongsProject(storedItem);
 			}
 		} else {
-			if(item.category === "notebooks"){
+			if (item.category === "notebooks") {
 				item.done = false;
+			}
+			if (
+				currentitem.parent !== "standalone" &&
+				item.parent !== currentitem.parent
+			) {
+				await itemNotBelongsProject(currentitem);
+			}
+			if (item.parent !== "standalone") {
+				await itemBelongsProject(item);
 			}
 			await editItem(item);
 			await getItems(category);
@@ -232,21 +204,7 @@ export default function NewItemDialog({ open, setOpen, projectId }) {
 		}
 		//reset form and close dialog
 		await setOpen(false);
-		await resetState();
 	};
-
-	/*//action name textfield
-	const [namevalue, setNameValue] = React.useState("");
-	const handleNameChange = (event) => {
-		setNameValue(event.target.value);
-	};
-	//action notes textfield
-	const [notevalue, setNoteValue] = React.useState("");
-	const handleNoteChange = (event) => {
-		setNoteValue(event.target.value);
-	};*/
-
-	//category select
 
 	return (
 		<Dialog

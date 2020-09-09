@@ -36,6 +36,8 @@ import Divider from "@material-ui/core/Divider";
 import NewProjectItemButton from "../components/NewProjectItemButton";
 import NewItemDialog from "../components/NewItemDialog";
 
+import {calcDueDate, calcProjectTimeRequired} from '../functions'
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: 345,
@@ -114,51 +116,6 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 	const classes = useStyles();
 	const { name, note, tags, dueDate } = item;
 
-	//calculate dueDate
-	const calcDueDate = (dueDate) => {
-		const now = new Date();
-		const date = new Date(dueDate);
-		const elapsed = date.getTime() - now.getTime();
-		return timeConversion(elapsed);
-	};
-
-	function timeConversion(millisec) {
-		const hours = (millisec / (1000 * 60 * 60)).toFixed(1);
-		const days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0);
-		const weeks = (days / 7).toFixed(0);
-
-		if (hours < -24) {
-			return `${days} days late`;
-		} else if (hours < 0 && hours >= -24) {
-			return `Yesterday`;
-		} else if (hours >= 0 && hours < 24) {
-			return `Today`;
-		} else if (hours >= 24 && hours < 48) {
-			return `Tomorrow`;
-		} else if (days >= 2 && days < 14) {
-			return days + " Days";
-		} else {
-			return `${weeks} weeks`;
-		}
-	}
-
-	//calculate project time required
-	const calcProjectTimeRequired = () => {
-		let sumTime = 0;
-		let flag = "";
-		getItemsById(item.items).forEach((item) => {
-			item.time ? (sumTime += item.time) : (flag = ">");
-		});
-		if (sumTime === 0) {
-			return `Not set`;
-		} else if (sumTime === 60) {
-			return `${flag}1 hour`;
-		} else if (sumTime > 60) {
-			return `${flag}${(sumTime / 60).toFixed(0)} hours`;
-		}
-		return `${flag}${sumTime} minutes`;
-	};
-
 	//get itemsState
 	const itemlistContext = useContext(itemsContext);
 	const {
@@ -166,7 +123,6 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 		doneItem,
 		getItemsById,
 		getItems,
-		deleteItem,
 		editItem,
 	} = itemlistContext;
 
@@ -189,12 +145,13 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 
 	//delete item
 	const handleChildItemDelete = (item) => {
-		if (item.category === "trash") {
+		/*if (item.category === "trash") {
 			deleteItem(item._id);
 		} else {
 			item.category = "trash";
 		}
-		getItems("projects");
+		getItems("projects");*/
+		handleItemDelete(item);
 	};
 
 	//collapse and expand state
@@ -359,7 +316,7 @@ const ProjectCard = ({ item, handleItemDelete, saveCurrentItem }) => {
 								variant="outlined"
 								size="small"
 								icon={<TimerIcon />}
-								label={calcProjectTimeRequired()}
+								label={calcProjectTimeRequired(getItemsById(item.items))}
 							/>
 						) : null}
 					</Grid>

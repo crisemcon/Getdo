@@ -2,8 +2,6 @@ import React, { useReducer } from "react";
 import tagsContext from "./tagsContext";
 import tagsReducer from "./tagsReducer";
 
-import { v4 as uuid } from "uuid";
-
 import axiosClient from "../../config/axios";
 
 import {ADD_TAG, VALIDATE_TAG, DELETE_TAG, UPDATE_TAG, FETCH_TAGS, TAG_ERROR } from "../../types";
