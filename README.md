@@ -18,8 +18,9 @@
 <p align="center"> Task manager built for the Getting Things Done® productivity system, designed to help you capture, clarify, organize, reflect and engage your day to day.
     <br> 
 </p>
-
+<p align="center">
 <img src="./readme-assets/Demo.gif">
+</p>
 
 
 ---
