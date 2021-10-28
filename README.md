@@ -1,7 +1,6 @@
-<!-- <p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="./readme-assets/splashhd.png" alt="Project logo"></a>
-</p> -->
+<p align="center">
+ <img width=200px height=200px src="./readme-assets/splashhd.png" alt="Project logo">
+</p>
 
 <h2 align="center">GETDO</h2>
 
@@ -18,7 +17,9 @@
 
 <p align="center"> Task manager built for the Getting Things Done® productivity system, designed to help you capture, clarify, organize, reflect and engage your day to day.
     <br> 
+    <img src="./readme-assets/Demo.gif">
 </p>
+
 
 ---
 ## 📝 Table of Contents
@@ -27,6 +28,7 @@
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Usage](#usage)
+- [Screenshots](#screenshots)
 <!--
 - [TODO](../TODO.md)
 - [Contributing](../CONTRIBUTING.md)
@@ -109,7 +111,28 @@ If you are unfamiliar with the GTD productivity system, you can start by reading
 
 Here is a diagram that illustrates a common productivity workflow based on the Getting Things Done system:
 
+<p align="center">
+ <img src="./readme-assets/GETDO_flowchart.png" alt="Flowchart">
+</p>
 
+---
+## 📷 Screenshots <a name="screenshots"></a>
+
+### 📱 Mobile
+<div>
+ <img src="./readme-assets/Screenshot5.png" alt="Screenshot 5" width="32%">
+    <img src="./readme-assets/Screenshot6.png" alt="Screenshot 6" width="32%">
+    <img src="./readme-assets/Screenshot7.png" alt="Screenshot 7" width="32%">
+    </div>
+
+### 🖥 Desktop
+<div>
+    <img src="./readme-assets/Screenshot4.png" alt="Screenshot 4">
+    <img src="./readme-assets/Screenshot2.png" alt="Screenshot 2">
+    <img src="./readme-assets/Screenshot3.png" alt="Screenshot 3">
+    <img src="./readme-assets/Screenshot8.png" alt="Screenshot 8">
+    <img src="./readme-assets/Screenshot1.png" alt="Screenshot 1" >
+</div>
 
 <!--## 🚀 Deployment <a name = "deployment"></a>
 Add additional notes about how to deploy this on a live system.
