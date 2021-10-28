@@ -1,2 +1,4 @@
 getdo-client/node_modules
 getdo-server/node_modules
+
+.DS_Store
