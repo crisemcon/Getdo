@@ -28,15 +28,19 @@
 - [About](#about)
 - [Built With](#built_with)
 - [Getting Started](#getting_started)
-- [Deployment](#deployment)
 - [Usage](#usage)
 - [Screenshots](#screenshots)
+<!--- [Deployment](#deployment)-->
 <!--
 - [TODO](../TODO.md)
 - [Contributing](../CONTRIBUTING.md)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 -->
+
+---
+## 🧐 About <a name = "about"></a>
+GETDO is a responsive web application designed to make Getting Things Done easy and sustainable. It has all the tools needed to follow the method, including projects, next actions lists, contexts, time and energy labels, areas, and more. 
 
 ---
 ## ⛏️ Built With <a name = "built_with"></a>
@@ -49,20 +53,16 @@
 - [BCrypt](https://github.com/kelektiv/node.bcrypt.js) - End-to-end password encryption
 
 ---
-## 🧐 About <a name = "about"></a>
-GETDO is a responsive web application designed to make Getting Things Done easy and sustainable. It has all the tools needed to follow the method, including projects, next actions lists, contexts, time and energy labels, areas, and more. 
-
----
 ## 🏁 Getting Started <a name = "getting_started"></a>
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.<!-- See [deployment](#deployment) for notes on how to deploy the project on a live system. -->
 
----
+
 ### Prerequisites
 
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager. If you encounter any problems, you can also use this [GitHub Gist](https://gist.github.com/isaacs/579814) to install Node.js.
 - MongoDB - [Download & Install MongoDB](http://www.mongodb.org/downloads), and make sure it's running on the default port (27017).
 
----
+
 ### Installing
 A step by step series of examples that tell you how to get a development env running.
 
@@ -122,10 +122,10 @@ Here is a diagram that illustrates a common productivity workflow based on the G
 
 ### 📱 Mobile
 <div>
- <img src="./readme-assets/Screenshot5.png" alt="Screenshot 5" width="32%">
     <img src="./readme-assets/Screenshot6.png" alt="Screenshot 6" width="32%">
     <img src="./readme-assets/Screenshot7.png" alt="Screenshot 7" width="32%">
-    </div>
+    <img src="./readme-assets/Screenshot5.png" alt="Screenshot 5" width="32%">
+</div>
 
 ### 🖥 Desktop
 <div>
