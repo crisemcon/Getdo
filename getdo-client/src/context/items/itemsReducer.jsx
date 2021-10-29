@@ -10,7 +10,7 @@ import {
 	ITEM_ERROR,
 } from "../../types";
 
-export default (state, action) => {
+const itemsReducer = (state, action) => {
 	switch (action.type) {
 		case ITEM_CATEGORIE:
 			if (action.payload === "focus") {
@@ -110,3 +110,5 @@ export default (state, action) => {
 			return state;
 	}
 };
+
+export default itemsReducer;

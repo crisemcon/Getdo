@@ -7,7 +7,7 @@ import {
 	TAG_ERROR
 } from "../../types";
 
-export default (state, action) => {
+const tagsReducer = (state, action) => {
 	switch (action.type) {
 		case ADD_TAG:
 			return {
@@ -48,3 +48,5 @@ export default (state, action) => {
 			return state;
 	}
 };
+
+export default tagsReducer;
